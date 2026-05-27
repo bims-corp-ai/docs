@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BIMS-Corp · Documentation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy-300: #012939;
+  --navy-400: #01212e;
+  --navy-500: #011922;
+  --beige-100: #ffffff;
+  --beige-200: #f2f0ea;
+  --lime-300: #a8e300;
+  --lime-400: #86b600;
+  --lime-500: #658800;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--beige-200);
+  color: var(--navy-300);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.atm-paper-grain {
+  background-image: radial-gradient(rgba(1, 41, 57, 0.04) 1px, transparent 1px);
+  background-size: 8px 8px;
+}
+header.bar {
+  background: var(--navy-300);
+  color: var(--beige-200);
+  padding: 14px 24px;
+  border-bottom: 1px solid rgba(168,227,0,0.15);
+}
+header.bar .brand {
+  font-size: 17px; font-weight: 800; letter-spacing: -0.01em;
+}
+header.bar .brand .dot { color: var(--lime-300); }
+header.bar .sub {
+  font-family: ui-monospace, monospace;
+  font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  opacity: 0.55;
+  margin-left: 14px; padding-left: 14px;
+  border-left: 1px solid rgba(242,240,234,0.15);
+}
+main.hub {
+  flex: 1;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 64px 24px 48px;
+  width: 100%;
+}
+.eyebrow {
+  font-family: ui-monospace, monospace;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--lime-500);
+  margin-bottom: 12px;
+}
+h1 {
+  font-size: clamp(28px, 4vw, 42px);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin: 0 0 12px;
+  font-weight: 900;
+  color: var(--navy-300);
+}
+.lede {
+  font-size: 17px;
+  line-height: 1.6;
+  opacity: 0.85;
+  margin: 0 0 48px;
+  max-width: 640px;
+}
+.cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  margin-bottom: 48px;
+}
+@media (min-width: 720px) {
+  .cards { grid-template-columns: 1fr 1fr; }
+}
+a.card {
+  display: block;
+  background: var(--beige-100);
+  border: 1px solid rgba(1,41,57,0.12);
+  border-left: 3px solid var(--lime-300);
+  padding: 24px 26px;
+  text-decoration: none;
+  color: var(--navy-300);
+  transition: transform 180ms, border-color 180ms, box-shadow 180ms;
+}
+a.card:hover {
+  transform: translateY(-2px);
+  border-color: var(--navy-300);
+  border-left-color: var(--lime-300);
+  box-shadow: 0 8px 24px rgba(1,41,57,0.08);
+}
+a.card .tag {
+  display: inline-block;
+  font-family: ui-monospace, monospace;
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  background: var(--navy-300);
+  color: var(--lime-300);
+  padding: 3px 8px;
+  margin-bottom: 14px;
+}
+a.card h2 {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  margin: 0 0 6px;
+  line-height: 1.2;
+  color: var(--navy-300);
+}
+a.card .blurb {
+  font-size: 15px;
+  line-height: 1.5;
+  opacity: 0.8;
+  margin: 0 0 14px;
+}
+a.card .arrow {
+  font-family: ui-monospace, monospace;
+  font-size: 13px; font-weight: 700;
+  color: var(--lime-500);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.divider {
+  height: 3px;
+  background: linear-gradient(90deg, transparent 0%, var(--lime-300) 20%, var(--lime-300) 80%, transparent 100%);
+  margin: 48px 0 32px;
+}
+.other {
+  font-size: 14px;
+  opacity: 0.7;
+  line-height: 1.7;
+}
+.other a {
+  color: var(--navy-300);
+  text-decoration: underline;
+  text-decoration-color: var(--lime-300);
+  text-underline-offset: 3px;
+}
+.other a:hover { color: var(--lime-500); }
+footer {
+  background: var(--navy-500);
+  color: var(--beige-200);
+  padding: 28px 24px;
+  font-family: ui-monospace, monospace;
+  font-size: 12px;
+  opacity: 0.7;
+  text-align: center;
+}
+footer .repo {
+  color: var(--lime-300);
+  text-decoration: none;
+}
+footer .repo:hover { text-decoration: underline; }
+</style>
+</head>
+<body class="atm-paper-grain">
+
+<header class="bar">
+  <span class="brand">BIMS-Corp<span class="dot">.</span>AI</span>
+  <span class="sub">Documentation</span>
+</header>
+
+<main class="hub">
+  <div class="eyebrow">Building Information Management Systems Corporation · NY DOS 4830492</div>
+  <h1>BIMS-Corp Documentation Hub.</h1>
+  <p class="lede">
+    Public-facing guides for the BIMS-Corp internal-tooling environment. Pick the role that matches what you're here to do.
+  </p>
+
+  <div class="cards">
+    <a class="card" href="qa-onboarding/">
+      <span class="tag">QA &amp; PM · WINDOWS 11</span>
+      <h2>QA Onboarding Guide</h2>
+      <p class="blurb">
+        Go from zero tools installed to finding a real production bug and drafting a Jira ticket — in about 60 minutes. Step-by-step with copy-paste commands.
+      </p>
+      <span class="arrow">Start →</span>
+    </a>
+
+    <a class="card" href="IT-OPS-HANDBOOK.html">
+      <span class="tag">IT OPS</span>
+      <h2>IT Ops Handbook</h2>
+      <p class="blurb">
+        Operational reference for the BIMS-Corp infrastructure: deploy targets, secrets management, sync schedules, incident response.
+      </p>
+      <span class="arrow">Open →</span>
+    </a>
+  </div>
+
+  <div class="divider"></div>
+
+  <p class="other">
+    Looking for the source code or engineering docs? See the
+    <a href="https://github.com/bims-corp-ai/bims-corp-ops" target="_blank">bims-corp-ops repository</a>
+    on GitHub.
+  </p>
+</main>
+
+<footer>
+  Maintained by Maxwell Collins ·
+  <a class="repo" href="https://github.com/bims-corp-ai/bims-corp-ops" target="_blank">bims-corp-ai/bims-corp-ops</a>
+</footer>
+
+</body>
+</html>

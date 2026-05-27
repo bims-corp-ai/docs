@@ -1,0 +1,1220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>BIMS-Corp Ops Handbook</title>
+<style>
+:root {
+    --bg: #ffffff;
+    --bg-muted: #f8fafc;
+    --bg-code: #f6f9fc;
+    --bg-callout-note: #f1f5fb;
+    --bg-callout-tip: #f0faf4;
+    --bg-callout-warn: #fef6ec;
+    --text: #0a2540;
+    --text-muted: #425466;
+    --text-faint: #6b7c93;
+    --border: #e3e8ee;
+    --border-strong: #cfd7e3;
+    --accent: #1e40af;
+    --accent-hover: #1d3a9b;
+    --code-text: #0a2540;
+    --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04);
+    --radius: 6px;
+    --radius-lg: 8px;
+    --sidebar-w: 260px;
+    --toc-w: 200px;
+    --max-content: 720px;
+    --header-h: 56px;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, "Helvetica Neue", Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--text);
+    background: var(--bg);
+    -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-hover); text-decoration: underline; }
+
+code, kbd, pre, samp {
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 13.5px;
+}
+
+/* ---- Layout ---- */
+.layout {
+    display: grid;
+    grid-template-columns: var(--sidebar-w) 1fr var(--toc-w);
+    min-height: 100vh;
+}
+.sidebar {
+    border-right: 1px solid var(--border);
+    background: var(--bg-muted);
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 24px 0;
+}
+.toc {
+    border-left: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 24px 16px 24px 24px;
+    font-size: 13px;
+    color: var(--text-muted);
+}
+.content {
+    padding: 56px 64px 96px;
+    max-width: calc(var(--max-content) + 128px);
+    margin: 0 auto;
+}
+
+/* ---- Sidebar ---- */
+.brand {
+    padding: 0 24px 20px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 16px;
+}
+.brand-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    margin: 0;
+    letter-spacing: -0.01em;
+}
+.brand-subtitle {
+    font-size: 12px;
+    color: var(--text-faint);
+    margin: 4px 0 0;
+}
+.sidebar-section { padding: 8px 0; }
+.sidebar-section-title {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-faint);
+    padding: 12px 24px 6px;
+    margin: 0;
+}
+.sidebar-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.sidebar-nav li a {
+    display: block;
+    padding: 6px 24px;
+    font-size: 13.5px;
+    color: var(--text-muted);
+    border-left: 2px solid transparent;
+}
+.sidebar-nav li a:hover {
+    color: var(--text);
+    text-decoration: none;
+    background: rgba(30, 64, 175, 0.04);
+}
+.sidebar-nav li a.active {
+    color: var(--accent);
+    font-weight: 500;
+    border-left-color: var(--accent);
+    background: rgba(30, 64, 175, 0.05);
+}
+
+/* ---- TOC ---- */
+.toc-title {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-faint);
+    margin: 0 0 12px;
+}
+.toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-left: 1px solid var(--border);
+}
+.toc-list li a {
+    display: block;
+    padding: 4px 12px;
+    color: var(--text-muted);
+    border-left: 2px solid transparent;
+    margin-left: -1px;
+    font-size: 12.5px;
+}
+.toc-list li a:hover {
+    color: var(--text);
+    text-decoration: none;
+}
+.toc-list li a.active {
+    color: var(--accent);
+    border-left-color: var(--accent);
+}
+
+/* ---- Content typography ---- */
+.content h1 {
+    font-size: 36px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin: 0 0 8px;
+    line-height: 1.15;
+}
+.content h2 {
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    margin: 56px 0 16px;
+    scroll-margin-top: 24px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+}
+.content h2:first-of-type { border-top: none; padding-top: 0; }
+.content h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 32px 0 8px;
+    scroll-margin-top: 24px;
+}
+.content p {
+    margin: 0 0 16px;
+    color: var(--text-muted);
+    max-width: var(--max-content);
+}
+.content .lead {
+    font-size: 17px;
+    color: var(--text-muted);
+    line-height: 1.55;
+    margin-bottom: 32px;
+    max-width: var(--max-content);
+}
+.content ul, .content ol {
+    margin: 0 0 16px;
+    padding-left: 24px;
+    color: var(--text-muted);
+    max-width: var(--max-content);
+}
+.content li { margin-bottom: 6px; }
+.content li > p { margin-bottom: 8px; }
+.content strong { color: var(--text); font-weight: 600; }
+
+/* ---- Inline code ---- */
+.content :not(pre) > code {
+    background: var(--bg-code);
+    color: var(--code-text);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+    border: 1px solid var(--border);
+}
+
+/* ---- Code blocks ---- */
+.code {
+    position: relative;
+    background: var(--bg-code);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin: 16px 0 24px;
+    max-width: var(--max-content);
+}
+.code-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 14px;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--text-faint);
+}
+.code-label { font-weight: 500; }
+.code-copy {
+    background: transparent;
+    border: 1px solid var(--border-strong);
+    color: var(--text-muted);
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: inherit;
+}
+.code-copy:hover { background: white; color: var(--text); }
+.code-copy.copied { color: #0a8c4a; border-color: #0a8c4a; }
+.code pre {
+    margin: 0;
+    padding: 14px;
+    overflow-x: auto;
+    color: var(--code-text);
+    line-height: 1.55;
+}
+
+/* ---- Tables ---- */
+.content table {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: var(--max-content);
+    margin: 16px 0 24px;
+    font-size: 14px;
+}
+.content th, .content td {
+    border: 1px solid var(--border);
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+}
+.content th {
+    background: var(--bg-muted);
+    font-weight: 600;
+    color: var(--text);
+}
+.content td { color: var(--text-muted); }
+.content td code { font-size: 12.5px; }
+
+/* ---- Callouts ---- */
+.callout {
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    margin: 16px 0 24px;
+    max-width: var(--max-content);
+    border-left: 3px solid var(--accent);
+    background: var(--bg-callout-note);
+    font-size: 14px;
+}
+.callout.tip { border-left-color: #0a8c4a; background: var(--bg-callout-tip); }
+.callout.warn { border-left-color: #c2410c; background: var(--bg-callout-warn); }
+.callout-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin: 0 0 4px;
+}
+.callout.tip .callout-label { color: #0a8c4a; }
+.callout.warn .callout-label { color: #c2410c; }
+.callout p:last-child { margin-bottom: 0; }
+.callout p { color: var(--text); }
+
+/* ---- Hero ---- */
+.hero {
+    padding-bottom: 32px;
+    margin-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+}
+.eyebrow {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 12px;
+}
+
+/* ---- Anchor links on headings (Stripe-style) ---- */
+.content h2 .anchor,
+.content h3 .anchor {
+    opacity: 0;
+    margin-left: 8px;
+    color: var(--text-faint);
+    font-weight: 400;
+    text-decoration: none;
+}
+.content h2:hover .anchor,
+.content h3:hover .anchor { opacity: 1; }
+
+/* ---- Mobile ---- */
+@media (max-width: 980px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidebar, .toc {
+        position: static;
+        height: auto;
+        border: none;
+        padding: 16px;
+    }
+    .toc { display: none; }
+    .content { padding: 32px 20px 64px; }
+    .sidebar { border-bottom: 1px solid var(--border); background: var(--bg); }
+}
+
+/* ---- Print: produce a clean printable cheatsheet ---- */
+@media print {
+    .sidebar, .toc { display: none; }
+    .layout { display: block; }
+    body {
+        font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+        font-size: 11pt;
+        color: #000;
+    }
+    .content { padding: 0; max-width: 100%; }
+    .content h1 { font-size: 22pt; }
+    .content h2 {
+        font-size: 16pt;
+        page-break-before: always;
+        margin-top: 0;
+        border-top: none;
+    }
+    .content h2:first-of-type { page-break-before: avoid; }
+    .content h3 { font-size: 13pt; page-break-after: avoid; }
+    .code, .callout { page-break-inside: avoid; }
+    .code-copy { display: none; }
+    .print-only { display: block !important; }
+    .no-print { display: none !important; }
+    a { color: #000; text-decoration: none; }
+    a:after { content: " (" attr(href) ")"; font-size: 9pt; color: #555; }
+    a[href^="#"]:after { content: ""; }
+}
+.print-only { display: none; }
+
+/* ---- Misc ---- */
+hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+.kbd {
+    display: inline-block;
+    padding: 1px 6px;
+    border: 1px solid var(--border-strong);
+    border-bottom-width: 2px;
+    border-radius: 4px;
+    background: var(--bg);
+    font-size: 12px;
+    font-family: ui-monospace, SFMono-Regular, monospace;
+    color: var(--text);
+}
+.muted { color: var(--text-faint); }
+</style>
+</head>
+<body>
+<div class="layout">
+
+<!-- ============== SIDEBAR ============== -->
+<nav class="sidebar" aria-label="Primary">
+    <div class="brand">
+        <p class="brand-title">BIMS-Corp Ops Handbook</p>
+        <p class="brand-subtitle">For IT operations &amp; ticket handlers</p>
+    </div>
+
+    <div class="sidebar-section">
+        <p class="sidebar-section-title">Getting started</p>
+        <ul class="sidebar-nav">
+            <li><a href="#welcome">Welcome</a></li>
+            <li><a href="#what-this-is">What this toolkit is</a></li>
+            <li><a href="#one-time-setup">One-time setup</a></li>
+            <li><a href="#first-5-minutes">First 5 minutes</a></li>
+        </ul>
+    </div>
+
+    <div class="sidebar-section">
+        <p class="sidebar-section-title">Daily workflows</p>
+        <ul class="sidebar-nav">
+            <li><a href="#workflow-find-bug">Filing a bug you found</a></li>
+            <li><a href="#workflow-write-ticket">Writing a ticket to India</a></li>
+            <li><a href="#workflow-ask-codebase">Asking the codebase a question</a></li>
+            <li><a href="#workflow-review-pr">Reviewing a vendor PR</a></li>
+            <li><a href="#workflow-diagnose">Diagnosing a finding</a></li>
+        </ul>
+    </div>
+
+    <div class="sidebar-section">
+        <p class="sidebar-section-title">Reference</p>
+        <ul class="sidebar-nav">
+            <li><a href="#severity-guide">Severity guide</a></li>
+            <li><a href="#command-reference">Command reference</a></li>
+            <li><a href="#cheatsheet">Printable cheatsheet</a></li>
+            <li><a href="#troubleshooting">Troubleshooting</a></li>
+            <li><a href="#glossary">Glossary</a></li>
+        </ul>
+    </div>
+
+    <div class="sidebar-section">
+        <p class="sidebar-section-title">Boundaries</p>
+        <ul class="sidebar-nav">
+            <li><a href="#what-you-dont-do">What you don't do</a></li>
+            <li><a href="#when-to-escalate">When to escalate</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- ============== CONTENT ============== -->
+<main class="content">
+
+<header class="hero" id="welcome">
+    <span class="eyebrow">v1.0 · 2026-05</span>
+    <h1>BIMS-Corp Ops Handbook</h1>
+    <p class="lead">A practical guide for the IT operations team. Use this when you need to file a bug, write a ticket to the subcontractor team, ask the codebase a question, or review a vendor PR. Optimized for getting useful work done in under five minutes per task.</p>
+</header>
+
+<h2 id="what-this-is">What this toolkit is <a href="#what-this-is" class="anchor">#</a></h2>
+
+<p>The <code>bims-corp-ops</code> repo is a toolkit for the engineering operations work BIMS-Corp does every day &mdash; bug intake, ticket writing, codebase questions, PR review against acceptance criteria. It uses Claude Code as the execution layer; you don't have to "know AI" to use it. You describe what you want in plain English, the toolkit handles the lookups and produces the artifact (a Jira-ready ticket, a cited answer, a PR verdict).</p>
+
+<p>The point is to make <em>your</em> job faster:</p>
+
+<ul>
+    <li><strong>Better tickets to the subcontractor team</strong>, faster. With <code>file:line</code> evidence and acceptance criteria they can actually act on &mdash; fewer round-trips per bug.</li>
+    <li><strong>Codebase questions answered with citations</strong>, not guesses. "Where is property creation handled" gets you an exact file and line range, not a 30-minute grep session.</li>
+    <li><strong>PR reviews with per-criterion verdicts</strong>, not vibes. Each acceptance criterion gets a PASS / FAIL / NEEDS_INFO with the evidence cited.</li>
+    <li><strong>A single audit trail</strong> for everything. Every finding, decision, and review is recorded with attribution &mdash; you can prove what was filed when, by whom.</li>
+</ul>
+
+<div class="callout">
+    <p class="callout-label">Note</p>
+    <p>This toolkit is for ops work, not code-writing. You're not being asked to write code, and you don't need to. You're being given faster tools to do the work you already do: triage bugs, write tickets, review what comes back.</p>
+</div>
+
+<h2 id="one-time-setup">One-time setup <a href="#one-time-setup" class="anchor">#</a></h2>
+
+<p>Install once per machine. After that, everything in this handbook works.</p>
+
+<h3 id="setup-tools">Install the tools</h3>
+
+<p>Open <strong>Terminal</strong> (<span class="kbd">&#8984; Space</span> &rarr; type <em>Terminal</em>). Run:</p>
+
+<div class="code">
+<div class="code-header"><span class="code-label">Terminal</span><button class="code-copy" data-copy="brew install gh jq sqlite3 ast-grep gitleaks">Copy</button></div>
+<pre>brew install gh jq sqlite3 ast-grep gitleaks</pre>
+</div>
+
+<p>Install <code>uv</code> (Python package manager) and <code>graphify</code> (code indexer):</p>
+
+<div class="code">
+<div class="code-header"><span class="code-label">Terminal</span><button class="code-copy" data-copy="curl -LsSf https://astral.sh/uv/install.sh | sh">Copy</button></div>
+<pre>curl -LsSf https://astral.sh/uv/install.sh | sh</pre>
+</div>
+
+<div class="code">
+<div class="code-header"><span class="code-label">Terminal</span><button class="code-copy" data-copy="source ~/.zshrc 2>/dev/null || true">Copy</button></div>
+<pre>source ~/.zshrc 2&gt;/dev/null || true
+uv tool install graphifyy</pre>
+</div>
+
+<p>Install <strong>Claude Code</strong> &mdash; the execution layer. It's a CLI tool that runs in any terminal:</p>
+
+<div class="code">
+<div class="code-header"><span class="code-label">Terminal</span><button class="code-copy" data-copy="brew install claude-code">Copy</button></div>
+<pre>brew install claude-code</pre>
+</div>
+
+<h3 id="setup-clone">Clone the workbench</h3>
+
+<div class="code">
+<div class="code-header"><span class="code-label">Terminal</span><button class="code-copy" data-copy="mkdir -p ~/Developer && cd ~/Developer && gh repo clone bims-corp-ai/bims-corp-ops && cd bims-corp-ops">Copy</button></div>
+<pre>mkdir -p ~/Developer
+cd ~/Developer
+gh repo clone bims-corp-ai/bims-corp-ops
+cd bims-corp-ops</pre>
+</div>
+
+<h3 id="setup-bootstrap">Run setup</h3>
+
+<div class="code">
+<div class="code-header"><span class="code-label">Terminal</span><button class="code-copy" data-copy="./bin/setup --mode secondary">Copy</button></div>
+<pre>./bin/setup --mode secondary</pre>
+</div>
+
+<p>The first run stops partway and tells you to edit <code>state/local-config.json</code>. Open that file in TextEdit, fill in your <code>machine_id</code>, <code>operator</code> (your email), <code>BIMS_OPS_ROOT</code>, and <code>BIMS_LEGACY_ROOT</code>. Save, then re-run:</p>
+
+<div class="code">
+<div class="code-header"><span class="code-label">Terminal</span><button class="code-copy" data-copy="./bin/setup --mode secondary">Copy</button></div>
+<pre>./bin/setup --mode secondary</pre>
+</div>
+
+<p>Setup runs all the way through this time (~8 minutes). You'll see <code>Summary: 32 pass / 0 warn / 0 fail</code>. If anything fails, the doctor tells you the exact next command &mdash; see <a href="#troubleshooting">Troubleshooting</a>.</p>
+
+<div class="callout warn">
+    <p class="callout-label">If you set up before May 2026</p>
+    <p>The pre-commit safety gate is in the repo but isn't activated locally on old clones. Activate it once:</p>
+    <p><code>git config --local core.hooksPath .githooks</code></p>
+    <p>This blocks commits that accidentally contain API keys or passwords. The workbench remote is public; the gate exists so a mistake doesn't end up on GitHub.</p>
+</div>
+
+<h2 id="first-5-minutes">Your first 5 minutes <a href="#first-5-minutes" class="anchor">#</a></h2>
+
+<p>From inside the <code>bims-corp-ops</code> directory, start a Claude Code session:</p>
+
+<div class="code">
+<div class="code-header"><span class="code-label">Terminal</span><button class="code-copy" data-copy="claude">Copy</button></div>
+<pre>claude</pre>
+</div>
+
+<p>Your first command in the session should always be:</p>
+
+<div class="code">
+<div class="code-header"><span class="code-label">Claude Code session</span><button class="code-copy" data-copy="please orient">Copy</button></div>
+<pre>please orient</pre>
+</div>
+
+<p>This loads project context &mdash; current findings, recent decisions, the list of repos in scope, the operating constraints. Skip it and you'll get worse answers on everything that follows.</p>
+
+<p>Now try a real query:</p>
+
+<div class="code">
+<div class="code-header"><span class="code-label">Claude Code session</span><button class="code-copy" data-copy="ask: where is the user login controller in PropertyOrganizer-Web">Copy</button></div>
+<pre>ask: where is the user login controller in PropertyOrganizer-Web</pre>
+</div>
+
+<p>You'll get back something like:</p>
+
+<div class="code">
+<div class="code-header"><span class="code-label">Response</span></div>
+<pre>The login controller is at:
+  application/modules/users/controllers/users.php:82  (function login())
+
+It validates email_w + password_w, calls users_model->check_front_login,
+and redirects to /dashboard on success. The role allowlist is roles 2, 3, 12
+(users_model.php:347).</pre>
+</div>
+
+<p>That's the loop: ask in plain English, get an answer with <code>file:line</code> citations, click through to the source if you want to verify. Five seconds vs. thirty minutes of greping.</p>
+
+<hr>
+
+<h2 id="workflow-find-bug">Filing a bug you found <a href="#workflow-find-bug" class="anchor">#</a></h2>
+
+<p><strong>When you'd use this:</strong> you spotted a bug during PR review, while testing the staging app, or while reading an error log. You want to record it before you forget, so it shows up in the queue for whoever drafts the ticket to the subcontractor team.</p>
+
+<h3 id="find-bug-record">Record the finding</h3>
+
+<p>In Claude Code:</p>
+
+<div class="code">
+<div class="code-header"><span class="code-label">Claude Code session</span><button class="code-copy" data-copy="record a finding: while reviewing PR #42, I noticed that the login form accepts an empty email field and returns a 500. Reproduce: POST /users/login with email_w='' and password_w='anything'. Expected: 200 with validation error. Got: 500 with stack trace.">Copy</button></div>
+<pre>record a finding: while reviewing PR #42, I noticed that the
+login form accepts an empty email field and returns a 500.
+
+Reproduce: POST /users/login with email_w='' and password_w='anything'.
+Expected: 200 with validation error. Got: 500 with stack trace.</pre>
+</div>
+
+<p>The toolkit will ask for severity (see the guide below), then write the finding to <code>bims-store</code>. You'll get back an ID like:</p>
+
+<div class="code">
+<div class="code-header"><span class="code-label">Response</span></div>
+<pre>Recorded: BIMS-F-2026-05-19-c9e21a60  (severity P1, status open)</pre>
+</div>
+
+<p>That ID is the finding's permanent reference. Anywhere you mention this bug later &mdash; in a meeting, in a ticket, in a PR comment &mdash; use the ID. The full record (your repro steps, severity, observation date) is always retrievable.</p>
+
+<h3 id="find-bug-fields">What good findings look like</h3>
+
+<table>
+    <thead>
+        <tr><th>Field</th><th>Good</th><th>Bad</th></tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>title</td>
+            <td>"Login form 500s on empty email instead of validating"</td>
+            <td>"Login broken"</td>
+        </tr>
+        <tr>
+            <td>summary</td>
+            <td>"POST /users/login with email_w='' returns HTTP 500. Form should validate to 200 with error."</td>
+            <td>"Found a bug while reviewing the PR"</td>
+        </tr>
+        <tr>
+            <td>reproduction</td>
+            <td>Exact steps: URL, payload, expected vs. actual. Include user ID + role if relevant.</td>
+            <td>"It crashed when I tried it"</td>
+        </tr>
+        <tr>
+            <td>file:line</td>
+            <td>If you can find the offending code, cite it: <code>users_model.php:347</code></td>
+            <td>Skipping this — fine if you genuinely don't know, but always try.</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="callout tip">
+    <p class="callout-label">Tip</p>
+    <p>If you don't know severity, leave it at <code>P2</code> by default. P0 is for production-down or active security issues. P3 is for cosmetic / nice-to-have. Use the <a href="#severity-guide">severity guide</a> below if you're not sure.</p>
+</div>
+
+<h3 id="find-bug-status">What happens to it next</h3>
+
+<p>The finding sits in <code>bims-store.findings</code> with status <code>open</code>. Someone (you or another ops engineer) picks it up and drafts a ticket using the <a href="#workflow-write-ticket">ticket workflow</a>. When the ticket gets posted to Jira, the finding's status flips to <code>promoted</code>. When the subcontractor team fixes it, the finding moves to <code>resolved</code>.</p>
+
+<p>You can list open findings any time:</p>
+
+<div class="code">
+<div class="code-header"><span class="code-label">Claude Code session</span><button class="code-copy" data-copy="list open findings">Copy</button></div>
+<pre>list open findings</pre>
+</div>
+
+<hr>
+
+<h2 id="workflow-write-ticket">Writing a ticket to India <a href="#workflow-write-ticket" class="anchor">#</a></h2>
+
+<p><strong>When you'd use this:</strong> a finding is recorded and you need to turn it into a Jira ticket that the subcontractor team can actually act on. The bad version of this task is the tickets you've been writing &mdash; loose prose, no repro steps, no file:line evidence, no acceptance criteria. India sends them back asking for more info. Three round-trips later the bug is still there. This workflow eliminates that.</p>
+
+<h3 id="write-ticket-cmd">Draft the ticket</h3>
+
+<p>Once you have a finding ID:</p>
+
+<div class="code">
+<div class="code-header"><span class="code-label">Claude Code session</span><button class="code-copy" data-copy="/bims-ticket BIMS-F-2026-05-19-c9e21a60">Copy</button></div>
+<pre>/bims-ticket BIMS-F-2026-05-19-c9e21a60</pre>
+</div>
+
+<p>The toolkit produces a Jira-shaped draft at <code>tickets/draft/&lt;finding-id&gt;.md</code>:</p>
+
+<div class="code">
+<div class="code-header"><span class="code-label">tickets/draft/&hellip;c9e21a60.md</span></div>
+<pre># BIMS-1234 — Login form 500s on empty email
+
+## Summary
+POST /users/login with empty email_w returns HTTP 500 instead of validating
+to a 200 with a "email required" error. Affects PropertyOrganizer-Web.
+
+## Reproduction
+1. Visit http://staging.propertyorganizer.com/users/login
+2. Submit the form with email_w='' and password_w='anything'
+3. Observe: HTTP 500 with stack trace
+4. Expected: HTTP 200, login form re-rendered, "Email is required" error
+
+## Affected files (cite during fix)
+- application/modules/users/controllers/users.php:106
+  (form_validation rule allows empty value to pass through to model)
+- application/modules/users/models/users_model.php:347
+  (check_front_login doesn't guard against empty email)
+
+## Acceptance criteria
+- [ ] AC1: POST /users/login with empty email_w returns HTTP 200
+- [ ] AC2: Response body contains the "Email is required" error string
+- [ ] AC3: No row added to ci_sessions on empty-credential submit
+- [ ] AC4: Existing happy-path login (valid creds) continues to work
+
+## Implementation note (suggestion, not prescription)
+Add `required` to the form_validation rule at users.php:106. Confirm
+xss_clean doesn't already strip the value to empty. Consider whether
+users_model.php:347 should also defend, in case other callers exist.
+
+---
+Finding: BIMS-F-2026-05-19-c9e21a60</pre>
+</div>
+
+<h3 id="write-ticket-review">Review before posting</h3>
+
+<p>Open the draft file. Check:</p>
+
+<ul>
+    <li>The reproduction steps work when you run them</li>
+    <li>The cited <code>file:line</code> ranges are correct (click the path; it should jump to the right code)</li>
+    <li>The acceptance criteria are testable &mdash; each one is a thing you can verify in 30 seconds</li>
+    <li>The implementation note is a <em>suggestion</em>, not a demand &mdash; vendors are free to fix it differently as long as ACs pass</li>
+</ul>
+
+<h3 id="write-ticket-promote">Promote to Jira</h3>
+
+<p>Once you've reviewed the draft and it looks right:</p>
+
+<div class="code">
+<div class="code-header"><span class="code-label">Claude Code session</span><button class="code-copy" data-copy="/bims-promote BIMS-F-2026-05-19-c9e21a60">Copy</button></div>
+<pre>/bims-promote BIMS-F-2026-05-19-c9e21a60</pre>
+</div>
+
+<p>While the Atlassian integration isn't wired yet, this outputs Jira-ready formatted text you can paste manually into the BIMS-* project. The finding's status flips to <code>promoted</code> and the Jira ID gets recorded.</p>
+
+<div class="callout warn">
+    <p class="callout-label">Always BIMS-*, never PAS-*</p>
+    <p>The Jira project for tickets you write is <strong>BIMS-*</strong> (BIMS-Corp's ops space). <strong>PAS-*</strong> is the subcontractor team's internal working space &mdash; you never write tickets there directly. The toolkit will refuse if you try. Add the label <code>ai-drafted</code> when posting so it's clear this came from the workbench.</p>
+</div>
+
+<hr>
+
+<h2 id="workflow-ask-codebase">Asking the codebase a question <a href="#workflow-ask-codebase" class="anchor">#</a></h2>
+
+<p><strong>When you'd use this:</strong> you need to know how some piece of the system works &mdash; what table a model writes to, where a function is called from, what the schema of <code>users</code> is, why a certain redirect happens. Instead of greping for an hour, you ask in plain English and get a cited answer.</p>
+
+<h3 id="ask-cmd">Ask</h3>
+
+<div class="code">
+<div class="code-header"><span class="code-label">Claude Code session</span><button class="code-copy" data-copy="/bims-ask what database tables does the property creation flow write to?">Copy</button></div>
+<pre>/bims-ask what database tables does the property creation flow write to?</pre>
+</div>
+
+<p>The toolkit consults the code graph (via the <code>graphify-bims-*</code> indexers), reads the precise file ranges, and produces an answer with <code>file:line</code> citations for everything it claims. Every claim is verifiable &mdash; you can click the path and read the code yourself.</p>
+
+<h3 id="ask-good-questions">Questions that work well</h3>
+
+<ul>
+    <li><strong>Specific behavior:</strong> "How does the master password backdoor in users_model.php actually work?"</li>
+    <li><strong>Schema questions:</strong> "What columns does the <code>users</code> table have, and what does <code>role_id</code> mean?"</li>
+    <li><strong>Cross-cutting:</strong> "Where is <code>STORAGE_AMOUNT_PER_PROPERTY</code> referenced and what does each caller do with it?"</li>
+    <li><strong>Workflow:</strong> "What happens after a user submits the property creation form?"</li>
+    <li><strong>Debugging:</strong> "Why might POST /users/login return 200 instead of redirecting to /dashboard?" (this works because the graph captures the controller's branching)</li>
+</ul>
+
+<h3 id="ask-poor-questions">Questions that don't work as well</h3>
+
+<ul>
+    <li><strong>Yes/no without context:</strong> "Is this a good idea?" &mdash; the toolkit doesn't have opinions; rephrase as "what are the tradeoffs of X vs Y"</li>
+    <li><strong>Multi-step engineering tasks:</strong> "Build me a new login system" &mdash; that's a feature request, not a question; open it as a finding instead</li>
+    <li><strong>Out of scope:</strong> Questions about iOS/Android repos when only the web graphs are indexed</li>
+</ul>
+
+<div class="callout">
+    <p class="callout-label">Every claim cites</p>
+    <p>If the toolkit makes a claim without a <code>file:line</code> citation, that claim is unverified and you should distrust it. The contract is: every factual statement is cited. Anything uncited is conjecture &mdash; ask for evidence or move on.</p>
+</div>
+
+<hr>
+
+<h2 id="workflow-review-pr">Reviewing a vendor PR <a href="#workflow-review-pr" class="anchor">#</a></h2>
+
+<p><strong>When you'd use this:</strong> the subcontractor team has submitted a PR fixing one of the tickets you wrote. You need to decide whether it actually fixes the bug &mdash; without spending an hour reading the diff. The toolkit produces a per-criterion verdict so your review is structured and defensible.</p>
+
+<h3 id="review-cmd">Run the review</h3>
+
+<div class="code">
+<div class="code-header"><span class="code-label">Claude Code session</span><button class="code-copy" data-copy="/bims-review https://github.com/bims-corp-ai/PropertyOrganizer-Web/pull/123">Copy</button></div>
+<pre>/bims-review https://github.com/bims-corp-ai/PropertyOrganizer-Web/pull/123</pre>
+</div>
+
+<p>If the Atlassian integration is wired, the toolkit auto-fetches the linked Jira ticket's acceptance criteria. Otherwise, paste them when prompted.</p>
+
+<h3 id="review-output">What you get back</h3>
+
+<div class="code">
+<div class="code-header"><span class="code-label">Review output</span></div>
+<pre>PR: PropertyOrganizer-Web#123 (BIMS-1234)
+Title: Fix login form on empty email
+Author: tatva-dev-3
+
+Per acceptance criterion verdict:
+
+AC1: POST /users/login with empty email_w returns HTTP 200
+  VERDICT: PASS
+  Evidence: application/modules/users/controllers/users.php:108
+  The form_validation rule now includes 'required'. Tested via curl,
+  empty email returns 200 with error message.
+
+AC2: Response body contains "Email is required" error string
+  VERDICT: PASS
+  Evidence: language/english/users_lang.php:42  ('email-required' string)
+  Validation triggers the lang lookup; the literal string is rendered.
+
+AC3: No row added to ci_sessions on empty-credential submit
+  VERDICT: LIKELY_PASS
+  Evidence: short-circuit at users.php:108 prevents reaching
+  set_custom_userdata. Recommend confirming in QA with a manual repro
+  rather than purely from diff inspection.
+
+AC4: Existing happy-path login continues to work
+  VERDICT: NEEDS_INFO
+  Evidence: No automated test covers this. Diff doesn't touch the
+  happy path, so likely intact, but verify before merge.
+
+Overall: 2 PASS, 1 LIKELY_PASS, 1 NEEDS_INFO. Recommend manual
+verification of AC3 and AC4 before approving.</pre>
+</div>
+
+<h3 id="review-what-to-do">What to do with the verdict</h3>
+
+<ul>
+    <li><strong>All PASS:</strong> approve.</li>
+    <li><strong>Any FAIL:</strong> request changes &mdash; cite the specific AC and evidence.</li>
+    <li><strong>NEEDS_INFO:</strong> ask the vendor for the missing evidence (typically a manual repro video or a test case) before approving.</li>
+    <li><strong>LIKELY_PASS:</strong> use judgment. Often safe to approve, but if the bug was a regression risk, manually verify.</li>
+</ul>
+
+<div class="callout warn">
+    <p class="callout-label">Boundary</p>
+    <p>Under the current operating model the toolkit produces <em>advisory</em> comments only. The subcontractor team currently operates the merge button. Your verdict is a recommendation, not a block. BIMS-Corp owns the merge policy and can change this arrangement at any time &mdash; if Greg decides ops should hold the merge button, that's allowed.</p>
+</div>
+
+<hr>
+
+<h2 id="workflow-diagnose">Diagnosing a finding <a href="#workflow-diagnose" class="anchor">#</a></h2>
+
+<p><strong>When you'd use this:</strong> a finding is recorded but it's not yet clear what's actually broken or what the fix should look like. You need to investigate before you draft a ticket.</p>
+
+<div class="code">
+<div class="code-header"><span class="code-label">Claude Code session</span><button class="code-copy" data-copy="/bims-diagnose BIMS-F-2026-05-19-c9e21a60">Copy</button></div>
+<pre>/bims-diagnose BIMS-F-2026-05-19-c9e21a60</pre>
+</div>
+
+<p>The diagnostic protocol does five things:</p>
+
+<ol>
+    <li><strong>Reproduce</strong> the bug locally (where possible) to confirm it actually exists</li>
+    <li><strong>Locate</strong> the exact code path responsible &mdash; <code>file:line</code> for the offending line, not just the controller name</li>
+    <li><strong>Git contrast</strong> the change &mdash; is this a longstanding bug, a recent regression, or introduced in a specific commit?</li>
+    <li><strong>Three hypotheses</strong> for what's wrong, each with a falsifiability criterion ("if X is true, we'd see Y in the logs")</li>
+    <li><strong>Two-track fix proposal</strong> &mdash; minimum-viable (smallest change that resolves the immediate issue) and ideal (what we'd do if we had unlimited time)</li>
+</ol>
+
+<p>Output lands at <code>diagnoses/&lt;finding-id&gt;/diagnosis.json</code>. Read it before drafting the ticket &mdash; the diagnosis usually sharpens the acceptance criteria significantly.</p>
+
+<hr>
+
+<h2 id="severity-guide">Severity guide <a href="#severity-guide" class="anchor">#</a></h2>
+
+<table>
+    <thead>
+        <tr><th>Severity</th><th>Meaning</th><th>Examples</th></tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>P0</code></td>
+            <td>Production-down or active security exposure. Drop everything.</td>
+            <td>Login broken in production. Customer data leaking. Credentials committed to public repo.</td>
+        </tr>
+        <tr>
+            <td><code>P1</code></td>
+            <td>Critical feature broken or significant risk. Same-week fix.</td>
+            <td>Property creation fails for a subset of users. Auth bypass via known plaintext. Payment processing edge case.</td>
+        </tr>
+        <tr>
+            <td><code>P2</code></td>
+            <td>Real bug affecting normal use. Plan into the next sprint.</td>
+            <td>Form validation accepts empty input. Search returns wrong results. Email template renders badly.</td>
+        </tr>
+        <tr>
+            <td><code>P3</code></td>
+            <td>Minor / cosmetic / tech-debt. Fix when convenient.</td>
+            <td>Misaligned button. Deprecated function still in use. Inconsistent error message wording.</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="callout tip">
+    <p class="callout-label">When unsure</p>
+    <p>Default to <code>P2</code>. The team can re-triage later. Over-classifying everything as <code>P1</code> dilutes the signal &mdash; if everything is critical, nothing is.</p>
+</div>
+
+<hr>
+
+<h2 id="command-reference">Command reference <a href="#command-reference" class="anchor">#</a></h2>
+
+<table>
+    <thead>
+        <tr><th>Command</th><th>When to use</th><th>Output</th></tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>please orient</code></td>
+            <td>First thing in every Claude Code session</td>
+            <td>Project context: findings, decisions, traps, sync state</td>
+        </tr>
+        <tr>
+            <td><code>list open findings</code></td>
+            <td>Triage queue review</td>
+            <td>Findings filtered by status=open, ordered by severity</td>
+        </tr>
+        <tr>
+            <td><code>record a finding: &lt;description&gt;</code></td>
+            <td>You found a bug</td>
+            <td>Finding ID + confirmation</td>
+        </tr>
+        <tr>
+            <td><code>/bims-ask &lt;question&gt;</code></td>
+            <td>Need to understand how code works</td>
+            <td>Cited answer with <code>file:line</code> references</td>
+        </tr>
+        <tr>
+            <td><code>/bims-ticket &lt;finding-id&gt;</code></td>
+            <td>Turn a finding into a Jira-ready draft</td>
+            <td>Markdown file at <code>tickets/draft/&hellip;</code></td>
+        </tr>
+        <tr>
+            <td><code>/bims-diagnose &lt;finding-id&gt;</code></td>
+            <td>Finding needs more investigation before ticketing</td>
+            <td>Structured diagnosis at <code>diagnoses/&lt;id&gt;/</code></td>
+        </tr>
+        <tr>
+            <td><code>/bims-review &lt;PR URL&gt;</code></td>
+            <td>Subcontractor team submitted a PR</td>
+            <td>Per-AC verdict (PASS / LIKELY_PASS / FAIL / NEEDS_INFO)</td>
+        </tr>
+        <tr>
+            <td><code>/bims-promote &lt;finding-id&gt;</code></td>
+            <td>Draft is reviewed, post to Jira</td>
+            <td>Jira-formatted text (auto-create when Atlassian wired)</td>
+        </tr>
+        <tr>
+            <td><code>/bims-decide &lt;decision&gt;</code></td>
+            <td>Record a process/architecture decision</td>
+            <td>Decision ID, persisted in <code>bims-store</code></td>
+        </tr>
+        <tr>
+            <td><code>./bin/doctor</code></td>
+            <td>Something's wrong; want a health report</td>
+            <td>Pass/warn/fail breakdown with remediation commands</td>
+        </tr>
+        <tr>
+            <td><code>./bin/sync-legacy</code></td>
+            <td>Refresh local mirrors of the 8 legacy repos</td>
+            <td><code>git fetch + pull --ff-only</code> per repo</td>
+        </tr>
+    </tbody>
+</table>
+
+<hr>
+
+<h2 id="cheatsheet">Printable cheatsheet <a href="#cheatsheet" class="anchor">#</a></h2>
+
+<p class="no-print muted">Print this page (<span class="kbd">&#8984; P</span>) and the rest of the handbook is page-breaked away &mdash; you'll get just this cheatsheet plus the severity guide.</p>
+
+<h3>Daily loop</h3>
+
+<ol>
+    <li><strong>Open Terminal</strong>, <code>cd ~/Developer/bims-corp-ops</code></li>
+    <li><strong>Start session:</strong> <code>claude</code></li>
+    <li><strong>Always first:</strong> <code>please orient</code></li>
+    <li><strong>Then one of:</strong>
+        <ul>
+            <li>Spotted a bug? <code>record a finding: &lt;what you saw&gt;</code></li>
+            <li>Need to write a ticket? <code>/bims-ticket &lt;finding-id&gt;</code></li>
+            <li>Need to understand code? <code>/bims-ask &lt;question&gt;</code></li>
+            <li>Reviewing a vendor PR? <code>/bims-review &lt;PR URL&gt;</code></li>
+        </ul>
+    </li>
+</ol>
+
+<h3>Health check (when something feels off)</h3>
+
+<div class="code">
+<div class="code-header"><span class="code-label">Terminal</span></div>
+<pre>./bin/doctor</pre>
+</div>
+
+<h3>Rules to never break</h3>
+
+<ul>
+    <li><strong>Never paste literal API keys, passwords, or tokens</strong> into any file in this repo &mdash; the remote is public.</li>
+    <li><strong>Never write tickets against PAS-*</strong> (the subcontractor team's space). Use BIMS-* with the <code>ai-drafted</code> label.</li>
+    <li><strong>Never run <code>git commit --no-verify</code></strong> &mdash; the gate is there for a reason. If something's flagged that isn't a real leak, add the fingerprint to <code>.gitleaksignore</code> with a comment.</li>
+    <li><strong>Never edit files under <code>BIMS-Corp-LEGACY/</code></strong> &mdash; legacy is read-only. The harness will refuse, but don't try to work around it.</li>
+    <li><strong>Every claim cites <code>file:line</code></strong>. If you can't cite, you don't actually know &mdash; ask the toolkit to find the evidence.</li>
+</ul>
+
+<hr>
+
+<h2 id="troubleshooting">Troubleshooting <a href="#troubleshooting" class="anchor">#</a></h2>
+
+<table>
+    <thead>
+        <tr><th>Symptom</th><th>What's wrong</th><th>Fix</th></tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>claude: command not found</code></td>
+            <td>Claude Code isn't installed</td>
+            <td><code>brew install claude-code</code></td>
+        </tr>
+        <tr>
+            <td>The toolkit doesn't know about a finding I recorded</td>
+            <td>You're in a different machine + the store isn't synced</td>
+            <td><code>./bin/doctor</code> &mdash; check "Turso store reachable"</td>
+        </tr>
+        <tr>
+            <td><code>orient</code> returns no recent decisions or findings</td>
+            <td>Either no work happened recently, or store connection is broken</td>
+            <td><code>./bin/doctor</code> &mdash; the row counts will tell you</td>
+        </tr>
+        <tr>
+            <td>A <code>/bims-ask</code> question returns "no information"</td>
+            <td>The relevant repo isn't indexed, or the question is too vague</td>
+            <td>Rephrase with a specific function/file name; or check <code>./bin/doctor</code> for graphify status</td>
+        </tr>
+        <tr>
+            <td><code>git commit</code> fails with a gitleaks finding</td>
+            <td>Something in the staged diff matches a credential pattern</td>
+            <td>Read the redacted finding. If it's a real secret, remove it. If it's a false positive (a documentation reference, etc.), add its fingerprint to <code>.gitleaksignore</code> with a comment.</td>
+        </tr>
+        <tr>
+            <td>Setup ran but doctor shows FAIL</td>
+            <td>Various causes; doctor names each one</td>
+            <td>Read the line above each FAIL; the exact remediation command is there.</td>
+        </tr>
+        <tr>
+            <td><code>./bin/setup</code> wants me to edit <code>state/local-config.json</code></td>
+            <td>This is expected on first run</td>
+            <td>Open in TextEdit, fill in <code>machine_id</code> + <code>operator</code> + paths, save, re-run setup</td>
+        </tr>
+        <tr>
+            <td>"core.hooksPath" not set on existing clone</td>
+            <td>Your clone predates the pre-commit gate wiring</td>
+            <td><code>git config --local core.hooksPath .githooks</code></td>
+        </tr>
+    </tbody>
+</table>
+
+<hr>
+
+<h2 id="what-you-dont-do">What you don't do <a href="#what-you-dont-do" class="anchor">#</a></h2>
+
+<p>This handbook is for ops work. There are three things the toolkit can technically do that <strong>you, as ops, do not do</strong>:</p>
+
+<ol>
+    <li><strong>Modify legacy code.</strong> Files under <code>BIMS-Corp-LEGACY/</code> are read-only. The harness refuses writes there, by design. The subcontractor team implements fixes; you write the tickets that describe what needs to happen.</li>
+    <li><strong>Merge PRs.</strong> Under the current operating model, the subcontractor team operates the merge button on legacy repos. Your role is advisory: produce per-AC verdicts that inform the merge decision. BIMS-Corp owns the merge policy and can revise this at any time; that's Greg's call, not yours.</li>
+    <li><strong>Rotate credentials or remediate leaks directly.</strong> If you find a credential leak, file it as a P0 finding and notify Greg. Don't try to rotate keys, revoke tokens, or rewrite git history. The subcontractor team owns the production-side remediation under the current arrangement.</li>
+</ol>
+
+<hr>
+
+<h2 id="when-to-escalate">When to escalate <a href="#when-to-escalate" class="anchor">#</a></h2>
+
+<p>Send to Greg directly (Slack or email) when:</p>
+
+<ul>
+    <li>A <strong>P0 finding</strong> is recorded &mdash; production-down or active security exposure</li>
+    <li>A <strong>credential leak</strong> is detected (pre-commit gate fired with a real positive, or you spotted leaked keys in a deployed app)</li>
+    <li>The subcontractor team's PR conflicts with the linked acceptance criteria and they want to merge anyway</li>
+    <li>The toolkit itself is broken (multiple <code>doctor</code> FAILs you can't resolve)</li>
+    <li>You're being asked to do something outside the ops boundary (e.g., write production code, rotate keys)</li>
+</ul>
+
+<p>For everything else &mdash; normal bugs, normal tickets, normal PR reviews &mdash; use the workflows above. They are designed so escalation is the exception, not the routine.</p>
+
+<hr>
+
+<h2 id="glossary">Glossary <a href="#glossary" class="anchor">#</a></h2>
+
+<table>
+    <thead>
+        <tr><th>Term</th><th>Meaning</th></tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>Workbench</strong></td>
+            <td>This repo (<code>bims-corp-ops</code>). The toolkit's home. Lives at <code>${BIMS_OPS_ROOT}</code> on your machine.</td>
+        </tr>
+        <tr>
+            <td><strong>Legacy</strong></td>
+            <td>The eight BIMS-Corp production code repos at <code>${BIMS_LEGACY_ROOT}/</code>. Read-only from the toolkit; the subcontractor team writes the code.</td>
+        </tr>
+        <tr>
+            <td><strong>Finding</strong></td>
+            <td>A recorded observation about a bug, leak, vulnerability, or anomaly. Persistent (stored in <code>bims-store</code>), has an ID like <code>BIMS-F-YYYY-MM-DD-xxxxxxxx</code>.</td>
+        </tr>
+        <tr>
+            <td><strong>Decision</strong></td>
+            <td>A recorded architectural or process choice. Future agents see decisions in <code>orient</code> and don't re-litigate them.</td>
+        </tr>
+        <tr>
+            <td><strong>Trap</strong></td>
+            <td>A documented gotcha future agents (and you) should not fall into. Example: <em>"CodeIgniter 2.1.4 is PHP 5.x-era; modern PHP idioms will not parse."</em></td>
+        </tr>
+        <tr>
+            <td><strong>Audit event</strong></td>
+            <td>A row in the append-only audit log. Recorded for every load-bearing action so there's a forensic trail.</td>
+        </tr>
+        <tr>
+            <td><strong>MCP</strong></td>
+            <td>"Model Context Protocol" &mdash; the integration mechanism that lets Claude Code call into <code>bims-store</code> and <code>graphify</code>. You don't need to understand the internals; just know that <code>mcp__bims-store__*</code> commands are how the toolkit reads/writes its database.</td>
+        </tr>
+        <tr>
+            <td><strong>Graphify</strong></td>
+            <td>The code-graph indexer. Builds a queryable graph of every function, class, file, and call site in the indexed repos. Powers <code>/bims-ask</code>.</td>
+        </tr>
+        <tr>
+            <td><strong>Acceptance criterion (AC)</strong></td>
+            <td>A testable statement attached to a ticket. Each AC is a thing you can verify pass/fail. Tickets should have 3-5 ACs; PR reviews verdict each one.</td>
+        </tr>
+        <tr>
+            <td><strong>BIMS-* / PAS-*</strong></td>
+            <td>Two Jira projects. <strong>BIMS-*</strong> = ops-authored tickets (you). <strong>PAS-*</strong> = subcontractor team's working space (not you).</td>
+        </tr>
+    </tbody>
+</table>
+
+<hr>
+
+<p class="muted" style="margin-top:48px; font-size:13px;">
+    Handbook version 1.0 &middot; published 2026-05.<br>
+    Repo: <a href="https://github.com/bims-corp-ai/bims-corp-ops">github.com/bims-corp-ai/bims-corp-ops</a> &middot;
+    Source: <code>docs/IT-OPS-HANDBOOK.html</code>.<br>
+    Questions about this handbook? File a finding with <code>repo=workbench</code>.
+</p>
+
+</main>
+
+<!-- ============== RIGHT-SIDE TOC ============== -->
+<aside class="toc" aria-label="On this page">
+    <p class="toc-title">On this page</p>
+    <ul class="toc-list" id="toc-list">
+        <!-- populated by JS from h2s -->
+    </ul>
+</aside>
+
+</div>
+
+<script>
+// ---- Build right-side TOC from h2s, with scroll-spy highlighting.
+(function() {
+    var headings = document.querySelectorAll('main.content h2[id]');
+    var tocList = document.getElementById('toc-list');
+    if (!tocList) return;
+    var anchors = [];
+    headings.forEach(function(h) {
+        var li = document.createElement('li');
+        var a = document.createElement('a');
+        a.href = '#' + h.id;
+        // Strip the trailing anchor-link "#"
+        a.textContent = (h.firstChild ? h.firstChild.textContent : h.textContent).trim();
+        li.appendChild(a);
+        tocList.appendChild(li);
+        anchors.push({ a: a, h: h });
+    });
+
+    // Sidebar anchors too
+    var sidebarLinks = document.querySelectorAll('nav.sidebar a[href^="#"]');
+    var sidebarMap = {};
+    sidebarLinks.forEach(function(a) {
+        sidebarMap[a.getAttribute('href').slice(1)] = a;
+    });
+
+    function setActive() {
+        var fromTop = window.scrollY + 80;
+        var current = null;
+        anchors.forEach(function(item) {
+            if (item.h.offsetTop <= fromTop) current = item;
+        });
+        anchors.forEach(function(item) {
+            item.a.classList.toggle('active', item === current);
+        });
+        Object.keys(sidebarMap).forEach(function(id) {
+            sidebarMap[id].classList.toggle('active', current && current.h.id === id);
+        });
+    }
+    setActive();
+    window.addEventListener('scroll', setActive, { passive: true });
+})();
+
+// ---- Code copy buttons.
+(function() {
+    document.querySelectorAll('button.code-copy').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var text = btn.dataset.copy;
+            if (!text) {
+                // Fall back to the sibling <pre>
+                var pre = btn.closest('.code').querySelector('pre');
+                text = pre ? pre.textContent : '';
+            }
+            navigator.clipboard.writeText(text).then(function() {
+                var orig = btn.textContent;
+                btn.textContent = 'Copied';
+                btn.classList.add('copied');
+                setTimeout(function() {
+                    btn.textContent = orig;
+                    btn.classList.remove('copied');
+                }, 1200);
+            });
+        });
+    });
+})();
+</script>
+</body>
+</html>

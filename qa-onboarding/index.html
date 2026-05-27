@@ -1,0 +1,1734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BIMS-Corp QA Onboarding Guide · Windows 11</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   DESIGN TOKENS (from cc-bid-analyzer-site/globals.css)
+   ============================================================ */
+:root {
+  --color-navy-100: #677f88;
+  --color-navy-200: #345461;
+  --color-navy-300: #012939;
+  --color-navy-400: #01212e;
+  --color-navy-500: #011922;
+  --color-beige-100: #ffffff;
+  --color-beige-200: #f2f0ea;
+  --color-beige-300: #dad8d3;
+  --color-beige-400: #c2c0bb;
+  --color-lime-100: #cbee66;
+  --color-lime-200: #b9e933;
+  --color-lime-300: #a8e300;
+  --color-lime-400: #86b600;
+  --color-lime-500: #658800;
+  --color-manila-100: #e5deb3;
+  --color-orange-300: #ef6226;
+  --color-accent-blue: #3860be;
+  --color-danger: #ff5a5a;
+  --color-danger-light: #ff8a8a;
+
+  --text-display: 50px;
+  --text-h1: 40px;
+  --text-h2: 32px;
+  --text-h3: 24px;
+  --text-h4: 18px;
+  --text-body-lg: 16px;
+  --text-body: 14px;
+  --text-caption: 13px;
+  --text-micro: 11px;
+
+  --radius-sm: 2px;
+  --shadow-card: 0 20px 60px rgba(0,0,0,0.35);
+  --shadow-glow-lime: 0 0 30px rgba(168,227,0,0.30);
+
+  /* layout */
+  --sidebar-w: 260px;
+  --content-max: 780px;
+  --header-h: 56px;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+body {
+  margin: 0;
+  background: var(--color-beige-200);
+  color: var(--color-navy-300);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+a { color: var(--color-navy-300); text-decoration: underline; text-decoration-color: var(--color-lime-300); text-underline-offset: 3px; }
+a:hover { color: var(--color-lime-500); }
+code, .mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+}
+:not(pre) > code {
+  font-size: 0.92em;
+  padding: 1px 6px;
+  background: rgba(1,41,57,0.06);
+  border-radius: 2px;
+  font-weight: 500;
+  color: var(--color-navy-300);
+}
+h1, h2, h3, h4 { font-weight: 800; letter-spacing: -0.01em; color: var(--color-navy-300); }
+p { margin: 0 0 14px; }
+ul, ol { margin: 0 0 14px; padding-left: 24px; }
+li { margin-bottom: 6px; }
+
+/* atmospheric */
+.atm-paper-grain {
+  background-image: radial-gradient(rgba(1, 41, 57, 0.04) 1px, transparent 1px);
+  background-size: 8px 8px;
+}
+
+/* ============================================================
+   HEADER (top bar with progress)
+   ============================================================ */
+.header {
+  position: sticky; top: 0; z-index: 50;
+  height: var(--header-h);
+  background: var(--color-navy-300);
+  color: var(--color-beige-200);
+  display: flex; align-items: center;
+  border-bottom: 1px solid rgba(168, 227, 0, 0.15);
+}
+.header-inner {
+  max-width: 1400px; margin: 0 auto;
+  padding: 0 20px;
+  display: flex; align-items: center; justify-content: space-between;
+  width: 100%;
+}
+.brand {
+  font-size: 17px; font-weight: 800; letter-spacing: -0.01em;
+  display: flex; align-items: center; gap: 8px;
+}
+.brand .dot { color: var(--color-lime-300); }
+.brand-sub {
+  font-family: ui-monospace, monospace;
+  font-size: 11px;
+  opacity: 0.55;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-left: 12px;
+  padding-left: 12px;
+  border-left: 1px solid rgba(242,240,234,0.15);
+  display: none;
+}
+@media (min-width: 768px) { .brand-sub { display: inline; } }
+.progress {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 12px; font-weight: 600;
+  color: var(--color-lime-300);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.progress-bar {
+  width: 120px; height: 4px;
+  background: rgba(168,227,0,0.15);
+  position: relative;
+  border-radius: 2px;
+  overflow: hidden;
+}
+.progress-bar > span {
+  display: block; height: 100%;
+  background: var(--color-lime-300);
+  transition: width 200ms;
+}
+.toc-toggle {
+  display: inline-block;
+  background: none; border: 1px solid rgba(168,227,0,0.3); color: var(--color-lime-300);
+  padding: 6px 12px;
+  font-family: inherit; font-size: 12px; font-weight: 700;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  border-radius: 2px;
+}
+@media (min-width: 1024px) { .toc-toggle { display: none; } }
+
+/* ============================================================
+   LAYOUT (sidebar + content)
+   ============================================================ */
+.layout {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 1024px) {
+  .layout { grid-template-columns: var(--sidebar-w) 1fr; gap: 40px; padding: 0 32px; }
+}
+
+/* TOC */
+.toc {
+  display: none;
+  position: sticky;
+  top: var(--header-h);
+  align-self: start;
+  max-height: calc(100vh - var(--header-h));
+  overflow-y: auto;
+  padding: 28px 0 40px 0;
+}
+@media (min-width: 1024px) { .toc { display: block; } }
+.toc.mobile-open {
+  display: block;
+  position: fixed;
+  top: var(--header-h); left: 0; right: 0; bottom: 0;
+  background: var(--color-beige-200);
+  z-index: 40;
+  padding: 24px;
+  overflow-y: auto;
+}
+.toc-label {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--color-lime-500);
+  margin-bottom: 12px;
+  padding-left: 12px;
+}
+.toc ol {
+  list-style: none; padding: 0; margin: 0;
+  counter-reset: toc;
+}
+.toc li {
+  counter-increment: toc;
+  margin: 0;
+}
+.toc a {
+  display: flex; align-items: baseline; gap: 10px;
+  padding: 9px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-navy-300);
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  transition: all 150ms;
+  line-height: 1.35;
+}
+.toc a:hover { background: rgba(168,227,0,0.06); color: var(--color-navy-300); }
+.toc a::before {
+  content: counter(toc, decimal-leading-zero);
+  font-family: ui-monospace, monospace;
+  font-size: 11px;
+  opacity: 0.45;
+  font-weight: 700;
+}
+.toc a.active {
+  background: rgba(168,227,0,0.10);
+  border-left-color: var(--color-lime-300);
+  color: var(--color-navy-300);
+}
+.toc a.active::before { color: var(--color-lime-500); opacity: 1; }
+
+/* CONTENT */
+.content {
+  padding: 32px 20px 80px;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+@media (min-width: 768px) { .content { padding: 40px 24px 100px; } }
+@media (min-width: 1024px) {
+  .content { padding: 48px 0 120px; }
+}
+.content > * { max-width: var(--content-max); }
+.content > .wide { max-width: 100%; }
+
+/* ============================================================
+   INTRO BLOCK (top of guide)
+   ============================================================ */
+.intro-eyebrow {
+  display: inline-block;
+  font-family: ui-monospace, monospace;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--color-lime-500);
+  margin-bottom: 12px;
+}
+.intro h1 {
+  font-size: clamp(32px, 5vw, var(--text-h1));
+  line-height: 1.1;
+  margin: 0 0 16px;
+}
+.intro .lede {
+  font-size: 18px;
+  line-height: 1.55;
+  opacity: 0.85;
+  margin-bottom: 24px;
+}
+.meta-row {
+  display: flex; flex-wrap: wrap; gap: 24px;
+  padding: 20px 24px;
+  margin: 24px 0 0;
+  background: var(--color-navy-300);
+  color: var(--color-beige-200);
+  border-radius: 2px;
+}
+.meta-row .item {
+  display: flex; flex-direction: column; gap: 4px;
+}
+.meta-row .item .lbl {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.55;
+}
+.meta-row .item .val {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-lime-300);
+  font-family: ui-monospace, monospace;
+}
+
+/* ============================================================
+   PART HEADERS (the big numbered section markers)
+   ============================================================ */
+.part {
+  margin-top: 64px;
+  padding-top: 32px;
+}
+.part:first-of-type { margin-top: 48px; }
+.part-head {
+  display: flex; align-items: baseline; gap: 16px;
+  padding-bottom: 14px;
+  margin-bottom: 28px;
+  border-bottom: 3px solid var(--color-lime-300);
+}
+.part-num {
+  font-family: ui-monospace, monospace;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: var(--color-lime-500);
+  flex-shrink: 0;
+}
+.part-head h2 {
+  font-size: clamp(24px, 4vw, var(--text-h2));
+  line-height: 1.15;
+  margin: 0;
+}
+.part-time {
+  margin-left: auto;
+  font-family: ui-monospace, monospace;
+  font-size: 12px;
+  color: var(--color-navy-200);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.part-intro {
+  font-size: 16px;
+  line-height: 1.6;
+  opacity: 0.85;
+  margin-bottom: 28px;
+}
+
+/* ============================================================
+   STEPS (the numbered substeps within a part)
+   ============================================================ */
+.step {
+  margin-bottom: 36px;
+  padding-top: 4px;
+}
+.step-head {
+  display: flex; gap: 16px; align-items: flex-start;
+  margin-bottom: 14px;
+}
+.step-num {
+  width: 32px; height: 32px;
+  flex-shrink: 0;
+  background: var(--color-navy-300);
+  color: var(--color-lime-300);
+  font-family: ui-monospace, monospace;
+  font-size: 14px;
+  font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 2px;
+  margin-top: 1px;
+}
+.step h3 {
+  font-size: 20px;
+  line-height: 1.3;
+  margin: 0;
+  font-weight: 800;
+}
+.step .step-body {
+  padding-left: 48px;
+}
+.step .step-body > p:first-child { margin-top: 0; }
+
+/* ============================================================
+   CODE BLOCKS (with copy button)
+   ============================================================ */
+.code {
+  position: relative;
+  background: var(--color-navy-300);
+  color: var(--color-beige-200);
+  border-radius: 2px;
+  margin: 14px 0;
+  overflow: hidden;
+}
+.code-head {
+  background: var(--color-navy-400);
+  padding: 8px 12px 8px 16px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid rgba(168,227,0,0.12);
+  font-family: ui-monospace, monospace;
+  font-size: 11px;
+  color: var(--color-lime-300);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.code-head .where { opacity: 0.7; font-weight: 500; }
+.code-head .copy-btn {
+  background: none;
+  border: 1px solid rgba(168,227,0,0.3);
+  color: var(--color-lime-300);
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 150ms;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.code-head .copy-btn:hover {
+  background: rgba(168,227,0,0.1);
+  border-color: rgba(168,227,0,0.5);
+}
+.code-head .copy-btn.copied {
+  background: var(--color-lime-300);
+  color: var(--color-navy-300);
+  border-color: var(--color-lime-300);
+}
+.code pre {
+  margin: 0;
+  padding: 14px 16px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 13px;
+  line-height: 1.55;
+  overflow-x: auto;
+  white-space: pre;
+  color: var(--color-beige-200);
+}
+.code pre .prompt { color: var(--color-lime-300); }
+.code pre .comment { color: rgba(242,240,234,0.5); font-style: italic; }
+.code pre .ok { color: var(--color-lime-300); }
+.code pre .warn { color: #ffc857; }
+.code pre .err { color: var(--color-danger-light); }
+.code pre .ai { color: #9ec3ff; }
+
+/* run-this code block (with "run in..." label) */
+.code.runme { border: 1px solid var(--color-lime-300); }
+
+/* ============================================================
+   EXPECTED OUTPUT panel (green left border)
+   ============================================================ */
+.expected {
+  display: flex; gap: 12px;
+  padding: 14px 18px;
+  background: rgba(168,227,0,0.06);
+  border-left: 3px solid var(--color-lime-300);
+  margin: 12px 0 16px;
+  font-size: 14px;
+}
+.expected .icon {
+  font-size: 18px;
+  line-height: 1.2;
+  color: var(--color-lime-500);
+  font-weight: 900;
+  flex-shrink: 0;
+}
+.expected .body {
+  flex: 1;
+}
+.expected strong { color: var(--color-lime-500); }
+.expected code {
+  background: rgba(1,41,57,0.08);
+  font-size: 0.9em;
+}
+
+/* ============================================================
+   STUCK callout (collapsible, red/orange border)
+   ============================================================ */
+.stuck {
+  background: rgba(239,98,38,0.05);
+  border-left: 3px solid var(--color-orange-300);
+  margin: 12px 0 16px;
+  border-radius: 0 2px 2px 0;
+}
+.stuck-q {
+  width: 100%;
+  background: none; border: none;
+  padding: 12px 18px;
+  font-family: inherit;
+  font-size: 14px; font-weight: 700;
+  color: var(--color-orange-300);
+  text-align: left;
+  cursor: pointer;
+  display: flex; align-items: center; gap: 10px;
+}
+.stuck-q::before {
+  content: '⚠';
+  font-size: 16px;
+}
+.stuck-q .chev {
+  margin-left: auto;
+  font-weight: 900;
+  transition: transform 200ms;
+}
+.stuck.open .stuck-q .chev { transform: rotate(90deg); }
+.stuck-a {
+  display: none;
+  padding: 0 18px 14px 46px;
+  font-size: 14px;
+  line-height: 1.55;
+}
+.stuck-a p:first-child { margin-top: 0; }
+.stuck.open .stuck-a { display: block; }
+
+/* ============================================================
+   INFO callout (lime, for tips)
+   ============================================================ */
+.tip {
+  display: flex; gap: 12px;
+  padding: 14px 18px;
+  background: rgba(56,96,190,0.06);
+  border-left: 3px solid var(--color-accent-blue);
+  margin: 12px 0 16px;
+  font-size: 14px;
+  border-radius: 0 2px 2px 0;
+}
+.tip .icon {
+  font-size: 18px;
+  color: var(--color-accent-blue);
+  font-weight: 900;
+  flex-shrink: 0;
+}
+.tip strong { color: var(--color-accent-blue); }
+
+/* ============================================================
+   "DONE" footer of each part
+   ============================================================ */
+.part-done {
+  margin-top: 36px;
+  padding: 20px 24px;
+  background: var(--color-navy-300);
+  color: var(--color-beige-200);
+  border-radius: 2px;
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: 16px;
+}
+.part-done .done-label {
+  font-family: ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--color-lime-300);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.part-done .done-label::before { content: '✓ '; }
+.part-done .done-body {
+  font-size: 15px;
+  font-weight: 600;
+  flex: 1;
+  min-width: 200px;
+}
+.part-done a.next {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--color-lime-300);
+  color: var(--color-navy-300);
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  border-radius: 2px;
+  text-transform: uppercase;
+}
+.part-done a.next:hover { background: var(--color-lime-400); color: var(--color-navy-300); }
+
+/* ============================================================
+   TRANSCRIPT (claude conversation example)
+   ============================================================ */
+.transcript {
+  background: var(--color-navy-400);
+  border: 1px solid rgba(168,227,0,0.18);
+  border-radius: 2px;
+  margin: 14px 0;
+  overflow: hidden;
+}
+.transcript-head {
+  background: var(--color-navy-500);
+  padding: 8px 16px;
+  display: flex; align-items: center; gap: 10px;
+  font-family: ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  border-bottom: 1px solid rgba(168,227,0,0.15);
+  color: var(--color-beige-200);
+}
+.transcript-head .dots { display: flex; gap: 5px; }
+.transcript-head .dots span { width: 9px; height: 9px; border-radius: 50%; background: rgba(242,240,234,0.25); }
+.transcript-head .label { opacity: 0.7; margin-left: 8px; }
+.transcript-body { padding: 14px 16px; }
+.msg { margin-bottom: 12px; font-size: 13px; line-height: 1.55; }
+.msg:last-child { margin-bottom: 0; }
+.msg-from {
+  font-family: ui-monospace, monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 4px;
+}
+.msg-you .msg-from { color: var(--color-lime-300); }
+.msg-ai .msg-from { color: #9ec3ff; }
+.msg-text { color: var(--color-beige-200); }
+.msg-you .msg-text { border-left: 2px solid rgba(168,227,0,0.4); padding-left: 12px; }
+.msg-ai .msg-text { border-left: 2px solid rgba(120,170,255,0.4); padding-left: 12px; }
+.msg-text code { background: rgba(168,227,0,0.12); color: var(--color-lime-300); padding: 1px 5px; font-size: 0.9em; }
+
+/* ============================================================
+   TABLES (cheat sheet)
+   ============================================================ */
+.tbl-wrap { overflow-x: auto; margin: 14px 0; }
+table.tbl {
+  width: 100%;
+  min-width: 500px;
+  border-collapse: collapse;
+  background: var(--color-beige-100);
+  border: 1px solid rgba(1,41,57,0.1);
+  font-size: 14px;
+}
+table.tbl th {
+  background: var(--color-navy-300);
+  color: var(--color-beige-100);
+  font-size: 11px;
+  text-align: left;
+  padding: 10px 14px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+table.tbl td {
+  padding: 10px 14px;
+  border-top: 1px solid rgba(1,41,57,0.08);
+  vertical-align: top;
+}
+table.tbl tr:nth-child(even) td { background: rgba(242,240,234,0.5); }
+table.tbl td:first-child {
+  font-family: ui-monospace, monospace;
+  font-weight: 600;
+  color: var(--color-navy-300);
+  white-space: nowrap;
+}
+
+/* kbd */
+.kbd {
+  display: inline-block;
+  background: var(--color-beige-100);
+  border: 1px solid rgba(1,41,57,0.2);
+  border-bottom-width: 2px;
+  border-radius: 3px;
+  padding: 1px 6px;
+  font-family: ui-monospace, monospace;
+  font-size: 0.85em;
+  font-weight: 600;
+}
+
+/* divider */
+.divider {
+  height: 1px;
+  background: rgba(1,41,57,0.1);
+  margin: 32px 0;
+}
+
+/* footer */
+.footer {
+  margin-top: 80px;
+  padding: 32px 0;
+  font-size: 12px;
+  font-family: ui-monospace, monospace;
+  color: var(--color-navy-200);
+  border-top: 1px solid rgba(1,41,57,0.1);
+}
+</style>
+</head>
+<body>
+
+<!-- =========================================================
+     HEADER
+     ========================================================= -->
+<header class="header">
+  <div class="header-inner">
+    <div class="brand">
+      <span>BIMS-Corp<span class="dot">.</span>AI</span>
+      <span class="brand-sub">QA Onboarding · Windows 11</span>
+    </div>
+    <div class="progress">
+      <span id="progress-label">Part 0 / 8</span>
+      <div class="progress-bar"><span id="progress-fill" style="width: 0%;"></span></div>
+      <button class="toc-toggle" id="toc-toggle">CONTENTS</button>
+    </div>
+  </div>
+</header>
+
+<!-- =========================================================
+     LAYOUT
+     ========================================================= -->
+<div class="layout">
+
+  <!-- TOC SIDEBAR -->
+  <aside class="toc" id="toc">
+    <div class="toc-label">The Guide</div>
+    <ol>
+      <li><a href="#part-0" class="toc-link">Before you start</a></li>
+      <li><a href="#part-1" class="toc-link">Install WSL2 + tools</a></li>
+      <li><a href="#part-2" class="toc-link">Install Claude Code</a></li>
+      <li><a href="#part-3" class="toc-link">Clone the repos</a></li>
+      <li><a href="#part-4" class="toc-link">Bootstrap workbench</a></li>
+      <li><a href="#part-5" class="toc-link">First conversation</a></li>
+      <li><a href="#part-6" class="toc-link">Hunt your first bug</a></li>
+      <li><a href="#part-7" class="toc-link">Daily workflow</a></li>
+      <li><a href="#part-8" class="toc-link">Cheat sheet &amp; reference</a></li>
+    </ol>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="content">
+
+    <!-- =========================================================
+         INTRO
+         ========================================================= -->
+    <section class="intro" id="part-0">
+      <div class="intro-eyebrow">BIMS-Corp · QA Onboarding Guide · Windows 11</div>
+      <h1>You're 60 minutes away from your first bug.</h1>
+      <p class="lede">
+        This guide walks you (yes you, the new QA person on a Windows 11 laptop) from <em>no tools installed</em> to <em>finding a real production bug and drafting a complete Jira ticket</em>. Follow it top to bottom. Every command is copy-paste. Every command has an expected-output panel. If something doesn't match, the troubleshooting box right below it tells you what to do.
+      </p>
+      <p class="lede">
+        You will <strong>not</strong> write code. You will <strong>not</strong> modify production. Your job is to ask Claude (an AI that already knows all 8 BIMS-Corp codebases) what's broken, confirm it's real, and draft Jira tickets. That's the whole loop.
+      </p>
+
+      <div class="meta-row">
+        <div class="item"><span class="lbl">total time</span><span class="val">~60 min</span></div>
+        <div class="item"><span class="lbl">disk needed</span><span class="val">~3 GB</span></div>
+        <div class="item"><span class="lbl">reboots</span><span class="val">1</span></div>
+        <div class="item"><span class="lbl">cost / month</span><span class="val">$20 (claude.ai Pro)</span></div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         PART 0 — BEFORE YOU START
+         ========================================================= -->
+    <section class="part" id="part-0-content">
+      <div class="part-head">
+        <span class="part-num">PART 0</span>
+        <h2>Before you start</h2>
+        <span class="part-time">5 min</span>
+      </div>
+      <p class="part-intro">A 30-second sanity check so you don't get blocked partway through.</p>
+
+      <div class="step">
+        <div class="step-head"><span class="step-num">1</span><h3>Confirm you have admin rights on this Windows 11 laptop</h3></div>
+        <div class="step-body">
+          <p>You need to be able to install software and enable Windows features. If you're using a corporate-locked machine where you can't run installers as admin, stop here and ping Max — he'll coordinate with IT.</p>
+          <p>To check: right-click the Start menu. If you see <strong>"Terminal (Admin)"</strong> or <strong>"Windows PowerShell (Admin)"</strong>, you're fine.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="step-num">2</span><h3>Confirm your GitHub account has access to the BIMS-Corp org</h3></div>
+        <div class="step-body">
+          <p>Open <a href="https://github.com/bims-corp-ai" target="_blank">https://github.com/bims-corp-ai</a> in your browser. If you can see the repos listed (8 of them), you're set. If you see a 404, ping Max with your GitHub username — he'll add you before you continue.</p>
+          <div class="tip">
+            <span class="icon">i</span>
+            <div><strong>Don't have a GitHub account yet?</strong> Sign up free at <a href="https://github.com/signup" target="_blank">github.com/signup</a>. Use your work email (e.g. <code>@bimscorp.com</code>) so Max can recognize you in the access request.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="step-num">3</span><h3>Decide your Claude billing setup</h3></div>
+        <div class="step-body">
+          <p>Claude Code needs an account. Two options — pick one before you start:</p>
+          <ul>
+            <li><strong>Claude.ai Pro</strong> ($20/month per person, billed via the claude.ai website). Easiest. Sign up at <a href="https://claude.ai" target="_blank">claude.ai</a> with your work email, then come back. You'll auth via browser later.</li>
+            <li><strong>Anthropic API key</strong> (pay-per-use). Max provides one if your team prefers shared billing. You'll paste it during install.</li>
+          </ul>
+          <div class="tip">
+            <span class="icon">i</span>
+            <div><strong>Not sure which?</strong> Default to Claude.ai Pro. It's simpler, you get the full chat product too, and $20/mo is the right scale for QA usage. Max can switch you to API later if needed.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="part-done">
+        <div class="done-label">Pre-checks complete</div>
+        <div class="done-body">Admin rights ✓ · GitHub access ✓ · Billing decided ✓</div>
+        <a href="#part-1" class="next">Part 1: Install →</a>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         PART 1 — WSL2 + LINUX TOOLS
+         ========================================================= -->
+    <section class="part" id="part-1">
+      <div class="part-head">
+        <span class="part-num">PART 1</span>
+        <h2>Install WSL2 &amp; Linux tools</h2>
+        <span class="part-time">~20 min (incl. 1 reboot)</span>
+      </div>
+      <p class="part-intro">
+        WSL2 ("Windows Subsystem for Linux") is Microsoft's first-party feature that lets you run Linux inside Windows. It's free, built into Windows 11, and is the simplest way to make Windows behave the same as Max's Mac. Every command in this guide runs <em>inside Ubuntu</em>, not PowerShell.
+      </p>
+
+      <div class="step">
+        <div class="step-head"><span class="step-num">1</span><h3>Open PowerShell as Administrator</h3></div>
+        <div class="step-body">
+          <p>Right-click the Start menu (bottom-left). Click <strong>Terminal (Admin)</strong> or <strong>Windows PowerShell (Admin)</strong>. A blue window opens. If Windows asks "Do you want to allow this app to make changes?", click <strong>Yes</strong>.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="step-num">2</span><h3>Install WSL2 with one command</h3></div>
+        <div class="step-body">
+          <p>Paste this into the PowerShell window and press Enter:</p>
+          <div class="code runme">
+            <div class="code-head">
+              <span>RUN IN POWERSHELL (ADMIN)</span>
+              <button class="copy-btn" data-copy="wsl --install">⎘ COPY</button>
+            </div>
+            <pre><span class="prompt">PS C:\&gt;</span> wsl --install</pre>
+          </div>
+          <div class="expected">
+            <span class="icon">✓</span>
+            <div class="body"><strong>You should see:</strong> a list of components downloading (Virtual Machine Platform, Ubuntu, etc.) and a message <code>The requested operation is successful. Changes will not be effective until the system is rebooted.</code></div>
+          </div>
+          <div class="stuck">
+            <button class="stuck-q">If it says "WSL is already installed"<span class="chev">›</span></button>
+            <div class="stuck-a">
+              <p>Run this instead to install Ubuntu specifically:</p>
+              <div class="code"><div class="code-head"><span>RUN IN POWERSHELL (ADMIN)</span><button class="copy-btn" data-copy="wsl --install -d Ubuntu&#10;wsl --set-default Ubuntu">⎘ COPY</button></div><pre>wsl --install -d Ubuntu
+wsl --set-default Ubuntu</pre></div>
+            </div>
+          </div>
+          <div class="stuck">
+            <button class="stuck-q">If it says "Virtualization not enabled" or similar BIOS error<span class="chev">›</span></button>
+            <div class="stuck-a">
+              <p>Your CPU's virtualization extension is turned off in BIOS. Fix:</p>
+              <ol>
+                <li>Reboot. As the laptop powers on, press <span class="kbd">F2</span> or <span class="kbd">Del</span> repeatedly to enter BIOS (the key depends on your laptop brand — Dell is usually F2, Lenovo is F1, HP is F10).</li>
+                <li>Find a setting called <strong>"Intel VT-x"</strong>, <strong>"AMD-V"</strong>, or <strong>"Virtualization Technology"</strong>. Enable it.</li>
+                <li>Save (usually F10) and exit. Windows boots normally.</li>
+                <li>Re-open PowerShell as Admin, re-run <code>wsl --install</code>.</li>
+              </ol>
+              <p>If you don't feel comfortable doing this, ping your IT contact or Max.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="step-num">3</span><h3>Reboot your laptop</h3></div>
+        <div class="step-body">
+          <p>Save anything you have open in other apps. Restart Windows (Start menu → Power → Restart).</p>
+          <div class="expected">
+            <span class="icon">✓</span>
+            <div class="body"><strong>After reboot:</strong> Ubuntu opens automatically in a new window and shows <code>Installing, this may take a few minutes...</code>. Wait for it to finish.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="step-num">4</span><h3>Create your Ubuntu username + password</h3></div>
+        <div class="step-body">
+          <p>When Ubuntu finishes installing, it asks for a UNIX username and password. <strong>This is a separate identity from your Windows login</strong> — it lives only inside Ubuntu.</p>
+          <ul>
+            <li><strong>Username:</strong> pick something short and lowercase, e.g. <code>qa</code> or your first name lowercase.</li>
+            <li><strong>Password:</strong> pick anything memorable. You don't see characters as you type — that's normal in Linux. Type it twice carefully.</li>
+            <li>Write both down somewhere. You'll need the password when you run <code>sudo</code> commands.</li>
+          </ul>
+          <div class="expected">
+            <span class="icon">✓</span>
+            <div class="body"><strong>You should see</strong> a prompt that looks like <code>qa@laptop-name:~$</code>. That dollar sign means you're at the Ubuntu shell. You're now inside Linux.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="step-num">5</span><h3>Install the prerequisite Linux packages</h3></div>
+        <div class="step-body">
+          <p>Inside the Ubuntu window, paste this <em>single</em> line and press Enter. It installs everything the BIMS workbench needs (git, jq, sqlite, python, etc.). Type your Ubuntu password when prompted.</p>
+          <div class="code runme">
+            <div class="code-head">
+              <span>RUN IN UBUNTU</span>
+              <button class="copy-btn" data-copy="sudo apt update && sudo apt install -y git curl unzip jq sqlite3 python3 python3-pip build-essential">⎘ COPY</button>
+            </div>
+            <pre><span class="prompt">$</span> sudo apt update &amp;&amp; sudo apt install -y \
+   git curl unzip jq sqlite3 python3 python3-pip build-essential</pre>
+          </div>
+          <div class="expected">
+            <span class="icon">✓</span>
+            <div class="body"><strong>You should see</strong> a bunch of <code>Setting up &lt;package&gt;...</code> lines, ending with the <code>$</code> prompt coming back. Takes 2-5 minutes depending on your connection.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="step-num">6</span><h3>Install uv (Python package manager)</h3></div>
+        <div class="step-body">
+          <p>The BIMS workbench uses <code>uv</code> (a modern Python tool). Two commands:</p>
+          <div class="code runme">
+            <div class="code-head">
+              <span>RUN IN UBUNTU</span>
+              <button class="copy-btn" data-copy="curl -LsSf https://astral.sh/uv/install.sh | sh&#10;source $HOME/.local/bin/env">⎘ COPY</button>
+            </div>
+            <pre><span class="prompt">$</span> curl -LsSf https://astral.sh/uv/install.sh | sh
+<span class="prompt">$</span> source $HOME/.local/bin/env</pre>
+          </div>
+          <div class="expected">
+            <span class="icon">✓</span>
+            <div class="body"><strong>Verify with</strong> <code>uv --version</code> — should print something like <code>uv 0.x.x</code>.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="step-num">7</span><h3>Install the GitHub CLI</h3></div>
+        <div class="step-body">
+          <p>This lets you authenticate against GitHub from the command line. Paste this whole block:</p>
+          <div class="code runme">
+            <div class="code-head">
+              <span>RUN IN UBUNTU</span>
+              <button class="copy-btn" data-copy="(type -p wget >/dev/null || sudo apt-get install wget -y) && sudo mkdir -p -m 755 /etc/apt/keyrings && wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null && sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg && echo &quot;deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main&quot; | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null && sudo apt update && sudo apt install gh -y">⎘ COPY</button>
+            </div>
+            <pre><span class="prompt">$</span> (type -p wget &gt;/dev/null || sudo apt-get install wget -y) \
+   &amp;&amp; sudo mkdir -p -m 755 /etc/apt/keyrings \
+   &amp;&amp; wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg \
+      | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg &gt; /dev/null \
+   &amp;&amp; sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
+   &amp;&amp; echo &quot;deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main&quot; \
+      | sudo tee /etc/apt/sources.list.d/github-cli.list &gt; /dev/null \
+   &amp;&amp; sudo apt update &amp;&amp; sudo apt install gh -y</pre>
+          </div>
+          <div class="expected">
+            <span class="icon">✓</span>
+            <div class="body"><strong>Verify with</strong> <code>gh --version</code> — should print <code>gh version 2.x.x</code>.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="step-num">8</span><h3>Log into GitHub from the command line</h3></div>
+        <div class="step-body">
+          <p>This connects your Ubuntu shell to your GitHub account so you can clone the private BIMS-Corp repos.</p>
+          <div class="code runme">
+            <div class="code-head"><span>RUN IN UBUNTU</span><button class="copy-btn" data-copy="gh auth login">⎘ COPY</button></div>
+            <pre><span class="prompt">$</span> gh auth login</pre>
+          </div>
+          <p>You'll be asked a series of questions. Answer them like this:</p>
+          <ul>
+            <li><strong>What account do you want to log into?</strong> → <code>GitHub.com</code></li>
+            <li><strong>What is your preferred protocol?</strong> → <code>HTTPS</code></li>
+            <li><strong>Authenticate Git with your GitHub credentials?</strong> → <code>Y</code> (Yes)</li>
+            <li><strong>How would you like to authenticate?</strong> → <code>Login with a web browser</code></li>
+          </ul>
+          <p>It then prints a one-time code (e.g. <code>ABCD-1234</code>) and a URL. <strong>Copy the code</strong>, press Enter to open the URL in your browser, then <strong>paste the code</strong> into the GitHub prompt. Approve the login.</p>
+          <div class="expected">
+            <span class="icon">✓</span>
+            <div class="body"><strong>Back in the terminal you should see</strong> <code>✓ Logged in as &lt;your-github-username&gt;</code>.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="part-done">
+        <div class="done-label">Part 1 complete</div>
+        <div class="done-body">WSL2 + Ubuntu + apt packages + uv + gh + GitHub auth — your Windows is now a Linux dev box.</div>
+        <a href="#part-2" class="next">Part 2: Claude Code →</a>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         PART 2 — INSTALL CLAUDE CODE
+         ========================================================= -->
+    <section class="part" id="part-2">
+      <div class="part-head">
+        <span class="part-num">PART 2</span>
+        <h2>Install Claude Code</h2>
+        <span class="part-time">~5 min</span>
+      </div>
+      <p class="part-intro">
+        Claude Code is Anthropic's CLI tool — it's the actual AI you'll be talking to. It's distributed as an npm package, so we install Node.js first.
+      </p>
+
+      <div class="step">
+        <div class="step-head"><span class="step-num">1</span><h3>Install Node.js 20</h3></div>
+        <div class="step-body">
+          <p>Run inside Ubuntu:</p>
+          <div class="code runme">
+            <div class="code-head"><span>RUN IN UBUNTU</span><button class="copy-btn" data-copy="curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -&#10;sudo apt install -y nodejs">⎘ COPY</button></div>
+            <pre><span class="prompt">$</span> curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+<span class="prompt">$</span> sudo apt install -y nodejs</pre>
+          </div>
+          <div class="expected">
+            <span class="icon">✓</span>
+            <div class="body"><strong>Verify with</strong> <code>node --version</code> — should print <code>v20.x.x</code>.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="step-num">2</span><h3>Install Claude Code globally</h3></div>
+        <div class="step-body">
+          <div class="code runme">
+            <div class="code-head"><span>RUN IN UBUNTU</span><button class="copy-btn" data-copy="npm install -g @anthropic-ai/claude-code">⎘ COPY</button></div>
+            <pre><span class="prompt">$</span> npm install -g @anthropic-ai/claude-code</pre>
+          </div>
+          <div class="expected">
+            <span class="icon">✓</span>
+            <div class="body"><strong>Verify with</strong> <code>claude --version</code> — should print <code>Claude Code 1.x.x</code>.</div>
+          </div>
+          <div class="stuck">
+            <button class="stuck-q">If <code>claude --version</code> says "command not found"<span class="chev">›</span></button>
+            <div class="stuck-a">
+              <p>Reload your shell profile and try again:</p>
+              <div class="code"><div class="code-head"><span>RUN IN UBUNTU</span><button class="copy-btn" data-copy="source ~/.bashrc&#10;claude --version">⎘ COPY</button></div><pre><span class="prompt">$</span> source ~/.bashrc
+<span class="prompt">$</span> claude --version</pre></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="step-num">3</span><h3>Log into Claude</h3></div>
+        <div class="step-body">
+          <p>Just type <code>claude</code> and press Enter:</p>
+          <div class="code runme">
+            <div class="code-head"><span>RUN IN UBUNTU</span><button class="copy-btn" data-copy="claude">⎘ COPY</button></div>
+            <pre><span class="prompt">$</span> claude</pre>
+          </div>
+          <p>First-run wizard appears. Pick your auth method:</p>
+          <ul>
+            <li><strong>Claude.ai Pro:</strong> select "Anthropic Console" or "Claude Pro" → opens your browser for OAuth → approve. Returns to terminal automatically.</li>
+            <li><strong>API key (from Max):</strong> select "API key" → paste it when prompted.</li>
+          </ul>
+          <div class="expected">
+            <span class="icon">✓</span>
+            <div class="body"><strong>You should see</strong> the Claude prompt — a colored box at the bottom of the terminal where you type your messages. Type <code>/exit</code> for now; we'll come back.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="part-done">
+        <div class="done-label">Part 2 complete</div>
+        <div class="done-body">Claude Code installed, logged in, ready to use.</div>
+        <a href="#part-3" class="next">Part 3: Clone repos →</a>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         PART 3 — CLONE
+         ========================================================= -->
+    <section class="part" id="part-3">
+      <div class="part-head">
+        <span class="part-num">PART 3</span>
+        <h2>Clone the BIMS-Corp repos</h2>
+        <span class="part-time">~15 min</span>
+      </div>
+      <p class="part-intro">
+        Two folders, side by side. The <code>bims-corp-ops</code> workbench is where the AI lives — skills, knowledge graphs, finding database, ticket drafts. The <code>BIMS-Corp-LEGACY/</code> folder holds the 8 production codebases that you'll be QAing. You read from legacy; you never modify it.
+      </p>
+
+      <div class="step">
+        <div class="step-head"><span class="step-num">1</span><h3>Create your working directory</h3></div>
+        <div class="step-body">
+          <p>We'll use <code>~/Developer</code> as the parent folder. <code>~</code> means your Ubuntu home folder.</p>
+          <div class="code runme">
+            <div class="code-head"><span>RUN IN UBUNTU</span><button class="copy-btn" data-copy="mkdir -p ~/Developer&#10;cd ~/Developer">⎘ COPY</button></div>
+            <pre><span class="prompt">$</span> mkdir -p ~/Developer
+<span class="prompt">$</span> cd ~/Developer</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="step-num">2</span><h3>Clone the workbench</h3></div>
+        <div class="step-body">
+          <div class="code runme">
+            <div class="code-head"><span>RUN IN UBUNTU</span><button class="copy-btn" data-copy="git clone https://github.com/bims-corp-ai/bims-corp-ops.git&#10;cd bims-corp-ops">⎘ COPY</button></div>
+            <pre><span class="prompt">$</span> git clone https://github.com/bims-corp-ai/bims-corp-ops.git
+<span class="prompt">$</span> cd bims-corp-ops</pre>
+          </div>
+          <div class="expected">
+            <span class="icon">✓</span>
+            <div class="body"><strong>You should see</strong> <code>Cloning into 'bims-corp-ops'... done.</code> The workbench is ~250 MB.</div>
+          </div>
+          <div class="stuck">
+            <button class="stuck-q">If you see "Permission denied" or "Repository not found"<span class="chev">›</span></button>
+            <div class="stuck-a">
+              <p>Your GitHub account isn't in the <code>bims-corp-ai</code> org with access to this repo. Confirm by visiting <a href="https://github.com/bims-corp-ai/bims-corp-ops" target="_blank">https://github.com/bims-corp-ai/bims-corp-ops</a>. If you see 404, ping Max with your GitHub username; he'll add you. Then re-run the clone command.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="step-num">3</span><h3>Clone all 8 legacy repos in one shot</h3></div>
+        <div class="step-body">
+          <p>The workbench has a helper script that clones every BIMS-Corp legacy repo to <code>~/Developer/BIMS-Corp-LEGACY/</code> in parallel:</p>
+          <div class="code runme">
+            <div class="code-head"><span>RUN IN UBUNTU (FROM bims-corp-ops/)</span><button class="copy-btn" data-copy="mkdir -p ~/Developer/BIMS-Corp-LEGACY&#10;./bin/clone-legacy">⎘ COPY</button></div>
+            <pre><span class="prompt">$</span> mkdir -p ~/Developer/BIMS-Corp-LEGACY
+<span class="prompt">$</span> ./bin/clone-legacy</pre>
+          </div>
+          <div class="expected">
+            <span class="icon">✓</span>
+            <div class="body"><strong>You should see</strong> 8 repos cloning (LinkServicePro-Web, LinkInspectPro-Web, PropertyOrganizer-Web, SuperAdmin-Web, and the 4 mobile ones). Takes 10-15 minutes total — ~1.5 GB of code.</div>
+          </div>
+          <div class="stuck">
+            <button class="stuck-q">If clone-legacy fails on one or more repos<span class="chev">›</span></button>
+            <div class="stuck-a">
+              <p>Same fix as step 2 — your GitHub account doesn't have access to that specific repo. Note which repos failed, send the list to Max with your GitHub username, wait for confirmation, then re-run <code>./bin/clone-legacy</code> (it skips already-cloned repos, only retries missing ones).</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="part-done">
+        <div class="done-label">Part 3 complete</div>
+        <div class="done-body">Workbench + 8 legacy repos cloned to <code>~/Developer/</code>.</div>
+        <a href="#part-4" class="next">Part 4: Bootstrap →</a>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         PART 4 — BOOTSTRAP
+         ========================================================= -->
+    <section class="part" id="part-4">
+      <div class="part-head">
+        <span class="part-num">PART 4</span>
+        <h2>Bootstrap the workbench</h2>
+        <span class="part-time">~10 min</span>
+      </div>
+      <p class="part-intro">
+        One config file to edit, then one command to wire everything together (Python deps, database, MCP servers, knowledge graphs).
+      </p>
+
+      <div class="step">
+        <div class="step-head"><span class="step-num">1</span><h3>Copy the example config to your local config</h3></div>
+        <div class="step-body">
+          <div class="code runme">
+            <div class="code-head"><span>RUN IN UBUNTU (FROM bims-corp-ops/)</span><button class="copy-btn" data-copy="cp etc/local-config.example.json state/local-config.json">⎘ COPY</button></div>
+            <pre><span class="prompt">$</span> cp etc/local-config.example.json state/local-config.json</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="step-num">2</span><h3>Find your Ubuntu username</h3></div>
+        <div class="step-body">
+          <p>You'll need this for the next step:</p>
+          <div class="code runme">
+            <div class="code-head"><span>RUN IN UBUNTU</span><button class="copy-btn" data-copy="whoami">⎘ COPY</button></div>
+            <pre><span class="prompt">$</span> whoami</pre>
+          </div>
+          <div class="expected">
+            <span class="icon">✓</span>
+            <div class="body"><strong>It prints your Ubuntu username</strong> — e.g. <code>qa</code>. Write it down; we use it as <code>&lt;you&gt;</code> in the next step.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="step-num">3</span><h3>Edit the config file</h3></div>
+        <div class="step-body">
+          <p>Open it in the <code>nano</code> editor (simplest CLI editor on Linux):</p>
+          <div class="code runme">
+            <div class="code-head"><span>RUN IN UBUNTU</span><button class="copy-btn" data-copy="nano state/local-config.json">⎘ COPY</button></div>
+            <pre><span class="prompt">$</span> nano state/local-config.json</pre>
+          </div>
+          <p>Fill in these fields (replace <code>&lt;you&gt;</code> with the Ubuntu username from step 2, and your name where indicated):</p>
+          <div class="code">
+            <div class="code-head"><span>state/local-config.json</span><span class="where">edit these fields</span></div><pre><span class="comment"># required:</span>
+"machine_id":       "&lt;your-firstname&gt;-qa-laptop",
+"operator":         "&lt;your-email@bimscorp.com&gt;",
+"BIMS_OPS_ROOT":    "/home/&lt;you&gt;/Developer/bims-corp-ops",
+"BIMS_LEGACY_ROOT": "/home/&lt;you&gt;/Developer/BIMS-Corp-LEGACY",
+"BIMS_STORE_URL":   "file:///home/&lt;you&gt;/Developer/bims-corp-ops/state/bims-store.db",
+"mode":             "secondary",
+"sync_enabled":     false
+
+<span class="comment"># delete these two lines entirely (you're not using the shared Turso store yet):</span>
+"BIMS_STORE_URL_BASE":  "..."
+"BIMS_STORE_TOKEN_FILE": "..."</pre>
+          </div>
+          <p>Save and exit nano: press <span class="kbd">Ctrl</span>+<span class="kbd">O</span>, then <span class="kbd">Enter</span> to confirm filename, then <span class="kbd">Ctrl</span>+<span class="kbd">X</span> to exit.</p>
+          <div class="tip">
+            <span class="icon">i</span>
+            <div><strong>Why <code>file://</code> instead of shared Turso?</strong> Day 1, each person gets their own local findings database. Once you're comfortable with the flow, Max will migrate the team to shared Turso so everyone sees each other's findings in real time.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="step-num">4</span><h3>Run the bootstrap script</h3></div>
+        <div class="step-body">
+          <p>This single command runs 11 numbered setup steps. Don't worry about what each one does — just watch for FAILs that aren't expected.</p>
+          <div class="code runme">
+            <div class="code-head"><span>RUN IN UBUNTU (FROM bims-corp-ops/)</span><button class="copy-btn" data-copy="./bin/setup --mode secondary --no-launchd --skip-indexes">⎘ COPY</button></div>
+            <pre><span class="prompt">$</span> ./bin/setup --mode secondary --no-launchd --skip-indexes</pre>
+          </div>
+          <div class="expected">
+            <span class="icon">✓</span>
+            <div class="body"><strong>You should see 11 steps, each printing PASS:</strong></div>
+          </div>
+          <div class="code">
+            <div class="code-head"><span>expected output</span></div><pre><span class="ok">  1/11</span> verify tooling .................. OK
+<span class="ok">  2/11</span> uv sync ......................... OK
+<span class="ok">  3/11</span> state/local-config.json ......... OK
+<span class="ok">  4/11</span> clone legacy repos .............. OK
+<span class="ok">  5/11</span> render config files ............. OK
+<span class="ok">  6/11</span> migrate db ...................... OK
+<span class="ok">  7/11</span> graphify indexes ................ SKIPPED
+<span class="ok">  8/11</span> launchd ......................... SKIPPED
+<span class="ok">  9/11</span> MCP smoke test .................. OK
+<span class="ok"> 10/11</span> workbench-tier bootstrap ........ OK
+<span class="ok"> 11/11</span> health check (./bin/doctor) ..... OK
+
+<span class="ok">Summary: 68 pass / 1 warn / 7 fail</span>
+<span class="warn">(the 7 FAILs are EXPECTED in Phase 0 — they're
+ placeholders for engineering work that doesn't
+ affect your QA workflow)</span></pre>
+          </div>
+          <div class="stuck">
+            <button class="stuck-q">If any of the 11 numbered steps FAIL<span class="chev">›</span></button>
+            <div class="stuck-a">
+              <p>Don't try to fix it yourself the first time. Screenshot or copy the full output (especially the FAIL lines) and Slack Max. Specifically he needs:</p>
+              <ol>
+                <li>Which step number failed (e.g. "step 6 / migrate db")</li>
+                <li>The full error text below that step</li>
+                <li>Output of <code>cat state/local-config.json</code> (to verify your config is correct — Max will sanitize before reviewing)</li>
+              </ol>
+            </div>
+          </div>
+          <div class="stuck">
+            <button class="stuck-q">If the summary shows MORE than 7 FAILs<span class="chev">›</span></button>
+            <div class="stuck-a">
+              <p>The 7 expected FAILs are 4 <code>no_driver_resolved</code> + 3 <code>harness_unbootstrapped</code> — placeholders for engineering work. If <code>bin/doctor</code> shows additional FAILs you don't recognize, run:</p>
+              <div class="code"><div class="code-head"><span>RUN IN UBUNTU</span><button class="copy-btn" data-copy="./bin/doctor 2>&amp;1 | grep FAIL">⎘ COPY</button></div><pre><span class="prompt">$</span> ./bin/doctor 2&gt;&amp;1 | grep FAIL</pre></div>
+              <p>Paste the full output to Max.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="part-done">
+        <div class="done-label">Part 4 complete</div>
+        <div class="done-body">Workbench is bootstrapped. The AI's knowledge graphs, finding DB, and MCP servers are all wired up.</div>
+        <a href="#part-5" class="next">Part 5: Talk →</a>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         PART 5 — FIRST CONVERSATION
+         ========================================================= -->
+    <section class="part" id="part-5">
+      <div class="part-head">
+        <span class="part-num">PART 5</span>
+        <h2>Your first conversation with Claude</h2>
+        <span class="part-time">5 min</span>
+      </div>
+      <p class="part-intro">
+        Now we verify it actually works. You'll ask Claude a real question about LinkServicePro-Web and watch it answer with file:line citations.
+      </p>
+
+      <div class="step">
+        <div class="step-head"><span class="step-num">1</span><h3>Open Claude from the workbench directory</h3></div>
+        <div class="step-body">
+          <p>The working directory matters — Claude needs to be inside <code>bims-corp-ops</code> so it picks up the skills and MCP config.</p>
+          <div class="code runme">
+            <div class="code-head"><span>RUN IN UBUNTU</span><button class="copy-btn" data-copy="cd ~/Developer/bims-corp-ops&#10;claude">⎘ COPY</button></div>
+            <pre><span class="prompt">$</span> cd ~/Developer/bims-corp-ops
+<span class="prompt">$</span> claude</pre>
+          </div>
+          <div class="expected">
+            <span class="icon">✓</span>
+            <div class="body">Claude takes a few seconds to load its skills, then shows the input prompt at the bottom of the terminal. You'll see a list of available skills like <code>/bims-ask</code>, <code>/bims-diagnose</code>, <code>/bims-ticket</code>.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="step-num">2</span><h3>Start with <code>/bims-orient</code></h3></div>
+        <div class="step-body">
+          <p>This is the "where are we" command. Always run it first in any new Claude session. It prints today's project state in ~3 seconds.</p>
+          <p>Type this and press Enter:</p>
+          <div class="code runme">
+            <div class="code-head"><span>TYPE INSIDE CLAUDE</span><button class="copy-btn" data-copy="/bims-orient">⎘ COPY</button></div>
+            <pre><span class="prompt">&gt;</span> /bims-orient</pre>
+          </div>
+          <div class="expected">
+            <span class="icon">✓</span>
+            <div class="body">Claude prints a summary: open findings count by severity (P0/P1/P2/P3), recent decisions, last legacy-repo sync, and a list of "traps" (known constraints to be aware of). Read it briefly. This is your daily compass.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="step-num">3</span><h3>Ask a real codebase question</h3></div>
+        <div class="step-body">
+          <p>Now we'll do something real. Type:</p>
+          <div class="code runme">
+            <div class="code-head"><span>TYPE INSIDE CLAUDE</span><button class="copy-btn" data-copy="/bims-ask how does invoice payment work in LinkServicePro-Web?">⎘ COPY</button></div>
+            <pre><span class="prompt">&gt;</span> /bims-ask how does invoice payment work in LinkServicePro-Web?</pre>
+          </div>
+          <p>Claude will: query the LSP-Web knowledge graph, identify the relevant files, read the precise line ranges, and answer you with citations. Every claim ends with <code>file:line</code>.</p>
+          <div class="expected">
+            <span class="icon">✓</span>
+            <div class="body">Something like this:</div>
+          </div>
+          <div class="transcript">
+            <div class="transcript-head"><div class="dots"><span></span><span></span><span></span></div><span class="label">claude · &gt; /bims-ask</span></div>
+            <div class="transcript-body">
+              <div class="msg msg-ai">
+                <div class="msg-from">CLAUDE</div>
+                <div class="msg-text">
+                  Invoice payment in LinkServicePro-Web works via an emailed link:
+                  <br><br>
+                  1. <code>sendInvoiceToClient()</code> at <code>app/Repositories/InvoiceRepository.php:1442</code> builds the email body for an invoice.
+                  <br><br>
+                  2. At <code>InvoiceRepository.php:1495</code>, the payment URL is built: <code>route('invoice_payment', ['invoice' =&gt; encrypt_decrypt($invoiceData-&gt;id)])</code>.
+                  <br><br>
+                  3. The encrypted invoice_id becomes the URL token the customer clicks. The token is decrypted at the payment controller to look up the invoice.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tip">
+            <span class="icon">!</span>
+            <div><strong>The cite-or-it-doesn't-count rule.</strong> Every claim Claude makes about code should end with <code>file:line</code>. If it doesn't, push back: "cite that please." If Claude can't, the claim is invented — don't trust it. This is your single most important habit.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="part-done">
+        <div class="done-label">Part 5 complete</div>
+        <div class="done-body">Claude is connected to the BIMS-Corp codebases and answering with citations. You're ready to hunt.</div>
+        <a href="#part-6" class="next">Part 6: Hunt a bug →</a>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         PART 6 — HUNT FIRST BUG
+         ========================================================= -->
+    <section class="part" id="part-6">
+      <div class="part-head">
+        <span class="part-num">PART 6</span>
+        <h2>Hunt your first bug, end-to-end</h2>
+        <span class="part-time">~15 min</span>
+      </div>
+      <p class="part-intro">
+        Five commands. Real bug. Jira-ready ticket at the end. We'll walk through a real example you can copy beat for beat the first time, then explain how to apply it to bugs you discover yourself.
+      </p>
+
+      <div class="step">
+        <div class="step-head"><span class="step-num">1</span><h3>Investigate a suspicion</h3></div>
+        <div class="step-body">
+          <p>Real bug-hunting starts with a hunch — a customer complaint, a security worry, a "this code feels old." You don't need to know where in the code to look. Tell Claude the symptom; it finds the location.</p>
+          <p>For this walkthrough, type:</p>
+          <div class="code runme">
+            <div class="code-head"><span>TYPE INSIDE CLAUDE</span><button class="copy-btn" data-copy="/bims-ask the QA team got a customer complaint that they could see someone else's invoice by tweaking the URL. Is there anything in LinkServicePro-Web's invoice flow that would let that happen?">⎘ COPY</button></div>
+            <pre><span class="prompt">&gt;</span> /bims-ask the QA team got a customer complaint that they
+   could see someone else's invoice by tweaking the URL. Is
+   there anything in LinkServicePro-Web's invoice flow that
+   would let that happen?</pre>
+          </div>
+          <div class="expected">
+            <span class="icon">✓</span>
+            <div class="body">Claude traces the invoice URL → finds <code>encrypt_decrypt()</code> at <code>GeneralHelper.php:370-386</code> → reads the implementation → identifies hardcoded AES key + static IV → explains the attack: anyone with repo access can forge any token. All with file:line citations.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="step-num">2</span><h3>Record the finding</h3></div>
+        <div class="step-body">
+          <p>If Claude found something real, just tell it:</p>
+          <div class="code runme">
+            <div class="code-head"><span>TYPE INSIDE CLAUDE</span><button class="copy-btn" data-copy="record this as a finding">⎘ COPY</button></div>
+            <pre><span class="prompt">&gt;</span> record this as a finding</pre>
+          </div>
+          <div class="expected">
+            <span class="icon">✓</span>
+            <div class="body">Claude calls <code>mcp__bims-store__record_finding</code> with the right severity rubric and prints a finding ID like <code>BIMS-F-2026-05-27-ddca6b27</code>. Severity is auto-computed from four facts — this one comes out <strong>P0 / CRITICAL</strong> because it lets attackers forge tokens at production scale with zero defenses.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="step-num">3</span><h3>Get a structured diagnosis</h3></div>
+        <div class="step-body">
+          <p>For P0 and P1 findings, run <code>/bims-diagnose</code> — it produces 3 competing hypotheses (with falsifiability criteria) plus a two-track fix (minimum-viable + ideal). Substitute the finding ID you just got:</p>
+          <div class="code runme">
+            <div class="code-head"><span>TYPE INSIDE CLAUDE</span><button class="copy-btn" data-copy="/bims-diagnose BIMS-F-2026-05-27-ddca6b27">⎘ COPY (replace the ID)</button></div>
+            <pre><span class="prompt">&gt;</span> /bims-diagnose &lt;your-finding-id&gt;</pre>
+          </div>
+          <div class="expected">
+            <span class="icon">✓</span>
+            <div class="body">Claude writes <code>diagnoses/&lt;finding-id&gt;/diagnosis.json</code> with: reproduction, suspect file:line range, contrast (LONGSTANDING / REGRESSION / INTRODUCED_HERE with the commit + author), 3 hypotheses ranked by likelihood, and Track A (minimum-viable fix with diff) + Track B (ideal fix).</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="step-num">4</span><h3>Draft a Jira ticket</h3></div>
+        <div class="step-body">
+          <div class="code runme">
+            <div class="code-head"><span>TYPE INSIDE CLAUDE</span><button class="copy-btn" data-copy="/bims-ticket BIMS-F-2026-05-27-ddca6b27">⎘ COPY (replace the ID)</button></div>
+            <pre><span class="prompt">&gt;</span> /bims-ticket &lt;your-finding-id&gt;</pre>
+          </div>
+          <div class="expected">
+            <span class="icon">✓</span>
+            <div class="body">Claude writes <code>tickets/draft/&lt;finding-id&gt;.md</code> — a complete Jira-shaped ticket with: title, severity, repo, labels, "Why this matters" (plain-English impact), current/expected behavior, root cause, two authorized tracks (A and B), and a full <strong>Implementation Note</strong> (files to touch, patterns to follow, patterns to avoid, test to write, definition of done, complexity tier).</div>
+          </div>
+          <p>Open the draft to review it. In a new Ubuntu window (right-click the Ubuntu icon → "New window"):</p>
+          <div class="code runme">
+            <div class="code-head"><span>RUN IN UBUNTU (second window)</span><button class="copy-btn" data-copy="cd ~/Developer/bims-corp-ops&#10;less tickets/draft/*.md">⎘ COPY</button></div>
+            <pre><span class="prompt">$</span> cd ~/Developer/bims-corp-ops
+<span class="prompt">$</span> less tickets/draft/*.md
+<span class="comment"># press q to exit less</span></pre>
+          </div>
+          <div class="tip">
+            <span class="icon">i</span>
+            <div><strong>If the draft is wrong</strong> — Claude misunderstood the impact, suggested the wrong files, etc. — just tell Claude in the chat: "the Implementation Note has the wrong entry point — it's StripeController.php not InvoiceController.php. update the draft." Claude rewrites the file. Iterate until you're happy.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="step-num">5</span><h3>Promote to Jira</h3></div>
+        <div class="step-body">
+          <div class="code runme">
+            <div class="code-head"><span>TYPE INSIDE CLAUDE</span><button class="copy-btn" data-copy="/bims-promote BIMS-F-2026-05-27-ddca6b27">⎘ COPY (replace the ID)</button></div>
+            <pre><span class="prompt">&gt;</span> /bims-promote &lt;your-finding-id&gt;</pre>
+          </div>
+          <p>Right now (until the Jira API token is wired), Claude prints a copy-paste block:</p>
+          <div class="code">
+            <div class="code-head"><span>expected output</span></div><pre>==== COPY THIS INTO JIRA ====
+Project: BIMS
+Issue type: Bug
+Summary: [Security/Crypto] encrypt_decrypt() helper uses hardcoded AES key...
+Labels: ai-drafted, security, crypto, complexity-M
+
+Description:
+---
+&lt;full ticket body&gt;
+---</pre>
+          </div>
+          <p>Now: open Jira in your browser, click <strong>Create Issue</strong>, paste the Summary into the summary field, paste the Description into the description field, add the labels exactly as listed, and submit. Copy the resulting BIMS-NNNN issue ID.</p>
+          <p>Back in Claude, record the Jira ID:</p>
+          <div class="code">
+            <div class="code-head"><span>TYPE INSIDE CLAUDE</span></div><pre><span class="prompt">&gt;</span> the jira id for that ticket is BIMS-5402</pre>
+          </div>
+          <div class="expected">
+            <span class="icon">✓</span>
+            <div class="body">Claude updates the finding to mark it as <code>promoted</code> with the Jira ID attached, so the audit trail is complete.</div>
+          </div>
+          <div class="tip">
+            <span class="icon">i</span>
+            <div><strong>Once the Jira API is wired</strong> (Max is working on it), <code>/bims-promote</code> will create the issue automatically — no manual paste. You won't have to change your workflow when that lands; it just gets faster.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="part-done">
+        <div class="done-label">Part 6 complete</div>
+        <div class="done-body">You ran the full bug-hunt loop end-to-end. Future bugs follow the exact same 5 commands.</div>
+        <a href="#part-7" class="next">Part 7: Daily workflow →</a>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         PART 7 — DAILY WORKFLOW
+         ========================================================= -->
+    <section class="part" id="part-7">
+      <div class="part-head">
+        <span class="part-num">PART 7</span>
+        <h2>Your daily workflow</h2>
+        <span class="part-time">reference</span>
+      </div>
+      <p class="part-intro">
+        How a normal QA day fits together. Don't memorize — just keep this guide bookmarked. The same 5 commands cover 95% of what you'll do.
+      </p>
+
+      <div class="step">
+        <div class="step-head"><span class="step-num">1</span><h3>Start of day (3 commands)</h3></div>
+        <div class="step-body">
+          <div class="code">
+            <div class="code-head"><span>EVERY MORNING</span></div><pre><span class="prompt">$</span> cd ~/Developer/bims-corp-ops
+<span class="prompt">$</span> git pull origin main      <span class="comment"># pulls latest skills + graphs from Max</span>
+<span class="prompt">$</span> claude                    <span class="comment"># opens Claude</span>
+
+<span class="prompt">&gt;</span> /bims-orient              <span class="comment"># prints today's project state</span></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="step-num">2</span><h3>Throughout the day (per bug)</h3></div>
+        <div class="step-body">
+          <p>Each bug = the same 5 commands from Part 6:</p>
+          <ol>
+            <li><code>/bims-ask &lt;the question or area you're investigating&gt;</code></li>
+            <li>If real: <code>record this as a finding</code></li>
+            <li>For P0 / P1: <code>/bims-diagnose &lt;finding-id&gt;</code></li>
+            <li><code>/bims-ticket &lt;finding-id&gt;</code></li>
+            <li><code>/bims-promote &lt;finding-id&gt;</code> → paste into Jira → tell Claude the BIMS-NNNN</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="step-num">3</span><h3>Mid-day check-in</h3></div>
+        <div class="step-body">
+          <p>Talk to Claude in plain English. Examples:</p>
+          <div class="code">
+            <div class="code-head"><span>USEFUL QUERIES</span></div><pre><span class="prompt">&gt;</span> show me my findings from today
+<span class="prompt">&gt;</span> which P0 and P1 findings are still open across all repos?
+<span class="prompt">&gt;</span> what bugs has TatvaSoft closed in the last 7 days?
+<span class="prompt">&gt;</span> remind me where I left off yesterday</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="step-num">4</span><h3>End of day — share your draft tickets with Max</h3></div>
+        <div class="step-body">
+          <p>While each person has a local findings database (day 1), Max can't see your draft tickets unless you push them. Run this at the end of each working day:</p>
+          <div class="code runme">
+            <div class="code-head"><span>RUN IN UBUNTU</span><button class="copy-btn" data-copy="cd ~/Developer/bims-corp-ops&#10;git checkout -b qa/$(date +%Y%m%d)-&lt;yourname&gt;-tickets&#10;git add tickets/draft/&#10;git commit -m &quot;QA tickets drafted $(date +%Y-%m-%d)&quot;&#10;git push -u origin qa/$(date +%Y%m%d)-&lt;yourname&gt;-tickets&#10;gh pr create --base main --title &quot;QA tickets $(date +%Y-%m-%d)&quot;">⎘ COPY (replace &lt;yourname&gt;)</button></div>
+            <pre><span class="prompt">$</span> cd ~/Developer/bims-corp-ops
+<span class="prompt">$</span> git checkout -b qa/$(date +%Y%m%d)-&lt;yourname&gt;-tickets
+<span class="prompt">$</span> git add tickets/draft/
+<span class="prompt">$</span> git commit -m "QA tickets drafted $(date +%Y-%m-%d)"
+<span class="prompt">$</span> git push -u origin qa/$(date +%Y%m%d)-&lt;yourname&gt;-tickets
+<span class="prompt">$</span> gh pr create --base main --title "QA tickets $(date +%Y-%m-%d)"</pre>
+          </div>
+          <p>Ping Max in Slack with the PR link. He'll review + merge so the tickets are visible to everyone.</p>
+          <div class="tip">
+            <span class="icon">i</span>
+            <div><strong>Future state:</strong> once Max migrates the team to shared Turso, your findings appear in his <code>/bims-orient</code> automatically — no daily PR needed. You won't change your workflow when that lands.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="step-num">5</span><h3>Stopping mid-task</h3></div>
+        <div class="step-body">
+          <p>Just exit Claude (<span class="kbd">Ctrl</span>+<span class="kbd">D</span> or type <code>/exit</code>). Your findings + tickets are saved to disk. Tomorrow:</p>
+          <div class="code">
+            <div class="code-head"><span>NEXT MORNING</span></div><pre><span class="prompt">$</span> cd ~/Developer/bims-corp-ops
+<span class="prompt">$</span> claude
+<span class="prompt">&gt;</span> /bims-orient
+<span class="prompt">&gt;</span> remind me where I left off — which finding was I working on?</pre>
+          </div>
+          <p>Claude reads the audit log and brings you back up to speed.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         PART 8 — CHEAT SHEET + RULES
+         ========================================================= -->
+    <section class="part" id="part-8">
+      <div class="part-head">
+        <span class="part-num">PART 8</span>
+        <h2>Cheat sheet &amp; reference</h2>
+        <span class="part-time">reference</span>
+      </div>
+
+      <h3 style="font-size: 18px; margin: 24px 0 8px;">Every command in one table</h3>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead><tr><th>Command</th><th>What it does</th></tr></thead>
+          <tbody>
+            <tr><td>claude</td><td>Open Claude Code (run from <code>~/Developer/bims-corp-ops</code>)</td></tr>
+            <tr><td>/bims-orient</td><td>Print current project state. <strong>Always start with this.</strong></td></tr>
+            <tr><td>/bims-ask &lt;Q&gt;</td><td>Ask Claude anything about the 8 BIMS-Corp codebases — cited answer</td></tr>
+            <tr><td>record this as a finding</td><td>Save a confirmed bug with auto-rated severity</td></tr>
+            <tr><td>/bims-diagnose &lt;id&gt;</td><td>5-step diagnosis (3 hypotheses + 2-track fix)</td></tr>
+            <tr><td>/bims-ticket &lt;id&gt;</td><td>Draft a Jira ticket → <code>tickets/draft/&lt;id&gt;.md</code></td></tr>
+            <tr><td>/bims-promote &lt;id&gt;</td><td>Promote a draft to Jira (paste-ready until API wired)</td></tr>
+            <tr><td>/help</td><td>Claude's built-in help</td></tr>
+            <tr><td>/exit</td><td>Close Claude (work auto-saved)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 style="font-size: 18px; margin: 32px 0 8px;">Where things live on disk</h3>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead><tr><th>Thing</th><th>Path</th></tr></thead>
+          <tbody>
+            <tr><td>Workbench</td><td><code>~/Developer/bims-corp-ops/</code></td></tr>
+            <tr><td>8 legacy repos</td><td><code>~/Developer/BIMS-Corp-LEGACY/</code></td></tr>
+            <tr><td>Your findings DB</td><td><code>state/bims-store.db</code></td></tr>
+            <tr><td>Drafted tickets</td><td><code>tickets/draft/*.md</code></td></tr>
+            <tr><td>Promoted tickets</td><td><code>tickets/promoted/*.md</code></td></tr>
+            <tr><td>Diagnoses</td><td><code>diagnoses/&lt;finding-id&gt;/diagnosis.json</code></td></tr>
+            <tr><td>Local config</td><td><code>state/local-config.json</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 style="font-size: 18px; margin: 32px 0 8px;">The 8 repos you'll be QAing</h3>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead><tr><th>Short name</th><th>Full name</th><th>Stack</th></tr></thead>
+          <tbody>
+            <tr><td>LSP-Web</td><td>LinkServicePro-Web</td><td>Laravel 8 PHP</td></tr>
+            <tr><td>LIP-Web</td><td>LinkInspectPro-Web</td><td>CodeIgniter 2.1.4 PHP</td></tr>
+            <tr><td>PO-Web</td><td>PropertyOrganizer-Web</td><td>CodeIgniter 2.1.4 PHP</td></tr>
+            <tr><td>SA-Web</td><td>SuperAdmin-Web</td><td>CodeIgniter 2.1.4 PHP</td></tr>
+            <tr><td>LSP-iOS</td><td>LinkServicePro-iOS</td><td>Swift</td></tr>
+            <tr><td>LIP-iOS</td><td>LinkInspectPro-iOS</td><td>Swift</td></tr>
+            <tr><td>LSP-Android</td><td>LinkServicePro-Android</td><td>Kotlin</td></tr>
+            <tr><td>LIP-Android</td><td>LinkInspectPro-Android</td><td>Kotlin (project root: <code>BIMS_Latest/</code>)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 style="font-size: 18px; margin: 32px 0 8px;">Rules (under current advisory-only mode)</h3>
+      <p><strong>You CAN:</strong> read any code in the 8 repos · ask Claude anything · record findings · run diagnose / ticket / promote · push <code>tickets/draft/</code> changes via PR.</p>
+      <p><strong>You CANNOT:</strong> edit any file under <code>BIMS-Corp-LEGACY/</code> (Claude refuses — enforced by hooks) · push to legacy repos · author tickets in <code>PAS-*</code> Jira project (only <code>BIMS-*</code> with <code>label=ai-drafted</code>) · paste secret values into prompts (reference by file:line, never paste).</p>
+      <p>The "cite or it doesn't count" rule: every claim Claude makes about code must end with <code>file:line</code>. If it doesn't, push back. If Claude can't cite, the claim is invented — don't trust it.</p>
+
+      <h3 style="font-size: 18px; margin: 32px 0 8px;">Who to ping for what</h3>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead><tr><th>Situation</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td>Install broke</td><td>Slack Max — screenshot + exact error text</td></tr>
+            <tr><td>Claude said X, I disagree</td><td>Slack Max — paste Claude's output verbatim</td></tr>
+            <tr><td>Is this really a P0?</td><td>Slack Max — paste finding-id + your reasoning</td></tr>
+            <tr><td>TatvaSoft pushed back on my ticket</td><td>Slack Max — he handles vendor disputes</td></tr>
+            <tr><td>Claude refuses to do something I want</td><td>Slack Max — there's usually a reason; he'll explain</td></tr>
+            <tr><td>3am prod bug, Max asleep</td><td>Record finding immediately, draft ticket, ping on-call channel</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 style="font-size: 18px; margin: 32px 0 8px;">5-minute glossary</h3>
+      <p><strong>advisory-tier</strong> — current operating mode where AI finds bugs and drafts tickets but never modifies code. Your mode.<br>
+      <strong>workbench-tier</strong> — Max's mode; the AI can write code under guardrails. Not relevant to you.<br>
+      <strong>finding</strong> — an entry in the bugs database. One row per bug. ID like <code>BIMS-F-YYYY-MM-DD-XXXXXX</code>.<br>
+      <strong>diagnosis</strong> — structured analysis: 3 hypotheses + 2 fix tracks. Lives at <code>diagnoses/&lt;id&gt;/diagnosis.json</code>.<br>
+      <strong>Implementation Note</strong> — the section of a ticket that tells TatvaSoft exactly what files to touch and what tests to write. Required for promotion.<br>
+      <strong>trap</strong> — a known constraint about the codebase (e.g. "CI 2.1.4 doesn't support PHP 8.1 idioms"). Surfaced by <code>/bims-orient</code>.<br>
+      <strong>graphify</strong> — the system that builds knowledge graphs of each codebase. One MCP per repo. Claude uses these to navigate.<br>
+      <strong>MCP</strong> — Model Context Protocol; how Claude talks to specialized servers. You don't talk to MCPs directly.<br>
+      <strong>severity rubric</strong> — deterministic algorithm that converts 4 facts about a finding into P0/P1/P2/P3.<br>
+      <strong>TatvaSoft</strong> — the subcontractor team that writes the actual fixes. Your tickets go to them via Jira.</p>
+
+      <div class="part-done">
+        <div class="done-label">You're ready</div>
+        <div class="done-body">Bookmark this page. The first bug usually takes 15 min; the tenth takes 5. Slack Max with anything weird.</div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      BIMS-Corp QA Onboarding Guide · Windows 11 · v1.0 · 2026-05-27 · Building Information Management Systems Corporation (NY DOS 4830492)
+    </footer>
+
+  </main>
+</div>
+
+<script>
+// ============================================================
+// Copy-to-clipboard
+// ============================================================
+document.querySelectorAll('.copy-btn').forEach(btn => {
+  btn.addEventListener('click', async () => {
+    const text = btn.dataset.copy || '';
+    try {
+      await navigator.clipboard.writeText(text);
+      const original = btn.textContent;
+      btn.textContent = '✓ COPIED';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = original;
+        btn.classList.remove('copied');
+      }, 1800);
+    } catch (e) {
+      btn.textContent = '✗ FAILED';
+      setTimeout(() => btn.textContent = '⎘ COPY', 1800);
+    }
+  });
+});
+
+// ============================================================
+// "Stuck?" accordion
+// ============================================================
+document.querySelectorAll('.stuck-q').forEach(q => {
+  q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
+});
+
+// ============================================================
+// Mobile TOC toggle
+// ============================================================
+const tocToggle = document.getElementById('toc-toggle');
+const toc = document.getElementById('toc');
+if (tocToggle) {
+  tocToggle.addEventListener('click', () => {
+    toc.classList.toggle('mobile-open');
+    tocToggle.textContent = toc.classList.contains('mobile-open') ? 'CLOSE' : 'CONTENTS';
+  });
+}
+// Close mobile TOC after clicking a link
+document.querySelectorAll('.toc-link').forEach(l => {
+  l.addEventListener('click', () => {
+    if (window.innerWidth < 1024) {
+      toc.classList.remove('mobile-open');
+      tocToggle.textContent = 'CONTENTS';
+    }
+  });
+});
+
+// ============================================================
+// Active TOC link + progress bar
+// ============================================================
+const sections = ['part-0-content', 'part-1', 'part-2', 'part-3', 'part-4', 'part-5', 'part-6', 'part-7', 'part-8']
+  .map(id => document.getElementById(id))
+  .filter(Boolean);
+const tocLinks = document.querySelectorAll('.toc-link');
+const progressFill = document.getElementById('progress-fill');
+const progressLabel = document.getElementById('progress-label');
+const partLabels = ['Before you start', 'Install tools', 'Claude Code', 'Clone repos', 'Bootstrap', 'First conversation', 'Hunt a bug', 'Daily workflow', 'Reference'];
+
+function updateActive() {
+  const scrollY = window.scrollY + 120;
+  let activeIdx = 0;
+  sections.forEach((s, i) => {
+    if (s.offsetTop <= scrollY) activeIdx = i;
+  });
+  tocLinks.forEach((l, i) => l.classList.toggle('active', i === activeIdx));
+  const pct = Math.round((activeIdx / (sections.length - 1)) * 100);
+  if (progressFill) progressFill.style.width = pct + '%';
+  if (progressLabel) progressLabel.textContent = `Part ${activeIdx} / ${sections.length - 1}`;
+}
+window.addEventListener('scroll', updateActive, { passive: true });
+window.addEventListener('load', updateActive);
+updateActive();
+</script>
+
+</body>
+</html>
