@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BIMS-Corp QA Onboarding Guide · Windows 11</title>
+<title>BIMS-Corp AI Workbench · Team Onboarding · Windows 11</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -516,6 +516,27 @@ li { margin-bottom: 6px; }
 .tip strong { color: var(--color-accent-blue); }
 
 /* ============================================================
+   SKIP callout (top of page, prominent)
+   ============================================================ */
+.skip-banner {
+  display: flex; gap: 14px; align-items: center;
+  padding: 16px 20px;
+  background: rgba(168,227,0,0.10);
+  border: 1px solid var(--color-lime-300);
+  border-radius: 2px;
+  margin: 0 0 32px;
+  font-size: 14px;
+}
+.skip-banner .icon {
+  font-size: 22px;
+  color: var(--color-lime-500);
+  font-weight: 900;
+  flex-shrink: 0;
+}
+.skip-banner strong { color: var(--color-lime-500); font-weight: 800; }
+.skip-banner a { font-weight: 700; }
+
+/* ============================================================
    "DONE" footer of each part
    ============================================================ */
 .part-done {
@@ -631,6 +652,34 @@ table.tbl td:first-child {
   white-space: nowrap;
 }
 
+/* role cards */
+.role-card {
+  background: var(--color-beige-100);
+  border: 1px solid rgba(1,41,57,0.1);
+  border-left: 3px solid var(--color-lime-300);
+  padding: 18px 22px;
+  margin: 14px 0;
+  border-radius: 0 2px 2px 0;
+}
+.role-card h4 {
+  margin: 0 0 6px;
+  font-size: 18px;
+  display: flex; align-items: baseline; gap: 10px;
+}
+.role-card h4 .role-tag {
+  font-family: ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-lime-500);
+}
+.role-card .role-sub {
+  font-size: 13px;
+  opacity: 0.7;
+  margin-bottom: 10px;
+}
+
 /* kbd */
 .kbd {
   display: inline-block;
@@ -671,10 +720,10 @@ table.tbl td:first-child {
   <div class="header-inner">
     <div class="brand">
       <span>BIMS-Corp<span class="dot">.</span>AI</span>
-      <span class="brand-sub">QA Onboarding · Windows 11</span>
+      <span class="brand-sub">Team Onboarding · Windows 11</span>
     </div>
     <div class="progress">
-      <span id="progress-label">Part 0 / 8</span>
+      <span id="progress-label">Part 0 / 9</span>
       <div class="progress-bar"><span id="progress-fill" style="width: 0%;"></span></div>
       <button class="toc-toggle" id="toc-toggle">CONTENTS</button>
     </div>
@@ -697,8 +746,9 @@ table.tbl td:first-child {
       <li><a href="#part-4" class="toc-link">Bootstrap workbench</a></li>
       <li><a href="#part-5" class="toc-link">First conversation</a></li>
       <li><a href="#part-6" class="toc-link">Hunt your first bug</a></li>
-      <li><a href="#part-7" class="toc-link">Daily workflow</a></li>
-      <li><a href="#part-8" class="toc-link">Cheat sheet &amp; reference</a></li>
+      <li><a href="#part-7" class="toc-link">Role variants</a></li>
+      <li><a href="#part-8" class="toc-link">Daily workflow</a></li>
+      <li><a href="#part-9" class="toc-link">Cheat sheet &amp; reference</a></li>
     </ol>
   </aside>
 
@@ -709,20 +759,27 @@ table.tbl td:first-child {
          INTRO
          ========================================================= -->
     <section class="intro" id="part-0">
-      <div class="intro-eyebrow">BIMS-Corp · QA Onboarding Guide · Windows 11</div>
-      <h1>You're 60 minutes away from your first bug.</h1>
+      <div class="intro-eyebrow">BIMS-Corp · Team Onboarding · Windows 11</div>
+      <h1>The BIMS-Corp AI workbench, end to end.</h1>
       <p class="lede">
-        This guide walks you (yes you, the new QA person on a Windows 11 laptop) from <em>no tools installed</em> to <em>finding a real production bug and drafting a complete Jira ticket</em>. Follow it top to bottom. Every command is copy-paste. Every command has an expected-output panel. If something doesn't match, the troubleshooting box right below it tells you what to do.
+        This is the working environment for Niam, Jose, and Sal. It puts an AI assistant in front of all 8 BIMS-Corp codebases (LinkServicePro, LinkInspectPro, PropertyOrganizer, SuperAdmin — web and mobile). You ask questions in plain English; it answers with <code>file:line</code> citations, helps you confirm bugs, and drafts Jira tickets ready to paste.
       </p>
       <p class="lede">
-        You will <strong>not</strong> write code. You will <strong>not</strong> modify production. Your job is to ask Claude (an AI that already knows all 8 BIMS-Corp codebases) what's broken, confirm it's real, and draft Jira tickets. That's the whole loop.
+        We'll walk through this together in tomorrow's session — by the end of the meeting, each of your machines is set up and you've each filed one real ticket. This document is the reference you keep open while we go through it, and after.
       </p>
 
       <div class="meta-row">
-        <div class="item"><span class="lbl">total time</span><span class="val">~60 min</span></div>
-        <div class="item"><span class="lbl">disk needed</span><span class="val">~3 GB</span></div>
-        <div class="item"><span class="lbl">reboots</span><span class="val">1</span></div>
-        <div class="item"><span class="lbl">cost / month</span><span class="val">$20 (claude.ai Pro)</span></div>
+        <div class="item"><span class="lbl">walkthrough time</span><span class="val">~60 min</span></div>
+        <div class="item"><span class="lbl">disk needed</span><span class="val">~5 GB</span></div>
+        <div class="item"><span class="lbl">reboots</span><span class="val">1 (WSL2)</span></div>
+        <div class="item"><span class="lbl">cost to you</span><span class="val">$0</span></div>
+      </div>
+
+      <div class="skip-banner" style="margin-top: 32px;">
+        <span class="icon">↪</span>
+        <div>
+          <strong>Sal — if you already have Claude Code installed</strong> on your machine, you can skip Parts 1 and 2 and jump straight to <a href="#part-3">Part 3 (Clone the repos)</a>. Niam and Jose, start at Part 0 below.
+        </div>
       </div>
     </section>
 
@@ -733,47 +790,32 @@ table.tbl td:first-child {
       <div class="part-head">
         <span class="part-num">PART 0</span>
         <h2>Before you start</h2>
-        <span class="part-time">5 min</span>
+        <span class="part-time">3 min</span>
       </div>
-      <p class="part-intro">A 30-second sanity check so you don't get blocked partway through.</p>
+      <p class="part-intro">Two quick sanity checks so nothing blocks you partway through.</p>
 
       <div class="step">
-        <div class="step-head"><span class="step-num">1</span><h3>Confirm you have admin rights on this Windows 11 laptop</h3></div>
+        <div class="step-head"><span class="step-num">1</span><h3>Confirm admin rights on your Windows 11 desktop</h3></div>
         <div class="step-body">
-          <p>You need to be able to install software and enable Windows features. If you're using a corporate-locked machine where you can't run installers as admin, stop here and ping Max — he'll coordinate with IT.</p>
-          <p>To check: right-click the Start menu. If you see <strong>"Terminal (Admin)"</strong> or <strong>"Windows PowerShell (Admin)"</strong>, you're fine.</p>
+          <p>You need to be able to install software and enable Windows features. Right-click the Start menu (bottom-left). If you see <strong>"Terminal (Admin)"</strong> or <strong>"Windows PowerShell (Admin)"</strong> in the list, you're set.</p>
+          <p>If the admin options are missing, the Windows account on this PC isn't an admin — flag it in tomorrow's session and we'll sort it before the install steps.</p>
         </div>
       </div>
 
       <div class="step">
         <div class="step-head"><span class="step-num">2</span><h3>Confirm your GitHub account has access to the BIMS-Corp org</h3></div>
         <div class="step-body">
-          <p>Open <a href="https://github.com/bims-corp-ai" target="_blank">https://github.com/bims-corp-ai</a> in your browser. If you can see the repos listed (8 of them), you're set. If you see a 404, ping Max with your GitHub username — he'll add you before you continue.</p>
+          <p>Open <a href="https://github.com/bims-corp-ai" target="_blank">https://github.com/bims-corp-ai</a> in your browser. If you can see the repository list, you're good. If you see a 404, your GitHub user isn't in the org yet — Max will add you in tomorrow's session.</p>
           <div class="tip">
             <span class="icon">i</span>
-            <div><strong>Don't have a GitHub account yet?</strong> Sign up free at <a href="https://github.com/signup" target="_blank">github.com/signup</a>. Use your work email (e.g. <code>@bimscorp.com</code>) so Max can recognize you in the access request.</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="step-head"><span class="step-num">3</span><h3>Decide your Claude billing setup</h3></div>
-        <div class="step-body">
-          <p>Claude Code needs an account. Two options — pick one before you start:</p>
-          <ul>
-            <li><strong>Claude.ai Pro</strong> ($20/month per person, billed via the claude.ai website). Easiest. Sign up at <a href="https://claude.ai" target="_blank">claude.ai</a> with your work email, then come back. You'll auth via browser later.</li>
-            <li><strong>Anthropic API key</strong> (pay-per-use). Max provides one if your team prefers shared billing. You'll paste it during install.</li>
-          </ul>
-          <div class="tip">
-            <span class="icon">i</span>
-            <div><strong>Not sure which?</strong> Default to Claude.ai Pro. It's simpler, you get the full chat product too, and $20/mo is the right scale for QA usage. Max can switch you to API later if needed.</div>
+            <div><strong>Don't have a GitHub account?</strong> Sign up free at <a href="https://github.com/signup" target="_blank">github.com/signup</a> before the session. Use any email — Max just needs your GitHub username to add you to the org.</div>
           </div>
         </div>
       </div>
 
       <div class="part-done">
         <div class="done-label">Pre-checks complete</div>
-        <div class="done-body">Admin rights ✓ · GitHub access ✓ · Billing decided ✓</div>
+        <div class="done-body">Admin rights ✓ · GitHub access (or username ready) ✓</div>
         <a href="#part-1" class="next">Part 1: Install →</a>
       </div>
     </section>
@@ -788,13 +830,13 @@ table.tbl td:first-child {
         <span class="part-time">~20 min (incl. 1 reboot)</span>
       </div>
       <p class="part-intro">
-        WSL2 ("Windows Subsystem for Linux") is Microsoft's first-party feature that lets you run Linux inside Windows. It's free, built into Windows 11, and is the simplest way to make Windows behave the same as Max's Mac. Every command in this guide runs <em>inside Ubuntu</em>, not PowerShell.
+        WSL2 ("Windows Subsystem for Linux") is Microsoft's first-party feature that runs Linux inside Windows. Free, built into Windows 11. The workbench is Linux-native, so everything from here runs <em>inside Ubuntu</em>, not PowerShell.
       </p>
 
       <div class="step">
         <div class="step-head"><span class="step-num">1</span><h3>Open PowerShell as Administrator</h3></div>
         <div class="step-body">
-          <p>Right-click the Start menu (bottom-left). Click <strong>Terminal (Admin)</strong> or <strong>Windows PowerShell (Admin)</strong>. A blue window opens. If Windows asks "Do you want to allow this app to make changes?", click <strong>Yes</strong>.</p>
+          <p>Right-click the Start menu. Click <strong>Terminal (Admin)</strong> or <strong>Windows PowerShell (Admin)</strong>. A blue window opens. If Windows asks "Do you want to allow this app to make changes?", click <strong>Yes</strong>.</p>
         </div>
       </div>
 
@@ -824,21 +866,21 @@ wsl --set-default Ubuntu</pre></div>
           <div class="stuck">
             <button class="stuck-q">If it says "Virtualization not enabled" or similar BIOS error<span class="chev">›</span></button>
             <div class="stuck-a">
-              <p>Your CPU's virtualization extension is turned off in BIOS. Fix:</p>
+              <p>Your CPU's virtualization extension is off in BIOS. This is a one-time toggle.</p>
               <ol>
-                <li>Reboot. As the laptop powers on, press <span class="kbd">F2</span> or <span class="kbd">Del</span> repeatedly to enter BIOS (the key depends on your laptop brand — Dell is usually F2, Lenovo is F1, HP is F10).</li>
+                <li>Reboot. As the PC powers on, press <span class="kbd">F2</span> or <span class="kbd">Del</span> repeatedly to enter BIOS. The key depends on the motherboard — most desktop BIOSes flash the right key on the boot screen for a second.</li>
                 <li>Find a setting called <strong>"Intel VT-x"</strong>, <strong>"AMD-V"</strong>, or <strong>"Virtualization Technology"</strong>. Enable it.</li>
                 <li>Save (usually F10) and exit. Windows boots normally.</li>
-                <li>Re-open PowerShell as Admin, re-run <code>wsl --install</code>.</li>
+                <li>Re-open PowerShell as Admin and re-run <code>wsl --install</code>.</li>
               </ol>
-              <p>If you don't feel comfortable doing this, ping your IT contact or Max.</p>
+              <p>If the PC's BIOS is locked or the setting isn't visible, raise it in tomorrow's session — Max has the IT context for each machine and can walk through it with whoever owns the hardware.</p>
             </div>
           </div>
         </div>
       </div>
 
       <div class="step">
-        <div class="step-head"><span class="step-num">3</span><h3>Reboot your laptop</h3></div>
+        <div class="step-head"><span class="step-num">3</span><h3>Reboot</h3></div>
         <div class="step-body">
           <p>Save anything you have open in other apps. Restart Windows (Start menu → Power → Restart).</p>
           <div class="expected">
@@ -853,13 +895,13 @@ wsl --set-default Ubuntu</pre></div>
         <div class="step-body">
           <p>When Ubuntu finishes installing, it asks for a UNIX username and password. <strong>This is a separate identity from your Windows login</strong> — it lives only inside Ubuntu.</p>
           <ul>
-            <li><strong>Username:</strong> pick something short and lowercase, e.g. <code>qa</code> or your first name lowercase.</li>
-            <li><strong>Password:</strong> pick anything memorable. You don't see characters as you type — that's normal in Linux. Type it twice carefully.</li>
-            <li>Write both down somewhere. You'll need the password when you run <code>sudo</code> commands.</li>
+            <li><strong>Username:</strong> short, lowercase, no spaces. Your first name lowercase works fine (<code>niam</code>, <code>jose</code>, <code>sal</code>).</li>
+            <li><strong>Password:</strong> anything memorable. You don't see characters as you type — that's normal in Linux. Type it twice carefully.</li>
+            <li>Write both down. You'll need the password whenever you run <code>sudo</code>.</li>
           </ul>
           <div class="expected">
             <span class="icon">✓</span>
-            <div class="body"><strong>You should see</strong> a prompt that looks like <code>qa@laptop-name:~$</code>. That dollar sign means you're at the Ubuntu shell. You're now inside Linux.</div>
+            <div class="body"><strong>You should see</strong> a prompt like <code>niam@desktop:~$</code>. The dollar sign means you're at the Ubuntu shell — you're inside Linux now.</div>
           </div>
         </div>
       </div>
@@ -867,7 +909,7 @@ wsl --set-default Ubuntu</pre></div>
       <div class="step">
         <div class="step-head"><span class="step-num">5</span><h3>Install the prerequisite Linux packages</h3></div>
         <div class="step-body">
-          <p>Inside the Ubuntu window, paste this <em>single</em> line and press Enter. It installs everything the BIMS workbench needs (git, jq, sqlite, python, etc.). Type your Ubuntu password when prompted.</p>
+          <p>Inside the Ubuntu window, paste this <em>single</em> line and press Enter. It installs git, jq, sqlite, python, and the build tools the workbench needs. Type your Ubuntu password when prompted.</p>
           <div class="code runme">
             <div class="code-head">
               <span>RUN IN UBUNTU</span>
@@ -878,7 +920,7 @@ wsl --set-default Ubuntu</pre></div>
           </div>
           <div class="expected">
             <span class="icon">✓</span>
-            <div class="body"><strong>You should see</strong> a bunch of <code>Setting up &lt;package&gt;...</code> lines, ending with the <code>$</code> prompt coming back. Takes 2-5 minutes depending on your connection.</div>
+            <div class="body"><strong>You should see</strong> a bunch of <code>Setting up &lt;package&gt;...</code> lines, ending with the <code>$</code> prompt coming back. 2–5 minutes depending on connection.</div>
           </div>
         </div>
       </div>
@@ -886,7 +928,7 @@ wsl --set-default Ubuntu</pre></div>
       <div class="step">
         <div class="step-head"><span class="step-num">6</span><h3>Install uv (Python package manager)</h3></div>
         <div class="step-body">
-          <p>The BIMS workbench uses <code>uv</code> (a modern Python tool). Two commands:</p>
+          <p>The workbench uses <code>uv</code> (a modern Python tool). Two commands:</p>
           <div class="code runme">
             <div class="code-head">
               <span>RUN IN UBUNTU</span>
@@ -897,7 +939,7 @@ wsl --set-default Ubuntu</pre></div>
           </div>
           <div class="expected">
             <span class="icon">✓</span>
-            <div class="body"><strong>Verify with</strong> <code>uv --version</code> — should print something like <code>uv 0.x.x</code>.</div>
+            <div class="body"><strong>Verify with</strong> <code>uv --version</code> — should print <code>uv 0.x.x</code>.</div>
           </div>
         </div>
       </div>
@@ -905,7 +947,7 @@ wsl --set-default Ubuntu</pre></div>
       <div class="step">
         <div class="step-head"><span class="step-num">7</span><h3>Install the GitHub CLI</h3></div>
         <div class="step-body">
-          <p>This lets you authenticate against GitHub from the command line. Paste this whole block:</p>
+          <p>This lets you authenticate against GitHub from the command line. Paste the whole block:</p>
           <div class="code runme">
             <div class="code-head">
               <span>RUN IN UBUNTU</span>
@@ -935,24 +977,24 @@ wsl --set-default Ubuntu</pre></div>
             <div class="code-head"><span>RUN IN UBUNTU</span><button class="copy-btn" data-copy="gh auth login">⎘ COPY</button></div>
             <pre><span class="prompt">$</span> gh auth login</pre>
           </div>
-          <p>You'll be asked a series of questions. Answer them like this:</p>
+          <p>Answer the prompts like this:</p>
           <ul>
             <li><strong>What account do you want to log into?</strong> → <code>GitHub.com</code></li>
             <li><strong>What is your preferred protocol?</strong> → <code>HTTPS</code></li>
             <li><strong>Authenticate Git with your GitHub credentials?</strong> → <code>Y</code> (Yes)</li>
             <li><strong>How would you like to authenticate?</strong> → <code>Login with a web browser</code></li>
           </ul>
-          <p>It then prints a one-time code (e.g. <code>ABCD-1234</code>) and a URL. <strong>Copy the code</strong>, press Enter to open the URL in your browser, then <strong>paste the code</strong> into the GitHub prompt. Approve the login.</p>
+          <p>It prints a one-time code (e.g. <code>ABCD-1234</code>) and a URL. <strong>Copy the code</strong>, press Enter to open the URL in your browser, then <strong>paste the code</strong> into the GitHub prompt. Approve the login.</p>
           <div class="expected">
             <span class="icon">✓</span>
-            <div class="body"><strong>Back in the terminal you should see</strong> <code>✓ Logged in as &lt;your-github-username&gt;</code>.</div>
+            <div class="body"><strong>Back in the terminal</strong> you'll see <code>✓ Logged in as &lt;your-github-username&gt;</code>.</div>
           </div>
         </div>
       </div>
 
       <div class="part-done">
         <div class="done-label">Part 1 complete</div>
-        <div class="done-body">WSL2 + Ubuntu + apt packages + uv + gh + GitHub auth — your Windows is now a Linux dev box.</div>
+        <div class="done-body">WSL2 + Ubuntu + apt packages + uv + gh + GitHub auth — your Windows machine is now a Linux dev box.</div>
         <a href="#part-2" class="next">Part 2: Claude Code →</a>
       </div>
     </section>
@@ -967,7 +1009,7 @@ wsl --set-default Ubuntu</pre></div>
         <span class="part-time">~5 min</span>
       </div>
       <p class="part-intro">
-        Claude Code is Anthropic's CLI tool — it's the actual AI you'll be talking to. It's distributed as an npm package, so we install Node.js first.
+        Claude Code is Anthropic's CLI tool — the AI you'll be talking to. It's distributed as an npm package, so Node.js comes first.
       </p>
 
       <div class="step">
@@ -1009,21 +1051,17 @@ wsl --set-default Ubuntu</pre></div>
       </div>
 
       <div class="step">
-        <div class="step-head"><span class="step-num">3</span><h3>Log into Claude</h3></div>
+        <div class="step-head"><span class="step-num">3</span><h3>Log in</h3></div>
         <div class="step-body">
-          <p>Just type <code>claude</code> and press Enter:</p>
+          <p>Type <code>claude</code> and press Enter:</p>
           <div class="code runme">
             <div class="code-head"><span>RUN IN UBUNTU</span><button class="copy-btn" data-copy="claude">⎘ COPY</button></div>
             <pre><span class="prompt">$</span> claude</pre>
           </div>
-          <p>First-run wizard appears. Pick your auth method:</p>
-          <ul>
-            <li><strong>Claude.ai Pro:</strong> select "Anthropic Console" or "Claude Pro" → opens your browser for OAuth → approve. Returns to terminal automatically.</li>
-            <li><strong>API key (from Max):</strong> select "API key" → paste it when prompted.</li>
-          </ul>
+          <p>Claude's first-run wizard appears. Use the credentials Max provides you with — subscription setup is handled outside this guide. Follow whichever auth path matches the login you were given (browser OAuth or API key paste).</p>
           <div class="expected">
             <span class="icon">✓</span>
-            <div class="body"><strong>You should see</strong> the Claude prompt — a colored box at the bottom of the terminal where you type your messages. Type <code>/exit</code> for now; we'll come back.</div>
+            <div class="body"><strong>You should see</strong> the Claude prompt — an input box at the bottom of the terminal. Type <code>/exit</code> for now; we'll come back in Part 5.</div>
           </div>
         </div>
       </div>
@@ -1045,13 +1083,13 @@ wsl --set-default Ubuntu</pre></div>
         <span class="part-time">~15 min</span>
       </div>
       <p class="part-intro">
-        Two folders, side by side. The <code>bims-corp-ops</code> workbench is where the AI lives — skills, knowledge graphs, finding database, ticket drafts. The <code>BIMS-Corp-LEGACY/</code> folder holds the 8 production codebases that you'll be QAing. You read from legacy; you never modify it.
+        Two folders, side by side. <code>bims-corp-ops</code> is the workbench — where the AI lives (skills, knowledge graphs, finding database, ticket drafts). <code>BIMS-Corp-LEGACY/</code> holds the 8 production codebases you're QAing against. You read from legacy; you never modify it (the workbench enforces this).
       </p>
 
       <div class="step">
         <div class="step-head"><span class="step-num">1</span><h3>Create your working directory</h3></div>
         <div class="step-body">
-          <p>We'll use <code>~/Developer</code> as the parent folder. <code>~</code> means your Ubuntu home folder.</p>
+          <p>We use <code>~/Developer</code> as the parent folder. <code>~</code> means your Ubuntu home folder.</p>
           <div class="code runme">
             <div class="code-head"><span>RUN IN UBUNTU</span><button class="copy-btn" data-copy="mkdir -p ~/Developer&#10;cd ~/Developer">⎘ COPY</button></div>
             <pre><span class="prompt">$</span> mkdir -p ~/Developer
@@ -1075,7 +1113,7 @@ wsl --set-default Ubuntu</pre></div>
           <div class="stuck">
             <button class="stuck-q">If you see "Permission denied" or "Repository not found"<span class="chev">›</span></button>
             <div class="stuck-a">
-              <p>Your GitHub account isn't in the <code>bims-corp-ai</code> org with access to this repo. Confirm by visiting <a href="https://github.com/bims-corp-ai/bims-corp-ops" target="_blank">https://github.com/bims-corp-ai/bims-corp-ops</a>. If you see 404, ping Max with your GitHub username; he'll add you. Then re-run the clone command.</p>
+              <p>Your GitHub account isn't in the <code>bims-corp-ai</code> org yet. Confirm by visiting <a href="https://github.com/bims-corp-ai/bims-corp-ops" target="_blank">github.com/bims-corp-ai/bims-corp-ops</a>. If you see a 404, tell Max your GitHub username in the session — he'll add you and you re-run the clone.</p>
             </div>
           </div>
         </div>
@@ -1084,7 +1122,7 @@ wsl --set-default Ubuntu</pre></div>
       <div class="step">
         <div class="step-head"><span class="step-num">3</span><h3>Clone all 8 legacy repos in one shot</h3></div>
         <div class="step-body">
-          <p>The workbench has a helper script that clones every BIMS-Corp legacy repo to <code>~/Developer/BIMS-Corp-LEGACY/</code> in parallel:</p>
+          <p>The workbench has a helper script that clones every BIMS-Corp legacy repo to <code>~/Developer/BIMS-Corp-LEGACY/</code>. It's idempotent — re-running skips repos that already exist.</p>
           <div class="code runme">
             <div class="code-head"><span>RUN IN UBUNTU (FROM bims-corp-ops/)</span><button class="copy-btn" data-copy="mkdir -p ~/Developer/BIMS-Corp-LEGACY&#10;./bin/clone-legacy">⎘ COPY</button></div>
             <pre><span class="prompt">$</span> mkdir -p ~/Developer/BIMS-Corp-LEGACY
@@ -1092,12 +1130,12 @@ wsl --set-default Ubuntu</pre></div>
           </div>
           <div class="expected">
             <span class="icon">✓</span>
-            <div class="body"><strong>You should see</strong> 8 repos cloning (LinkServicePro-Web, LinkInspectPro-Web, PropertyOrganizer-Web, SuperAdmin-Web, and the 4 mobile ones). Takes 10-15 minutes total — ~1.5 GB of code.</div>
+            <div class="body"><strong>You should see</strong> 8 repos cloning in sequence (LinkServicePro-Web, LinkInspectPro-Web, PropertyOrganizer-Web, SuperAdmin-Web, and the 4 mobile ones), ending with <code>clone-legacy: cloned=8 skipped=0 failed=0</code>. 10–15 minutes total; ~1.5 GB of code.</div>
           </div>
           <div class="stuck">
             <button class="stuck-q">If clone-legacy fails on one or more repos<span class="chev">›</span></button>
             <div class="stuck-a">
-              <p>Same fix as step 2 — your GitHub account doesn't have access to that specific repo. Note which repos failed, send the list to Max with your GitHub username, wait for confirmation, then re-run <code>./bin/clone-legacy</code> (it skips already-cloned repos, only retries missing ones).</p>
+              <p>Your GitHub account doesn't have access to that specific legacy repo yet. The summary line at the end tells you which failed. Send Max the failed-repo names in the session; once he adds you, re-run <code>./bin/clone-legacy</code> — it skips the ones already on disk and retries the missing ones.</p>
             </div>
           </div>
         </div>
@@ -1120,7 +1158,7 @@ wsl --set-default Ubuntu</pre></div>
         <span class="part-time">~10 min</span>
       </div>
       <p class="part-intro">
-        One config file to edit, then one command to wire everything together (Python deps, database, MCP servers, knowledge graphs).
+        One config file to fill in, then one command to wire everything together (Python deps, database, MCP servers, knowledge graphs).
       </p>
 
       <div class="step">
@@ -1143,7 +1181,7 @@ wsl --set-default Ubuntu</pre></div>
           </div>
           <div class="expected">
             <span class="icon">✓</span>
-            <div class="body"><strong>It prints your Ubuntu username</strong> — e.g. <code>qa</code>. Write it down; we use it as <code>&lt;you&gt;</code> in the next step.</div>
+            <div class="body"><strong>It prints your Ubuntu username</strong> — e.g. <code>niam</code>. Use this as <code>&lt;you&gt;</code> in the next step.</div>
           </div>
         </div>
       </div>
@@ -1151,30 +1189,32 @@ wsl --set-default Ubuntu</pre></div>
       <div class="step">
         <div class="step-head"><span class="step-num">3</span><h3>Edit the config file</h3></div>
         <div class="step-body">
-          <p>Open it in the <code>nano</code> editor (simplest CLI editor on Linux):</p>
+          <p>Open it in <code>nano</code> (simplest CLI editor on Linux):</p>
           <div class="code runme">
             <div class="code-head"><span>RUN IN UBUNTU</span><button class="copy-btn" data-copy="nano state/local-config.json">⎘ COPY</button></div>
             <pre><span class="prompt">$</span> nano state/local-config.json</pre>
           </div>
-          <p>Fill in these fields (replace <code>&lt;you&gt;</code> with the Ubuntu username from step 2, and your name where indicated):</p>
+          <p>Set these fields (replace <code>&lt;you&gt;</code> with the Ubuntu username from step 2, and pick a machine_id that identifies you and the machine):</p>
           <div class="code">
             <div class="code-head"><span>state/local-config.json</span><span class="where">edit these fields</span></div><pre><span class="comment"># required:</span>
-"machine_id":       "&lt;your-firstname&gt;-qa-laptop",
-"operator":         "&lt;your-email@bimscorp.com&gt;",
+"machine_id":       "&lt;firstname&gt;-bimscorp-desktop",
+"operator":         "&lt;your work email&gt;",
 "BIMS_OPS_ROOT":    "/home/&lt;you&gt;/Developer/bims-corp-ops",
 "BIMS_LEGACY_ROOT": "/home/&lt;you&gt;/Developer/BIMS-Corp-LEGACY",
-"BIMS_STORE_URL":   "file:///home/&lt;you&gt;/Developer/bims-corp-ops/state/bims-store.db",
 "mode":             "secondary",
 "sync_enabled":     false
 
-<span class="comment"># delete these two lines entirely (you're not using the shared Turso store yet):</span>
+<span class="comment"># add this line (a local sqlite store for day 1):</span>
+"BIMS_STORE_URL":   "file:///home/&lt;you&gt;/Developer/bims-corp-ops/state/bims-store.db"
+
+<span class="comment"># delete these two lines (they're for the shared Turso store, which we'll wire up later):</span>
 "BIMS_STORE_URL_BASE":  "..."
 "BIMS_STORE_TOKEN_FILE": "..."</pre>
           </div>
-          <p>Save and exit nano: press <span class="kbd">Ctrl</span>+<span class="kbd">O</span>, then <span class="kbd">Enter</span> to confirm filename, then <span class="kbd">Ctrl</span>+<span class="kbd">X</span> to exit.</p>
+          <p>Save and exit nano: <span class="kbd">Ctrl</span>+<span class="kbd">O</span>, <span class="kbd">Enter</span> to confirm filename, <span class="kbd">Ctrl</span>+<span class="kbd">X</span> to exit.</p>
           <div class="tip">
             <span class="icon">i</span>
-            <div><strong>Why <code>file://</code> instead of shared Turso?</strong> Day 1, each person gets their own local findings database. Once you're comfortable with the flow, Max will migrate the team to shared Turso so everyone sees each other's findings in real time.</div>
+            <div><strong>Why local sqlite instead of shared Turso?</strong> Day 1, each of you gets your own local findings database — simpler to bootstrap. Once we're all running comfortably, we migrate the team to shared Turso so everyone sees each other's findings in the same orient call.</div>
           </div>
         </div>
       </div>
@@ -1182,14 +1222,14 @@ wsl --set-default Ubuntu</pre></div>
       <div class="step">
         <div class="step-head"><span class="step-num">4</span><h3>Run the bootstrap script</h3></div>
         <div class="step-body">
-          <p>This single command runs 11 numbered setup steps. Don't worry about what each one does — just watch for FAILs that aren't expected.</p>
+          <p>One command runs all 11 setup steps. You don't need to know what each one does — just watch for unexpected FAILs.</p>
           <div class="code runme">
             <div class="code-head"><span>RUN IN UBUNTU (FROM bims-corp-ops/)</span><button class="copy-btn" data-copy="./bin/setup --mode secondary --no-launchd --skip-indexes">⎘ COPY</button></div>
             <pre><span class="prompt">$</span> ./bin/setup --mode secondary --no-launchd --skip-indexes</pre>
           </div>
           <div class="expected">
             <span class="icon">✓</span>
-            <div class="body"><strong>You should see 11 steps, each printing PASS:</strong></div>
+            <div class="body"><strong>You should see 11 numbered steps:</strong></div>
           </div>
           <div class="code">
             <div class="code-head"><span>expected output</span></div><pre><span class="ok">  1/11</span> verify tooling .................. OK
@@ -1205,27 +1245,27 @@ wsl --set-default Ubuntu</pre></div>
 <span class="ok"> 11/11</span> health check (./bin/doctor) ..... OK
 
 <span class="ok">Summary: 68 pass / 1 warn / 7 fail</span>
-<span class="warn">(the 7 FAILs are EXPECTED in Phase 0 — they're
- placeholders for engineering work that doesn't
- affect your QA workflow)</span></pre>
+<span class="warn">(the 7 FAILs are EXPECTED — they're placeholder
+ checks for engineering work in progress that doesn't
+ affect your bug-hunting workflow)</span></pre>
           </div>
           <div class="stuck">
             <button class="stuck-q">If any of the 11 numbered steps FAIL<span class="chev">›</span></button>
             <div class="stuck-a">
-              <p>Don't try to fix it yourself the first time. Screenshot or copy the full output (especially the FAIL lines) and Slack Max. Specifically he needs:</p>
+              <p>Don't try to fix it yourself the first time. Copy the full output (especially the FAIL lines) and send it to Max with:</p>
               <ol>
                 <li>Which step number failed (e.g. "step 6 / migrate db")</li>
                 <li>The full error text below that step</li>
-                <li>Output of <code>cat state/local-config.json</code> (to verify your config is correct — Max will sanitize before reviewing)</li>
+                <li>Output of <code>cat state/local-config.json</code> so Max can verify your paths</li>
               </ol>
             </div>
           </div>
           <div class="stuck">
             <button class="stuck-q">If the summary shows MORE than 7 FAILs<span class="chev">›</span></button>
             <div class="stuck-a">
-              <p>The 7 expected FAILs are 4 <code>no_driver_resolved</code> + 3 <code>harness_unbootstrapped</code> — placeholders for engineering work. If <code>bin/doctor</code> shows additional FAILs you don't recognize, run:</p>
+              <p>The 7 expected FAILs are 4 <code>no_driver_resolved</code> + 3 <code>harness_unbootstrapped</code> — placeholders. If you see additional FAILs you don't recognize, run:</p>
               <div class="code"><div class="code-head"><span>RUN IN UBUNTU</span><button class="copy-btn" data-copy="./bin/doctor 2>&amp;1 | grep FAIL">⎘ COPY</button></div><pre><span class="prompt">$</span> ./bin/doctor 2&gt;&amp;1 | grep FAIL</pre></div>
-              <p>Paste the full output to Max.</p>
+              <p>Send the full output to Max.</p>
             </div>
           </div>
         </div>
@@ -1233,7 +1273,7 @@ wsl --set-default Ubuntu</pre></div>
 
       <div class="part-done">
         <div class="done-label">Part 4 complete</div>
-        <div class="done-body">Workbench is bootstrapped. The AI's knowledge graphs, finding DB, and MCP servers are all wired up.</div>
+        <div class="done-body">Workbench is bootstrapped. Knowledge graphs, finding DB, and MCP servers are all wired.</div>
         <a href="#part-5" class="next">Part 5: Talk →</a>
       </div>
     </section>
@@ -1248,13 +1288,13 @@ wsl --set-default Ubuntu</pre></div>
         <span class="part-time">5 min</span>
       </div>
       <p class="part-intro">
-        Now we verify it actually works. You'll ask Claude a real question about LinkServicePro-Web and watch it answer with file:line citations.
+        Now we confirm it actually works. You'll ask Claude a real question about LinkServicePro-Web and watch it answer with <code>file:line</code> citations.
       </p>
 
       <div class="step">
         <div class="step-head"><span class="step-num">1</span><h3>Open Claude from the workbench directory</h3></div>
         <div class="step-body">
-          <p>The working directory matters — Claude needs to be inside <code>bims-corp-ops</code> so it picks up the skills and MCP config.</p>
+          <p>The working directory matters — Claude has to be inside <code>bims-corp-ops</code> to pick up the skills and MCP config.</p>
           <div class="code runme">
             <div class="code-head"><span>RUN IN UBUNTU</span><button class="copy-btn" data-copy="cd ~/Developer/bims-corp-ops&#10;claude">⎘ COPY</button></div>
             <pre><span class="prompt">$</span> cd ~/Developer/bims-corp-ops
@@ -1262,23 +1302,26 @@ wsl --set-default Ubuntu</pre></div>
           </div>
           <div class="expected">
             <span class="icon">✓</span>
-            <div class="body">Claude takes a few seconds to load its skills, then shows the input prompt at the bottom of the terminal. You'll see a list of available skills like <code>/bims-ask</code>, <code>/bims-diagnose</code>, <code>/bims-ticket</code>.</div>
+            <div class="body">Claude takes a few seconds to load skills + run its built-in orient check (you'll see a short status line with open-findings counts, recent decisions, and known constraints). When the input prompt appears, you're ready.</div>
+          </div>
+          <div class="tip">
+            <span class="icon">i</span>
+            <div><strong>What just happened:</strong> the workbench has a session-start hook that auto-runs an orient query against the project store every time you launch Claude. You don't have to remember to run anything — orientation just happens.</div>
           </div>
         </div>
       </div>
 
       <div class="step">
-        <div class="step-head"><span class="step-num">2</span><h3>Start with <code>/bims-orient</code></h3></div>
+        <div class="step-head"><span class="step-num">2</span><h3>Sanity-check the connection</h3></div>
         <div class="step-body">
-          <p>This is the "where are we" command. Always run it first in any new Claude session. It prints today's project state in ~3 seconds.</p>
-          <p>Type this and press Enter:</p>
+          <p>Type this into Claude and press Enter:</p>
           <div class="code runme">
-            <div class="code-head"><span>TYPE INSIDE CLAUDE</span><button class="copy-btn" data-copy="/bims-orient">⎘ COPY</button></div>
-            <pre><span class="prompt">&gt;</span> /bims-orient</pre>
+            <div class="code-head"><span>TYPE INSIDE CLAUDE</span><button class="copy-btn" data-copy="who are you and what can you help me with?">⎘ COPY</button></div>
+            <pre><span class="prompt">&gt;</span> who are you and what can you help me with?</pre>
           </div>
           <div class="expected">
             <span class="icon">✓</span>
-            <div class="body">Claude prints a summary: open findings count by severity (P0/P1/P2/P3), recent decisions, last legacy-repo sync, and a list of "traps" (known constraints to be aware of). Read it briefly. This is your daily compass.</div>
+            <div class="body">Claude explains the BIMS-Corp workbench, names the 8 repos it has indexed, and lists the skills available to you (<code>/bims-ask</code>, <code>/bims-diagnose</code>, <code>/bims-ticket</code>, <code>/bims-promote</code>, etc.). Read the reply — it confirms everything's wired correctly.</div>
           </div>
         </div>
       </div>
@@ -1286,12 +1329,12 @@ wsl --set-default Ubuntu</pre></div>
       <div class="step">
         <div class="step-head"><span class="step-num">3</span><h3>Ask a real codebase question</h3></div>
         <div class="step-body">
-          <p>Now we'll do something real. Type:</p>
+          <p>Now something real. Type:</p>
           <div class="code runme">
             <div class="code-head"><span>TYPE INSIDE CLAUDE</span><button class="copy-btn" data-copy="/bims-ask how does invoice payment work in LinkServicePro-Web?">⎘ COPY</button></div>
             <pre><span class="prompt">&gt;</span> /bims-ask how does invoice payment work in LinkServicePro-Web?</pre>
           </div>
-          <p>Claude will: query the LSP-Web knowledge graph, identify the relevant files, read the precise line ranges, and answer you with citations. Every claim ends with <code>file:line</code>.</p>
+          <p>Claude queries the LSP-Web knowledge graph, identifies the relevant files, reads the precise line ranges, and answers with citations. Every claim ends with a <code>file:line</code> reference.</p>
           <div class="expected">
             <span class="icon">✓</span>
             <div class="body">Something like this:</div>
@@ -1306,23 +1349,23 @@ wsl --set-default Ubuntu</pre></div>
                   <br><br>
                   1. <code>sendInvoiceToClient()</code> at <code>app/Repositories/InvoiceRepository.php:1442</code> builds the email body for an invoice.
                   <br><br>
-                  2. At <code>InvoiceRepository.php:1495</code>, the payment URL is built: <code>route('invoice_payment', ['invoice' =&gt; encrypt_decrypt($invoiceData-&gt;id)])</code>.
+                  2. The payment URL is constructed inside that method via Laravel's <code>route()</code> helper, with the invoice ID encoded by a helper from <code>app/Helpers/Global/GeneralHelper.php</code>.
                   <br><br>
-                  3. The encrypted invoice_id becomes the URL token the customer clicks. The token is decrypted at the payment controller to look up the invoice.
+                  3. The encoded invoice ID becomes the URL token the customer clicks. The token is decoded at the payment controller to look up the invoice.
                 </div>
               </div>
             </div>
           </div>
           <div class="tip">
             <span class="icon">!</span>
-            <div><strong>The cite-or-it-doesn't-count rule.</strong> Every claim Claude makes about code should end with <code>file:line</code>. If it doesn't, push back: "cite that please." If Claude can't, the claim is invented — don't trust it. This is your single most important habit.</div>
+            <div><strong>The cite-or-it-doesn't-count rule.</strong> Every claim Claude makes about code should end with <code>file:line</code>. If it doesn't, push back: "cite that please." If Claude can't cite, the claim is invented — don't trust it. This is your single most important habit.</div>
           </div>
         </div>
       </div>
 
       <div class="part-done">
         <div class="done-label">Part 5 complete</div>
-        <div class="done-body">Claude is connected to the BIMS-Corp codebases and answering with citations. You're ready to hunt.</div>
+        <div class="done-body">Claude is connected to the BIMS-Corp codebases and answering with citations. Ready to hunt.</div>
         <a href="#part-6" class="next">Part 6: Hunt a bug →</a>
       </div>
     </section>
@@ -1337,24 +1380,24 @@ wsl --set-default Ubuntu</pre></div>
         <span class="part-time">~15 min</span>
       </div>
       <p class="part-intro">
-        Five commands. Real bug. Jira-ready ticket at the end. We'll walk through a real example you can copy beat for beat the first time, then explain how to apply it to bugs you discover yourself.
+        Five commands. Real bug. Jira-ready ticket at the end. We walk through it once together in the session — after that, the same five commands handle every bug you find.
       </p>
 
       <div class="step">
         <div class="step-head"><span class="step-num">1</span><h3>Investigate a suspicion</h3></div>
         <div class="step-body">
-          <p>Real bug-hunting starts with a hunch — a customer complaint, a security worry, a "this code feels old." You don't need to know where in the code to look. Tell Claude the symptom; it finds the location.</p>
+          <p>Bug-hunting starts with a hunch — a customer complaint, a behavior that feels wrong, a "this code looks old." You don't need to know where in the code to look. Tell Claude the symptom; it finds the location.</p>
           <p>For this walkthrough, type:</p>
           <div class="code runme">
-            <div class="code-head"><span>TYPE INSIDE CLAUDE</span><button class="copy-btn" data-copy="/bims-ask the QA team got a customer complaint that they could see someone else's invoice by tweaking the URL. Is there anything in LinkServicePro-Web's invoice flow that would let that happen?">⎘ COPY</button></div>
-            <pre><span class="prompt">&gt;</span> /bims-ask the QA team got a customer complaint that they
-   could see someone else's invoice by tweaking the URL. Is
-   there anything in LinkServicePro-Web's invoice flow that
-   would let that happen?</pre>
+            <div class="code-head"><span>TYPE INSIDE CLAUDE</span><button class="copy-btn" data-copy="/bims-ask a customer says they could see someone else's invoice by tweaking the URL. Is there anything in LinkServicePro-Web's invoice flow that would let that happen?">⎘ COPY</button></div>
+            <pre><span class="prompt">&gt;</span> /bims-ask a customer says they could see someone else's
+   invoice by tweaking the URL. Is there anything in
+   LinkServicePro-Web's invoice flow that would let that
+   happen?</pre>
           </div>
           <div class="expected">
             <span class="icon">✓</span>
-            <div class="body">Claude traces the invoice URL → finds <code>encrypt_decrypt()</code> at <code>GeneralHelper.php:370-386</code> → reads the implementation → identifies hardcoded AES key + static IV → explains the attack: anyone with repo access can forge any token. All with file:line citations.</div>
+            <div class="body">Claude traces the invoice URL flow, reads the relevant helper that signs the URLs, identifies the specific weakness, and explains the attack — all with <code>file:line</code> citations you can verify.</div>
           </div>
         </div>
       </div>
@@ -1369,7 +1412,7 @@ wsl --set-default Ubuntu</pre></div>
           </div>
           <div class="expected">
             <span class="icon">✓</span>
-            <div class="body">Claude calls <code>mcp__bims-store__record_finding</code> with the right severity rubric and prints a finding ID like <code>BIMS-F-2026-05-27-ddca6b27</code>. Severity is auto-computed from four facts — this one comes out <strong>P0 / CRITICAL</strong> because it lets attackers forge tokens at production scale with zero defenses.</div>
+            <div class="body">Claude writes the finding to the workbench's findings database and prints a finding ID like <code>BIMS-F-2026-05-27-ddca6b27</code>. Severity is auto-computed from four facts (impact, likelihood, population affected, defenses remaining) and printed alongside the ID — e.g. <strong>P0 / CRITICAL</strong>.</div>
           </div>
         </div>
       </div>
@@ -1377,14 +1420,14 @@ wsl --set-default Ubuntu</pre></div>
       <div class="step">
         <div class="step-head"><span class="step-num">3</span><h3>Get a structured diagnosis</h3></div>
         <div class="step-body">
-          <p>For P0 and P1 findings, run <code>/bims-diagnose</code> — it produces 3 competing hypotheses (with falsifiability criteria) plus a two-track fix (minimum-viable + ideal). Substitute the finding ID you just got:</p>
+          <p>For P0 and P1 findings, run <code>/bims-diagnose</code> — it produces 3 competing hypotheses (with falsifiability criteria) plus a two-track fix (minimum-viable and ideal). Substitute the finding ID you just got:</p>
           <div class="code runme">
             <div class="code-head"><span>TYPE INSIDE CLAUDE</span><button class="copy-btn" data-copy="/bims-diagnose BIMS-F-2026-05-27-ddca6b27">⎘ COPY (replace the ID)</button></div>
             <pre><span class="prompt">&gt;</span> /bims-diagnose &lt;your-finding-id&gt;</pre>
           </div>
           <div class="expected">
             <span class="icon">✓</span>
-            <div class="body">Claude writes <code>diagnoses/&lt;finding-id&gt;/diagnosis.json</code> with: reproduction, suspect file:line range, contrast (LONGSTANDING / REGRESSION / INTRODUCED_HERE with the commit + author), 3 hypotheses ranked by likelihood, and Track A (minimum-viable fix with diff) + Track B (ideal fix).</div>
+            <div class="body">Claude writes <code>diagnoses/&lt;finding-id&gt;/diagnosis.json</code> with: reproduction, suspect <code>file:line</code> range, git-contrast (LONGSTANDING / REGRESSION / INTRODUCED_HERE with the commit + author), 3 hypotheses ranked by likelihood, and Track A (minimum-viable fix) + Track B (ideal fix).</div>
           </div>
         </div>
       </div>
@@ -1398,7 +1441,7 @@ wsl --set-default Ubuntu</pre></div>
           </div>
           <div class="expected">
             <span class="icon">✓</span>
-            <div class="body">Claude writes <code>tickets/draft/&lt;finding-id&gt;.md</code> — a complete Jira-shaped ticket with: title, severity, repo, labels, "Why this matters" (plain-English impact), current/expected behavior, root cause, two authorized tracks (A and B), and a full <strong>Implementation Note</strong> (files to touch, patterns to follow, patterns to avoid, test to write, definition of done, complexity tier).</div>
+            <div class="body">Claude writes <code>tickets/draft/&lt;finding-id&gt;.md</code> — a complete Jira-shaped ticket: title, severity, repo, labels, "Why this matters" (plain-English impact), current/expected behavior, root cause, two authorized fix tracks (A and B), and a full <strong>Implementation Note</strong> (files to touch, patterns to follow, patterns to avoid, test to write, definition of done, complexity tier).</div>
           </div>
           <p>Open the draft to review it. In a new Ubuntu window (right-click the Ubuntu icon → "New window"):</p>
           <div class="code runme">
@@ -1409,7 +1452,7 @@ wsl --set-default Ubuntu</pre></div>
           </div>
           <div class="tip">
             <span class="icon">i</span>
-            <div><strong>If the draft is wrong</strong> — Claude misunderstood the impact, suggested the wrong files, etc. — just tell Claude in the chat: "the Implementation Note has the wrong entry point — it's StripeController.php not InvoiceController.php. update the draft." Claude rewrites the file. Iterate until you're happy.</div>
+            <div><strong>If the draft is wrong</strong> — Claude misunderstood the impact, named the wrong file, etc. — just tell Claude in the chat: "the Implementation Note has the wrong entry point — it's StripeController.php not InvoiceController.php. update the draft." Claude rewrites the file. Iterate until you're happy.</div>
           </div>
         </div>
       </div>
@@ -1421,64 +1464,138 @@ wsl --set-default Ubuntu</pre></div>
             <div class="code-head"><span>TYPE INSIDE CLAUDE</span><button class="copy-btn" data-copy="/bims-promote BIMS-F-2026-05-27-ddca6b27">⎘ COPY (replace the ID)</button></div>
             <pre><span class="prompt">&gt;</span> /bims-promote &lt;your-finding-id&gt;</pre>
           </div>
-          <p>Right now (until the Jira API token is wired), Claude prints a copy-paste block:</p>
+          <p>Until the Jira API is wired (in progress), Claude prints a copy-paste block:</p>
           <div class="code">
             <div class="code-head"><span>expected output</span></div><pre>==== COPY THIS INTO JIRA ====
 Project: BIMS
 Issue type: Bug
-Summary: [Security/Crypto] encrypt_decrypt() helper uses hardcoded AES key...
-Labels: ai-drafted, security, crypto, complexity-M
+Summary: [Security] LinkServicePro-Web invoice URL signing is forgeable...
+Labels: ai-drafted, security, complexity-M
 
 Description:
 ---
 &lt;full ticket body&gt;
 ---</pre>
           </div>
-          <p>Now: open Jira in your browser, click <strong>Create Issue</strong>, paste the Summary into the summary field, paste the Description into the description field, add the labels exactly as listed, and submit. Copy the resulting BIMS-NNNN issue ID.</p>
+          <p>Open Jira in your browser, click <strong>Create Issue</strong>, paste the Summary into the summary field, paste the Description into the description field, add the labels exactly as listed, and submit. Copy the resulting BIMS-NNNN issue ID.</p>
           <p>Back in Claude, record the Jira ID:</p>
           <div class="code">
             <div class="code-head"><span>TYPE INSIDE CLAUDE</span></div><pre><span class="prompt">&gt;</span> the jira id for that ticket is BIMS-5402</pre>
           </div>
           <div class="expected">
             <span class="icon">✓</span>
-            <div class="body">Claude updates the finding to mark it as <code>promoted</code> with the Jira ID attached, so the audit trail is complete.</div>
+            <div class="body">Claude updates the finding to mark it as <code>promoted</code> with the Jira ID attached, closing the audit trail.</div>
           </div>
           <div class="tip">
             <span class="icon">i</span>
-            <div><strong>Once the Jira API is wired</strong> (Max is working on it), <code>/bims-promote</code> will create the issue automatically — no manual paste. You won't have to change your workflow when that lands; it just gets faster.</div>
+            <div><strong>Once the Jira API is wired,</strong> <code>/bims-promote</code> creates the issue automatically — no manual paste. The five-command flow doesn't change; it just gets faster.</div>
           </div>
         </div>
       </div>
 
       <div class="part-done">
         <div class="done-label">Part 6 complete</div>
-        <div class="done-body">You ran the full bug-hunt loop end-to-end. Future bugs follow the exact same 5 commands.</div>
-        <a href="#part-7" class="next">Part 7: Daily workflow →</a>
+        <div class="done-body">You ran the full bug-hunt loop end-to-end. Future bugs follow the same five commands.</div>
+        <a href="#part-7" class="next">Part 7: Role variants →</a>
       </div>
     </section>
 
     <!-- =========================================================
-         PART 7 — DAILY WORKFLOW
+         PART 7 — ROLE VARIANTS
          ========================================================= -->
     <section class="part" id="part-7">
       <div class="part-head">
         <span class="part-num">PART 7</span>
+        <h2>Role variants — how Niam, Jose, and Sal each use this</h2>
+        <span class="part-time">reference</span>
+      </div>
+      <p class="part-intro">
+        The five-command loop in Part 6 is the core — everyone uses it. But each of you comes at the BIMS-Corp codebases from a different angle. This section shows how the same tool serves three different jobs.
+      </p>
+
+      <div class="role-card">
+        <h4>Niam <span class="role-tag">Head of IT · BIMS-Corp PM</span></h4>
+        <div class="role-sub">Your lens: portfolio view — what's open, what's aging, what TatvaSoft has in flight.</div>
+        <p>You'll use <code>/bims-ask</code> less for "find me a bug" and more for "give me the state of the work." Useful queries:</p>
+        <div class="code">
+          <div class="code-head"><span>QUERIES NIAM RUNS</span></div><pre><span class="prompt">&gt;</span> show me all open P0 and P1 findings across the 8 repos
+<span class="prompt">&gt;</span> which findings have been open longest without a Jira ID?
+<span class="prompt">&gt;</span> summarize this week's findings by repo and severity
+<span class="prompt">&gt;</span> which findings touch the invoice flow in LSP-Web?
+<span class="prompt">&gt;</span> what tickets did Jose draft yesterday?</pre>
+        </div>
+        <p>You'll also be the one routing tickets to TatvaSoft once they're in Jira, and the one checking that fix PRs match the Implementation Note in the ticket. Part 6 still applies when YOU find a bug — but the day-to-day will lean on these triage queries.</p>
+      </div>
+
+      <div class="role-card">
+        <h4>Jose <span class="role-tag">QA</span></h4>
+        <div class="role-sub">Your lens: bug hunter. Part 6 IS your loop.</div>
+        <p>Every bug report or QA scan goes through the same five commands. Your job is to keep a high bar on what becomes a finding — false-positive findings waste TatvaSoft's time, so if Claude reports something and you're not convinced, push back:</p>
+        <div class="code">
+          <div class="code-head"><span>QA-FLAVORED PROBES</span></div><pre><span class="prompt">&gt;</span> cite that — what file:line are you reading from?
+<span class="prompt">&gt;</span> reproduce this against the current main branch
+<span class="prompt">&gt;</span> what would falsify this hypothesis?
+<span class="prompt">&gt;</span> what's the population of users actually affected here?</pre>
+        </div>
+        <p>If Claude's severity feels off, challenge it on the specific input ("worst_case isn't silent-degrade, it's integrity-bypass — re-rate it") and it will re-compute. If you and Claude still disagree, the call is Max's.</p>
+      </div>
+
+      <div class="role-card">
+        <h4>Sal <span class="role-tag">Real-user QA · GC Environmental</span></h4>
+        <div class="role-sub">Your lens: production user. The most valuable signal in the whole team.</div>
+        <p>You use LinkServicePro / LinkInspectPro / PropertyOrganizer every day to do actual work for GC Environmental. That means your bug reports start from "I just clicked X and Y happened" — and that's where the high-value findings come from. Code-only review can't see those.</p>
+        <p>Your version of the Part 6 loop starts from the symptom, not the codebase:</p>
+        <div class="code">
+          <div class="code-head"><span>HOW SAL STARTS A BUG REPORT</span></div><pre><span class="prompt">&gt;</span> /bims-ask in LinkServicePro just now I tried to upload a
+   work-order photo and the page froze. Walk through the
+   upload flow and tell me where it could have hung.
+
+<span class="prompt">&gt;</span> /bims-ask in PropertyOrganizer, when I edit a contact
+   and save, it sometimes shows the OLD address back. What
+   in the save flow could explain that?
+
+<span class="prompt">&gt;</span> /bims-ask on LSP invoices, the payment link in my email
+   sent the customer to a DIFFERENT invoice than the one I
+   sent. How is that possible — what builds that URL?</pre>
+        </div>
+        <p>From there, it's the same five commands as Jose. The difference is that your starting prompt is grounded in a real user action with a real timestamp — which makes the finding stronger when it lands in front of TatvaSoft.</p>
+        <div class="tip">
+          <span class="icon">i</span>
+          <div><strong>Privacy note:</strong> when you describe a user action to Claude, <em>don't paste customer PII</em> (real customer names, addresses, invoice IDs from production). Refer to "the customer" or "that invoice" — Claude doesn't need the literal value to trace the code path, and the workbench remote is public.</div>
+        </div>
+      </div>
+
+      <div class="part-done">
+        <div class="done-label">Part 7 complete</div>
+        <div class="done-body">Same tool, three angles. Pick the one that matches your day.</div>
+        <a href="#part-8" class="next">Part 8: Daily workflow →</a>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         PART 8 — DAILY WORKFLOW
+         ========================================================= -->
+    <section class="part" id="part-8">
+      <div class="part-head">
+        <span class="part-num">PART 8</span>
         <h2>Your daily workflow</h2>
         <span class="part-time">reference</span>
       </div>
       <p class="part-intro">
-        How a normal QA day fits together. Don't memorize — just keep this guide bookmarked. The same 5 commands cover 95% of what you'll do.
+        How a normal day fits together. Don't memorize — keep this page bookmarked. The same five commands cover 95% of what you'll do.
       </p>
 
       <div class="step">
-        <div class="step-head"><span class="step-num">1</span><h3>Start of day (3 commands)</h3></div>
+        <div class="step-head"><span class="step-num">1</span><h3>Start of day (1 command)</h3></div>
         <div class="step-body">
           <div class="code">
             <div class="code-head"><span>EVERY MORNING</span></div><pre><span class="prompt">$</span> cd ~/Developer/bims-corp-ops
-<span class="prompt">$</span> git pull origin main      <span class="comment"># pulls latest skills + graphs from Max</span>
-<span class="prompt">$</span> claude                    <span class="comment"># opens Claude</span>
-
-<span class="prompt">&gt;</span> /bims-orient              <span class="comment"># prints today's project state</span></pre>
+<span class="prompt">$</span> claude                    <span class="comment"># opens Claude, auto-orients</span></pre>
+          </div>
+          <p>Claude prints a short status line on startup (open findings count, recent decisions, known constraints). Read it briefly — that's your day's compass.</p>
+          <div class="tip">
+            <span class="icon">i</span>
+            <div><strong>Refreshing the workbench:</strong> the workbench repo itself updates occasionally (new skills, fixed bugs). In tomorrow's session Max will show you the simple <code>git pull origin main</code> step. For now, the version you cloned is current.</div>
           </div>
         </div>
       </div>
@@ -1486,9 +1603,9 @@ Description:
       <div class="step">
         <div class="step-head"><span class="step-num">2</span><h3>Throughout the day (per bug)</h3></div>
         <div class="step-body">
-          <p>Each bug = the same 5 commands from Part 6:</p>
+          <p>Each bug = the same five commands from Part 6:</p>
           <ol>
-            <li><code>/bims-ask &lt;the question or area you're investigating&gt;</code></li>
+            <li><code>/bims-ask &lt;your question or area of concern&gt;</code></li>
             <li>If real: <code>record this as a finding</code></li>
             <li>For P0 / P1: <code>/bims-diagnose &lt;finding-id&gt;</code></li>
             <li><code>/bims-ticket &lt;finding-id&gt;</code></li>
@@ -1500,33 +1617,33 @@ Description:
       <div class="step">
         <div class="step-head"><span class="step-num">3</span><h3>Mid-day check-in</h3></div>
         <div class="step-body">
-          <p>Talk to Claude in plain English. Examples:</p>
+          <p>Plain English. Examples:</p>
           <div class="code">
             <div class="code-head"><span>USEFUL QUERIES</span></div><pre><span class="prompt">&gt;</span> show me my findings from today
 <span class="prompt">&gt;</span> which P0 and P1 findings are still open across all repos?
-<span class="prompt">&gt;</span> what bugs has TatvaSoft closed in the last 7 days?
-<span class="prompt">&gt;</span> remind me where I left off yesterday</pre>
+<span class="prompt">&gt;</span> what did I work on yesterday?
+<span class="prompt">&gt;</span> which findings touch the property-edit flow?</pre>
           </div>
         </div>
       </div>
 
       <div class="step">
-        <div class="step-head"><span class="step-num">4</span><h3>End of day — share your draft tickets with Max</h3></div>
+        <div class="step-head"><span class="step-num">4</span><h3>End of day — share your draft tickets</h3></div>
         <div class="step-body">
-          <p>While each person has a local findings database (day 1), Max can't see your draft tickets unless you push them. Run this at the end of each working day:</p>
+          <p>While each of you has a local findings database (day 1), Max can't see your drafts until you push them. Once a day — when you've got something worth sharing — run this:</p>
           <div class="code runme">
-            <div class="code-head"><span>RUN IN UBUNTU</span><button class="copy-btn" data-copy="cd ~/Developer/bims-corp-ops&#10;git checkout -b qa/$(date +%Y%m%d)-&lt;yourname&gt;-tickets&#10;git add tickets/draft/&#10;git commit -m &quot;QA tickets drafted $(date +%Y-%m-%d)&quot;&#10;git push -u origin qa/$(date +%Y%m%d)-&lt;yourname&gt;-tickets&#10;gh pr create --base main --title &quot;QA tickets $(date +%Y-%m-%d)&quot;">⎘ COPY (replace &lt;yourname&gt;)</button></div>
+            <div class="code-head"><span>RUN IN UBUNTU</span><button class="copy-btn" data-copy="cd ~/Developer/bims-corp-ops&#10;git checkout -b qa/$(date +%Y%m%d)-&lt;yourname&gt;-tickets&#10;git add tickets/draft/&#10;git commit -m &quot;tickets drafted $(date +%Y-%m-%d)&quot;&#10;git push -u origin qa/$(date +%Y%m%d)-&lt;yourname&gt;-tickets&#10;gh pr create --base main --title &quot;tickets $(date +%Y-%m-%d)&quot;">⎘ COPY (replace &lt;yourname&gt;)</button></div>
             <pre><span class="prompt">$</span> cd ~/Developer/bims-corp-ops
 <span class="prompt">$</span> git checkout -b qa/$(date +%Y%m%d)-&lt;yourname&gt;-tickets
 <span class="prompt">$</span> git add tickets/draft/
-<span class="prompt">$</span> git commit -m "QA tickets drafted $(date +%Y-%m-%d)"
+<span class="prompt">$</span> git commit -m "tickets drafted $(date +%Y-%m-%d)"
 <span class="prompt">$</span> git push -u origin qa/$(date +%Y%m%d)-&lt;yourname&gt;-tickets
-<span class="prompt">$</span> gh pr create --base main --title "QA tickets $(date +%Y-%m-%d)"</pre>
+<span class="prompt">$</span> gh pr create --base main --title "tickets $(date +%Y-%m-%d)"</pre>
           </div>
-          <p>Ping Max in Slack with the PR link. He'll review + merge so the tickets are visible to everyone.</p>
+          <p>Send Max the PR link. He reviews and merges so the tickets are visible to everyone.</p>
           <div class="tip">
             <span class="icon">i</span>
-            <div><strong>Future state:</strong> once Max migrates the team to shared Turso, your findings appear in his <code>/bims-orient</code> automatically — no daily PR needed. You won't change your workflow when that lands.</div>
+            <div><strong>Future state:</strong> once the team is on the shared Turso store, your findings appear in everyone's startup orient automatically — no daily PR needed. Workflow doesn't change; the manual sharing step just goes away.</div>
           </div>
         </div>
       </div>
@@ -1534,24 +1651,23 @@ Description:
       <div class="step">
         <div class="step-head"><span class="step-num">5</span><h3>Stopping mid-task</h3></div>
         <div class="step-body">
-          <p>Just exit Claude (<span class="kbd">Ctrl</span>+<span class="kbd">D</span> or type <code>/exit</code>). Your findings + tickets are saved to disk. Tomorrow:</p>
+          <p>Just exit Claude (<span class="kbd">Ctrl</span>+<span class="kbd">D</span> or type <code>/exit</code>). Findings + ticket drafts are saved to disk. Next time you start Claude:</p>
           <div class="code">
-            <div class="code-head"><span>NEXT MORNING</span></div><pre><span class="prompt">$</span> cd ~/Developer/bims-corp-ops
+            <div class="code-head"><span>NEXT SESSION</span></div><pre><span class="prompt">$</span> cd ~/Developer/bims-corp-ops
 <span class="prompt">$</span> claude
-<span class="prompt">&gt;</span> /bims-orient
-<span class="prompt">&gt;</span> remind me where I left off — which finding was I working on?</pre>
+<span class="prompt">&gt;</span> what was I working on last? bring me back up to speed.</pre>
           </div>
-          <p>Claude reads the audit log and brings you back up to speed.</p>
+          <p>Claude reads the audit log and the open-finding list and tells you where to pick up.</p>
         </div>
       </div>
     </section>
 
     <!-- =========================================================
-         PART 8 — CHEAT SHEET + RULES
+         PART 9 — CHEAT SHEET + RULES
          ========================================================= -->
-    <section class="part" id="part-8">
+    <section class="part" id="part-9">
       <div class="part-head">
-        <span class="part-num">PART 8</span>
+        <span class="part-num">PART 9</span>
         <h2>Cheat sheet &amp; reference</h2>
         <span class="part-time">reference</span>
       </div>
@@ -1561,13 +1677,13 @@ Description:
         <table class="tbl">
           <thead><tr><th>Command</th><th>What it does</th></tr></thead>
           <tbody>
-            <tr><td>claude</td><td>Open Claude Code (run from <code>~/Developer/bims-corp-ops</code>)</td></tr>
-            <tr><td>/bims-orient</td><td>Print current project state. <strong>Always start with this.</strong></td></tr>
+            <tr><td>claude</td><td>Open Claude Code (run from <code>~/Developer/bims-corp-ops</code>). Auto-orients on startup.</td></tr>
             <tr><td>/bims-ask &lt;Q&gt;</td><td>Ask Claude anything about the 8 BIMS-Corp codebases — cited answer</td></tr>
             <tr><td>record this as a finding</td><td>Save a confirmed bug with auto-rated severity</td></tr>
             <tr><td>/bims-diagnose &lt;id&gt;</td><td>5-step diagnosis (3 hypotheses + 2-track fix)</td></tr>
             <tr><td>/bims-ticket &lt;id&gt;</td><td>Draft a Jira ticket → <code>tickets/draft/&lt;id&gt;.md</code></td></tr>
             <tr><td>/bims-promote &lt;id&gt;</td><td>Promote a draft to Jira (paste-ready until API wired)</td></tr>
+            <tr><td>/bims-catchup</td><td>Re-orient mid-session if you've cleared context</td></tr>
             <tr><td>/help</td><td>Claude's built-in help</td></tr>
             <tr><td>/exit</td><td>Close Claude (work auto-saved)</td></tr>
           </tbody>
@@ -1590,7 +1706,7 @@ Description:
         </table>
       </div>
 
-      <h3 style="font-size: 18px; margin: 32px 0 8px;">The 8 repos you'll be QAing</h3>
+      <h3 style="font-size: 18px; margin: 32px 0 8px;">The 8 repos you'll be working with</h3>
       <div class="tbl-wrap">
         <table class="tbl">
           <thead><tr><th>Short name</th><th>Full name</th><th>Stack</th></tr></thead>
@@ -1607,46 +1723,46 @@ Description:
         </table>
       </div>
 
-      <h3 style="font-size: 18px; margin: 32px 0 8px;">Rules (under current advisory-only mode)</h3>
-      <p><strong>You CAN:</strong> read any code in the 8 repos · ask Claude anything · record findings · run diagnose / ticket / promote · push <code>tickets/draft/</code> changes via PR.</p>
-      <p><strong>You CANNOT:</strong> edit any file under <code>BIMS-Corp-LEGACY/</code> (Claude refuses — enforced by hooks) · push to legacy repos · author tickets in <code>PAS-*</code> Jira project (only <code>BIMS-*</code> with <code>label=ai-drafted</code>) · paste secret values into prompts (reference by file:line, never paste).</p>
-      <p>The "cite or it doesn't count" rule: every claim Claude makes about code must end with <code>file:line</code>. If it doesn't, push back. If Claude can't cite, the claim is invented — don't trust it.</p>
+      <h3 style="font-size: 18px; margin: 32px 0 8px;">Ground rules (the workbench enforces these)</h3>
+      <p><strong>You can:</strong> read any code in the 8 repos · ask Claude anything · record findings · run diagnose / ticket / promote · push your <code>tickets/draft/</code> changes via PR.</p>
+      <p><strong>You can't (workbench blocks it):</strong> edit any file under <code>BIMS-Corp-LEGACY/</code> (Claude refuses by design while AI capability is still being assessed) · push to legacy repos · author tickets in the subcontractor Jira project (you write into <code>BIMS-*</code> with <code>label=ai-drafted</code>) · paste secret values into prompts (reference by <code>file:line</code>, never paste).</p>
+      <p><strong>Cite-or-it-doesn't-count:</strong> every claim Claude makes about code must end with <code>file:line</code>. If it doesn't, push back. If Claude can't cite, the claim is invented — don't trust it.</p>
 
-      <h3 style="font-size: 18px; margin: 32px 0 8px;">Who to ping for what</h3>
+      <h3 style="font-size: 18px; margin: 32px 0 8px;">When to flag something to Max</h3>
       <div class="tbl-wrap">
         <table class="tbl">
-          <thead><tr><th>Situation</th><th>Action</th></tr></thead>
+          <thead><tr><th>Situation</th><th>What to send</th></tr></thead>
           <tbody>
-            <tr><td>Install broke</td><td>Slack Max — screenshot + exact error text</td></tr>
-            <tr><td>Claude said X, I disagree</td><td>Slack Max — paste Claude's output verbatim</td></tr>
-            <tr><td>Is this really a P0?</td><td>Slack Max — paste finding-id + your reasoning</td></tr>
-            <tr><td>TatvaSoft pushed back on my ticket</td><td>Slack Max — he handles vendor disputes</td></tr>
-            <tr><td>Claude refuses to do something I want</td><td>Slack Max — there's usually a reason; he'll explain</td></tr>
-            <tr><td>3am prod bug, Max asleep</td><td>Record finding immediately, draft ticket, ping on-call channel</td></tr>
+            <tr><td>Install / bootstrap broke</td><td>Screenshot + exact error text + the failing step number</td></tr>
+            <tr><td>Claude said X, you disagree</td><td>The finding ID + your reasoning + Claude's verbatim output</td></tr>
+            <tr><td>Is this really a P0?</td><td>The finding ID + which rubric input you think is wrong</td></tr>
+            <tr><td>TatvaSoft pushed back on a ticket</td><td>The Jira ID + their objection</td></tr>
+            <tr><td>Claude refuses to do something you want</td><td>The exact prompt + Claude's refusal text — usually there's a workbench rule behind it</td></tr>
           </tbody>
         </table>
       </div>
 
       <h3 style="font-size: 18px; margin: 32px 0 8px;">5-minute glossary</h3>
-      <p><strong>advisory-tier</strong> — current operating mode where AI finds bugs and drafts tickets but never modifies code. Your mode.<br>
-      <strong>workbench-tier</strong> — Max's mode; the AI can write code under guardrails. Not relevant to you.<br>
+      <p><strong>advisory-tier</strong> — the current mode where AI finds bugs and drafts tickets but doesn't modify production code. Your mode.<br>
+      <strong>workbench-tier</strong> — Max's mode; AI can write code under engineering guardrails. Not relevant to you.<br>
       <strong>finding</strong> — an entry in the bugs database. One row per bug. ID like <code>BIMS-F-YYYY-MM-DD-XXXXXX</code>.<br>
       <strong>diagnosis</strong> — structured analysis: 3 hypotheses + 2 fix tracks. Lives at <code>diagnoses/&lt;id&gt;/diagnosis.json</code>.<br>
       <strong>Implementation Note</strong> — the section of a ticket that tells TatvaSoft exactly what files to touch and what tests to write. Required for promotion.<br>
-      <strong>trap</strong> — a known constraint about the codebase (e.g. "CI 2.1.4 doesn't support PHP 8.1 idioms"). Surfaced by <code>/bims-orient</code>.<br>
+      <strong>trap</strong> — a known constraint about the codebase (e.g. "CI 2.1.4 doesn't support PHP 8.1 idioms"). Surfaced on Claude startup.<br>
       <strong>graphify</strong> — the system that builds knowledge graphs of each codebase. One MCP per repo. Claude uses these to navigate.<br>
       <strong>MCP</strong> — Model Context Protocol; how Claude talks to specialized servers. You don't talk to MCPs directly.<br>
-      <strong>severity rubric</strong> — deterministic algorithm that converts 4 facts about a finding into P0/P1/P2/P3.<br>
-      <strong>TatvaSoft</strong> — the subcontractor team that writes the actual fixes. Your tickets go to them via Jira.</p>
+      <strong>severity rubric</strong> — the deterministic algorithm that converts 4 facts about a finding into P0/P1/P2/P3.<br>
+      <strong>BIMS-Corp</strong> — Building Information Management Systems Corporation, the legal owner of the 8 codebases. Greg Collins is CEO.<br>
+      <strong>TatvaSoft / Codepaper</strong> — the subcontractor teams that write the actual fixes in the legacy repos. Your tickets reach them via Jira.</p>
 
       <div class="part-done">
         <div class="done-label">You're ready</div>
-        <div class="done-body">Bookmark this page. The first bug usually takes 15 min; the tenth takes 5. Slack Max with anything weird.</div>
+        <div class="done-body">Bookmark this page. The first bug usually takes 15 min; the tenth takes 5. Anything weird, send it to Max.</div>
       </div>
     </section>
 
     <footer class="footer">
-      BIMS-Corp QA Onboarding Guide · Windows 11 · v1.0 · 2026-05-27 · Building Information Management Systems Corporation (NY DOS 4830492)
+      BIMS-Corp Team Onboarding Guide · Windows 11 · v1.1 · 2026-05-27 · Building Information Management Systems Corporation (NY DOS 4830492)
     </footer>
 
   </main>
@@ -1706,13 +1822,13 @@ document.querySelectorAll('.toc-link').forEach(l => {
 // ============================================================
 // Active TOC link + progress bar
 // ============================================================
-const sections = ['part-0-content', 'part-1', 'part-2', 'part-3', 'part-4', 'part-5', 'part-6', 'part-7', 'part-8']
+const sections = ['part-0-content', 'part-1', 'part-2', 'part-3', 'part-4', 'part-5', 'part-6', 'part-7', 'part-8', 'part-9']
   .map(id => document.getElementById(id))
   .filter(Boolean);
 const tocLinks = document.querySelectorAll('.toc-link');
 const progressFill = document.getElementById('progress-fill');
 const progressLabel = document.getElementById('progress-label');
-const partLabels = ['Before you start', 'Install tools', 'Claude Code', 'Clone repos', 'Bootstrap', 'First conversation', 'Hunt a bug', 'Daily workflow', 'Reference'];
+const partLabels = ['Before you start', 'Install tools', 'Claude Code', 'Clone repos', 'Bootstrap', 'First conversation', 'Hunt a bug', 'Role variants', 'Daily workflow', 'Reference'];
 
 function updateActive() {
   const scrollY = window.scrollY + 120;
